@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "COVIDMonitoringSystem.Core", "COVIDMonitoringSystem.Core\COVIDMonitoringSystem.Core.csproj", "{6A408ABD-BDF0-405F-A1EF-98DCC2C974C3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "COVIDMonitoringSystem.ConsoleApp", "COVIDMonitoringSystem.ConsoleApp\COVIDMonitoringSystem.ConsoleApp.csproj", "{636B4FB5-FDEB-43A1-AFAF-3AEBD8D80321}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "COVIDMonitoringSystem.GuiApp", "COVIDMonitoringSystem.GuiApp\COVIDMonitoringSystem.GuiApp.csproj", "{C2C0B2D4-87A1-440A-8623-86C391A43D5B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{6A408ABD-BDF0-405F-A1EF-98DCC2C974C3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6A408ABD-BDF0-405F-A1EF-98DCC2C974C3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6A408ABD-BDF0-405F-A1EF-98DCC2C974C3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6A408ABD-BDF0-405F-A1EF-98DCC2C974C3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{636B4FB5-FDEB-43A1-AFAF-3AEBD8D80321}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{636B4FB5-FDEB-43A1-AFAF-3AEBD8D80321}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{636B4FB5-FDEB-43A1-AFAF-3AEBD8D80321}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{636B4FB5-FDEB-43A1-AFAF-3AEBD8D80321}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C2C0B2D4-87A1-440A-8623-86C391A43D5B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C2C0B2D4-87A1-440A-8623-86C391A43D5B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C2C0B2D4-87A1-440A-8623-86C391A43D5B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C2C0B2D4-87A1-440A-8623-86C391A43D5B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
