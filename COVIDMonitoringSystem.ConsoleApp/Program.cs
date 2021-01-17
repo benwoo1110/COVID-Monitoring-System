@@ -1,4 +1,5 @@
 ﻿using System;
+using COVIDMonitoringSystem.Core;
 
 namespace COVIDMonitoringSystem.ConsoleApp
 {
@@ -6,7 +7,7 @@ namespace COVIDMonitoringSystem.ConsoleApp
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            var covidMonitoringManager = new COVIDMonitoringManager();
         }
     }
 }
