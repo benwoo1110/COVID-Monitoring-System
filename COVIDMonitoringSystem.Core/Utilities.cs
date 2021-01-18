@@ -12,10 +12,12 @@ namespace COVIDMonitoringSystem.Core
             var headers = fileData[0].Split(',');
 
             var csvEntries = new Dictionary<string, string>[fileData.Length - 1];
-            for (var index = 1; index < fileData.Length - 1; index++)
+            Console.WriteLine(fileData.Length);
+            for (var index = 1; index < fileData.Length; index++)
             {
                 string[] lineData = fileData[index].Split(',');
-                csvEntries[index] = ParseSingleCsvLine(headers, lineData);
+                Console.WriteLine(lineData[1] + " ");
+                csvEntries[index-1] = ParseSingleCsvLine(headers, lineData);
             }
 
             return csvEntries;
