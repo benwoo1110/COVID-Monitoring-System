@@ -38,6 +38,13 @@ namespace COVIDMonitoringSystem.Core
                 Person newPerson = entry["type"] == "resident"
                     ? ParseResidentEntry(entry)
                     : ParseVisitorEntry(entry);
+
+                if (!string.IsNullOrEmpty(entry["travelEntryLastCountry"]))
+                {
+                    newPerson.AddTravelEntry(ParseTravelEntry(entry));
+                }
+
+                PersonList.Add(newPerson);
             }
         }
 
@@ -76,7 +83,7 @@ namespace COVIDMonitoringSystem.Core
             return new TravelEntry(
                 entry["travelEntryLastCountry"], 
                 entry["travelEntryMode"], 
-                Convert.ToDateTime("travelEntryDate")
+                Convert.ToDateTime(entry["travelEntryDate"])
             );
         }
     }
