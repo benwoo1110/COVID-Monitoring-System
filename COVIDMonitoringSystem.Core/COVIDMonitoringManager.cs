@@ -5,35 +5,39 @@ namespace COVIDMonitoringSystem.Core
 {
     public class COVIDMonitoringManager
     {
-        public List<BusinessLocation> BusinessLocationList { get; }
-        public List<SHNFacility> ShnFacilitiesList { get; }
-        public List<Person> PersonList { get; }
+        public List<BusinessLocation> BusinessLocationList { get; set; }
+        public List<SHNFacility> ShnFacilitiesList { get; set; }
+        public List<Person> PersonList { get; set; }
 
         public COVIDMonitoringManager()
         {
-            /*BusinessLocationList = LoadBusinessLocationData();
-            ShnFacilitiesList = LoadSHNFacilityData();*/
-            PersonList = LoadPersonData();
+            LoadBusinessLocationData();
+            LoadSHNFacilityData();
+            LoadPersonData();
         }
 
-        private List<BusinessLocation> LoadBusinessLocationData()
+        private void LoadBusinessLocationData()
         {
             //TODO Melvin: LoadBusinessLocationData
-            throw new NotImplementedException();
+            var businessCsvData = Utilities.ReadCsv("resources/BusinessLocation.csv");
+            BusinessLocationList = new List<BusinessLocation>();
+
+            // Do parsing code here
         }
-        
-        private List<SHNFacility> LoadSHNFacilityData()
+
+        private void LoadSHNFacilityData()
         {
-            //TODO Melvin: LoadSHNFacilityData
+            //TODO Ben: LoadSHNFacilityData
             throw new NotImplementedException();
         }
-        
-        private List<Person> LoadPersonData()
+
+        private void LoadPersonData()
         {
             //TODO Ben: LoadPersonData
             var personCsvData = Utilities.ReadCsv("resources/Person.csv");
-
-            throw new NotImplementedException();
+            PersonList = new List<Person>();
+            
+            
         }
     }
 }
