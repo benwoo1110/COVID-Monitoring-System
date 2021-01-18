@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using Newtonsoft.Json;
 
 namespace COVIDMonitoringSystem.Core
 {
@@ -35,6 +36,11 @@ namespace COVIDMonitoringSystem.Core
             }
 
             return csvEntry;
+        }
+
+        public static void PrintObject(object o)
+        {
+            Console.WriteLine(JsonConvert.SerializeObject(o, Formatting.Indented));
         }
     }
 }
