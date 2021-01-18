@@ -11,14 +11,15 @@ namespace COVIDMonitoringSystem.Core
 
         public COVIDMonitoringManager()
         {
-            /*BusinessLocationList = LoadBusinessLocationData();
-            ShnFacilitiesList = LoadSHNFacilityData();*/
+            BusinessLocationList = LoadBusinessLocationData();
+            /*ShnFacilitiesList = LoadSHNFacilityData();*/
             PersonList = LoadPersonData();
         }
 
         private List<BusinessLocation> LoadBusinessLocationData()
         {
             //TODO Melvin: LoadBusinessLocationData
+            var locationCsvData = Utilities.ReadCsv("resources/BusinessLocation.csv");
             throw new NotImplementedException();
         }
         
