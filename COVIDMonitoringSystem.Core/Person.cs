@@ -24,6 +24,11 @@ namespace COVIDMonitoringSystem.Core
             TravelEntryList.Add(entry);
         }
 
+        public void AddSafeEntry(SafeEntry entry)
+        {
+            SafeEntryList.Add(entry);
+        }
+
         public abstract double CalculateSHNCharges();
 
         public override string ToString()
