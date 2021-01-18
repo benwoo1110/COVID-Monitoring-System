@@ -10,11 +10,11 @@ namespace COVIDMonitoringSystem.Core
 
         public DateTime ExpiryDate { get; set; }
 
-        public TraceTogetherToken(string no, string location, DateTime expiry)
+        public TraceTogetherToken(string serialNo, string collectionLocation, DateTime expiryDate)
         {
-            SerialNo = no;
-            CollectionLocation = location;
-            ExpiryDate = expiry;
+            SerialNo = serialNo;
+            CollectionLocation = collectionLocation;
+            ExpiryDate = expiryDate;
         }
 
         public bool IsEligibleForReplacement()

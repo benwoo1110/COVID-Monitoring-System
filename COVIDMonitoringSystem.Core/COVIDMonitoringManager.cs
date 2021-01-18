@@ -28,7 +28,6 @@ namespace COVIDMonitoringSystem.Core
         private void LoadSHNFacilityData()
         {
             //TODO Ben: LoadSHNFacilityData
-            throw new NotImplementedException();
         }
 
         private void LoadPersonData()
@@ -36,8 +35,52 @@ namespace COVIDMonitoringSystem.Core
             //TODO Ben: LoadPersonData
             var personCsvData = Utilities.ReadCsv("resources/Person.csv");
             PersonList = new List<Person>();
+
+            foreach (var entry in personCsvData)
+            {
+                Person newPerson = entry["type"] == "resident"
+                    ? ParseResidentEntry(entry)
+                    : ParseVisitorEntry(entry);
+            }
+        }
+
+        private Person ParseResidentEntry(IReadOnlyDictionary<string, string> entry)
+        {
+            Resident newResident = new Resident(
+                entry["name"], 
+                entry["address"], 
+                Convert.ToDateTime(entry["lastLeftCountry"])
+            );
+
+            if (!string.IsNullOrWhiteSpace(entry["tokenSerial"]))
+            {
+                newResident.Token = ParseTraceTogetherToken(entry);
+            }
             
-            
+            return newResident;
+        }
+
+        private TraceTogetherToken ParseTraceTogetherToken(IReadOnlyDictionary<string, string> entry)
+        {
+            return new TraceTogetherToken(
+                entry["tokenSerial"], 
+                entry["tokenCollectionLocation"], 
+                Convert.ToDateTime(entry["tokenExpiryDate"])
+            );
+        }
+
+        private Person ParseVisitorEntry(IReadOnlyDictionary<string, string> entry)
+        {
+            return new Visitor(entry["name"], entry["passportNo"], entry["nationality"]);
+        }
+
+        private TravelEntry ParseTravelEntry(IReadOnlyDictionary<string, string> entry)
+        {
+            return new TravelEntry(
+                entry["travelEntryLastCountry"], 
+                entry["travelEntryMode"], 
+                Convert.ToDateTime("travelEntryDate")
+            );
         }
     }
 }
