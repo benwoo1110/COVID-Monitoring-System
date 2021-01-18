@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Net.Http;
+using System.Threading.Tasks;
 using Newtonsoft.Json;
 
 namespace COVIDMonitoringSystem.Core
@@ -38,9 +40,29 @@ namespace COVIDMonitoringSystem.Core
             return csvEntry;
         }
 
+        public static object FetchFromWeb<T>(String uri, String request)
+        {
+            using HttpClient client = new HttpClient {BaseAddress = new Uri(uri)};
+            Task<HttpResponseMessage> responseTask = client.GetAsync(request);
+            responseTask.Wait();
+            HttpResponseMessage response = responseTask.Result;
+            if (!response.IsSuccessStatusCode)
+            {
+                Console.WriteLine($"Response from server was not successful. Response dump as follows:\n{GetObjectData(response)}");
+                return null;
+            }
+            string rawData = response.Content.ReadAsStringAsync().Result;
+            return JsonConvert.DeserializeObject<T>(rawData);
+        }
+
+        public static string GetObjectData(object o)
+        {
+            return JsonConvert.SerializeObject(o, Formatting.Indented);
+        }
+
         public static void PrintObject(object o)
         {
-            Console.WriteLine(JsonConvert.SerializeObject(o, Formatting.Indented));
+            Console.WriteLine(GetObjectData(o));
         }
     }
 }

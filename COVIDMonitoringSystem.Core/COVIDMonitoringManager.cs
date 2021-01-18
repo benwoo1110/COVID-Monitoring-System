@@ -15,6 +15,9 @@ namespace COVIDMonitoringSystem.Core
             LoadSHNFacilityData();
             LoadPersonData();
         }
+        
+        //TODO: Additional feature idea...
+        //https://corona.lmao.ninja/v2/countries/singapore
 
         private void LoadBusinessLocationData()
         {
@@ -24,12 +27,14 @@ namespace COVIDMonitoringSystem.Core
 
         private void LoadSHNFacilityData()
         {
-            //TODO Ben: LoadSHNFacilityData
+            ShnFacilitiesList = (List<SHNFacility>) Utilities.FetchFromWeb<List<SHNFacility>>(
+                "https://covidmonitoringapiprg2.azurewebsites.net",
+                "/faciliy"
+            ) ?? new List<SHNFacility>();
         }
 
         private void LoadPersonData()
         {
-            //TODO Ben: LoadPersonData
             var personCsvData = Utilities.ReadCsv("resources/Person.csv");
             PersonList = new List<Person>();
 
