@@ -11,18 +11,29 @@ namespace COVIDMonitoringSystem.Core
 
         public COVIDMonitoringManager()
         {
+<<<<<<< HEAD
+            BusinessLocationList = LoadBusinessLocationData();
+            /*ShnFacilitiesList = LoadSHNFacilityData();*/
+            PersonList = LoadPersonData();
+=======
             LoadBusinessLocationData();
             LoadSHNFacilityData();
             LoadPersonData();
+>>>>>>> 5d09f03e31aeadbe3b5b091a87010891ad160523
         }
 
         private void LoadBusinessLocationData()
         {
             //TODO Melvin: LoadBusinessLocationData
+<<<<<<< HEAD
+            var locationCsvData = Utilities.ReadCsv("resources/BusinessLocation.csv");
+            throw new NotImplementedException();
+=======
             var businessCsvData = Utilities.ReadCsv("resources/BusinessLocation.csv");
             BusinessLocationList = new List<BusinessLocation>();
 
             // Do parsing code here
+>>>>>>> 5d09f03e31aeadbe3b5b091a87010891ad160523
         }
 
         private void LoadSHNFacilityData()
