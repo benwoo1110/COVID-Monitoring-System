@@ -29,7 +29,7 @@ namespace COVIDMonitoringSystem.Core
         {
             ShnFacilitiesList = (List<SHNFacility>) Utilities.FetchFromWeb<List<SHNFacility>>(
                 "https://covidmonitoringapiprg2.azurewebsites.net",
-                "/faciliy"
+                "/facility"
             ) ?? new List<SHNFacility>();
         }
 
@@ -40,7 +40,7 @@ namespace COVIDMonitoringSystem.Core
 
             foreach (var entry in personCsvData)
             {
-                Person newPerson = entry["type"] == "resident"
+                var newPerson = entry["type"] == "resident"
                     ? ParseResidentEntry(entry)
                     : ParseVisitorEntry(entry);
 
@@ -55,7 +55,7 @@ namespace COVIDMonitoringSystem.Core
 
         private Person ParseResidentEntry(IReadOnlyDictionary<string, string> entry)
         {
-            Resident newResident = new Resident(
+            var newResident = new Resident(
                 entry["name"], 
                 entry["address"], 
                 Convert.ToDateTime(entry["lastLeftCountry"])
@@ -85,11 +85,33 @@ namespace COVIDMonitoringSystem.Core
 
         private TravelEntry ParseTravelEntry(IReadOnlyDictionary<string, string> entry)
         {
-            return new TravelEntry(
-                entry["travelEntryLastCountry"], 
-                entry["travelEntryMode"], 
+            var newTravelEntry = new TravelEntry(
+                entry["travelEntryLastCountry"],
+                entry["travelEntryMode"],
                 Convert.ToDateTime(entry["travelEntryDate"])
-            );
+            )
+            {
+                ShnEndDate = Convert.ToDateTime(entry["travelShnEndDate"]),
+                IsPaid = Convert.ToBoolean(entry["travelIsPaid"]),
+                ShnFacility = FindSHNFacility(entry["facilityName"])
+            };
+            
+            return newTravelEntry;
+        }
+
+        public BusinessLocation FindBusinessLocation(string name)
+        {
+            return BusinessLocationList.Find(businessLocation => businessLocation.BusinessName.Equals(name));
+        }
+        
+        public SHNFacility FindSHNFacility(string name)
+        {
+            return ShnFacilitiesList.Find(shnFacility => shnFacility.FacilityName.Equals(name));
+        }
+
+        public Person FindPerson(string name)
+        {
+            return PersonList.Find(person => person.Name.Equals(name));
         }
     }
 }
