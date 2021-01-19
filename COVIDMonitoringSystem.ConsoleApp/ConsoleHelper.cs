@@ -20,7 +20,7 @@ namespace COVIDMonitoringSystem.ConsoleApp
                 }
                 catch (Exception)
                 {
-                    Console.WriteLine($"Input is not a {typeof(T).Name}, please try again!");
+                    Console.WriteLine("Input is in invalid format. Please try again!");
                 }
             }
         }
