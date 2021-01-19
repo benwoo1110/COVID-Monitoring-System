@@ -1,34 +1,55 @@
 ﻿using System;
+using System.Collections.Specialized;
+using COVIDMonitoringSystem.ConsoleApp;
 
 namespace Cryptography.ConsoleApp
 {
     public class Menu
     {
-        private readonly string header;
-        private readonly string[] contents;
-        
         private const int ExitOption = 0;
+        
+        public string Header { get; }
+        public MenuOption[] Contents { get; }
 
-        public Menu(string header, string[] contents)
+        public Menu(string header, MenuOption[] contents)
         {
-            this.header = header;
-            this.contents = contents;
+            Header = header;
+            Contents = contents;
         }
 
-        public string RunMenuOption()
+        public void RunMenuOptionLooped()
+        {
+            while (true)
+            {
+                RunMenuOption();
+            }
+        }
+
+        public void RunMenuOption()
         {
             ShowMenu();
-            return GetInputOption();
+            DoOptionAction();
         }
 
-        private string GetInputOption()
+        private void ShowMenu()
+        {
+            ConsoleHelper.EmptyLine();
+            Console.WriteLine(Header);
+            for (var index = 0; index < Contents.Length; index++)
+            {
+                Console.WriteLine($"[{index + 1}] {Contents[index].Name}");
+            }
+            Console.WriteLine($"[{ExitOption}] Exit");
+        }
+
+        private void DoOptionAction()
         {
             while (true)
             {
                 int input = ConsoleHelper.GetInput("Enter option: ", Convert.ToInt32);
                 if (!IsInRange(input))
                 {
-                    Console.WriteLine($"Please enter a number between 0 and {contents.Length}!");
+                    Console.WriteLine($"Please enter a number between 0 and {Contents.Length}!");
                     continue;
                 }
                 if (IsExitOption(input))
@@ -36,7 +57,8 @@ namespace Cryptography.ConsoleApp
                     ConsoleHelper.ExitProgram();
                 }
 
-                return contents[input - 1];
+                Contents[input - 1].RunMethod();
+                return;
             }
         }
 
@@ -47,17 +69,7 @@ namespace Cryptography.ConsoleApp
 
         private bool IsInRange(int input)
         {
-            return input >= 0 && input <= contents.Length;
-        }
-
-        private void ShowMenu()
-        {
-            Console.WriteLine(header);
-            for (var index = 0; index < contents.Length; index++)
-            {
-                Console.WriteLine($"[{index + 1}] {contents[index]}");
-            }
-            Console.WriteLine($"[{ExitOption}] Exit");
+            return input >= 0 && input <= Contents.Length;
         }
     }
 }
