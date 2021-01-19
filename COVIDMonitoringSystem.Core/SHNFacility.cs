@@ -20,7 +20,7 @@ namespace COVIDMonitoringSystem.Core
             DistFromLandCheckpoint = distFromLandCheckpoint;
         }
 
-        public double CalculateTravelCost()
+        public double CalculateTravelCost(string entryMode, DateTime entryDate)
         {
             throw new NotImplementedException();
         }
