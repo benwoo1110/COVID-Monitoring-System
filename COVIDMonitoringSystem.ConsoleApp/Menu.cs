@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Specialized;
-using COVIDMonitoringSystem.ConsoleApp;
 
-namespace Cryptography.ConsoleApp
+namespace COVIDMonitoringSystem.ConsoleApp
 {
     public class Menu
     {

@@ -7,7 +7,7 @@ using Newtonsoft.Json;
 
 namespace COVIDMonitoringSystem.Core
 {
-    public class Utilities
+    public static class Utilities
     {
         public static Dictionary<string, string>[] ReadCsv(string filePath)
         {

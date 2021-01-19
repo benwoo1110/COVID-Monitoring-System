@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace Cryptography.ConsoleApp
+namespace COVIDMonitoringSystem.ConsoleApp
 {
-    public class ConsoleHelper
+    public static class ConsoleHelper
     {
         public static string GetInput(string prompt)
         {

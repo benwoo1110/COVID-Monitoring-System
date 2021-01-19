@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using COVIDMonitoringSystem.Core;
-using Cryptography.ConsoleApp;
 
 namespace COVIDMonitoringSystem.ConsoleApp
 {
