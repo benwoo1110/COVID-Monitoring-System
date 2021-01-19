@@ -6,17 +6,15 @@ namespace COVIDMonitoringSystem.Core
     public class SafeEntry
     {
         public DateTime CheckIn { get; set; }
-
         public DateTime CheckOut { get; set; }
-
         public BusinessLocation Location { get; set; }
 
-        public SafeEntry(DateTime entry, BusinessLocation location)
+        public SafeEntry(DateTime checkIn, BusinessLocation location)
         {
-            CheckIn = entry;
+            CheckIn = checkIn;
             Location = location;
         }
-        
+
         public void PerformCheckOut()
         {
             throw new NotImplementedException();

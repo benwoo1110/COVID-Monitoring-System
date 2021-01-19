@@ -5,18 +5,16 @@ namespace COVIDMonitoringSystem.Core
     public class BusinessLocation
     {
         public string BusinessName { get; set; }
-
         public string BranchCode { get; set; }
-
         public int MaximumCapacity { get; set; }
 
         public int VisitorsNow { get; set; }
 
-        public BusinessLocation(string name, string branch, int capacity)
+        public BusinessLocation(string businessName, string branchCode, int maximumCapacity)
         {
-            BusinessName = name;
-            BranchCode = branch;
-            VisitorsNow = capacity;
+            BusinessName = businessName;
+            BranchCode = branchCode;
+            MaximumCapacity = maximumCapacity;
         }
 
         public bool IsFull()

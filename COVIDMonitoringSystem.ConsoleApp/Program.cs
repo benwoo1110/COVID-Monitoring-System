@@ -23,5 +23,25 @@ namespace COVIDMonitoringSystem.ConsoleApp
 
             mainMenu.RunMenuOption();
         }
+
+        public void GeneralActions()
+        {
+            
+        }
+        
+        public void TraceTogetherActions()
+        {
+            
+        }
+        
+        public void SafeEntryActions()
+        {
+            
+        }
+        
+        public void TravelEntryActions()
+        {
+            
+        }
     }
 }
