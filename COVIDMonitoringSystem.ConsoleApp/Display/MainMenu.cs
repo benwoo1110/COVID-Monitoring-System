@@ -1,6 +1,6 @@
 ﻿using COVIDMonitoringSystem.ConsoleApp.Utilities;
 
-namespace COVIDMonitoringSystem.ConsoleApp.MenuDisplay
+namespace COVIDMonitoringSystem.ConsoleApp.Display
 {
     public class MainMenu : Menu
     {

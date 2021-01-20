@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using COVIDMonitoringSystem.ConsoleApp.MenuDisplay;
+using COVIDMonitoringSystem.ConsoleApp.Display;
 using COVIDMonitoringSystem.Core;
 
 namespace COVIDMonitoringSystem.ConsoleApp

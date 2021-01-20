@@ -2,7 +2,7 @@
 using COVIDMonitoringSystem.ConsoleApp.Utilities;
 using JetBrains.Annotations;
 
-namespace COVIDMonitoringSystem.ConsoleApp.MenuDisplay
+namespace COVIDMonitoringSystem.ConsoleApp.Display
 {
     public class Menu
     {
