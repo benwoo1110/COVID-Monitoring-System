@@ -4,15 +4,14 @@ using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Text;
-using System.Threading.Tasks;
 using JetBrains.Annotations;
 using Newtonsoft.Json;
 
-namespace COVIDMonitoringSystem.Core
+namespace COVIDMonitoringSystem.Core.Utilities
 {
-    public static class Utilities
+    public static class CoreHelper
     {
-        public static Dictionary<string, string>[] ReadCsv([NotNull] string filePath)
+        [NotNull] public static Dictionary<string, string>[] ReadCsv([NotNull] string filePath)
         {
             var fileData = File.ReadAllLines(filePath);
             var headers = fileData[0].Split(',');
@@ -27,17 +26,17 @@ namespace COVIDMonitoringSystem.Core
             return csvEntries;
         }
 
-        private static Dictionary<string, string> ParseSingleCsvLine(
-            [NotNull] string[] headers, 
-            [NotNull] string[] lineData)
+        [NotNull] private static Dictionary<string, string> ParseSingleCsvLine(
+            [NotNull] IReadOnlyList<string> headers, 
+            [NotNull] IReadOnlyList<string> lineData)
         {
-            if (headers.Length != lineData.Length)
+            if (headers.Count != lineData.Count)
             {
                 throw new ArgumentException("Headers does not match amount of data provided.");
             }
 
             var csvEntry = new Dictionary<string, string>();
-            for (var index = 0; index < headers.Length; index++)
+            for (var index = 0; index < headers.Count; index++)
             {
                 csvEntry.Add(headers[index], lineData[index]);
             }
@@ -65,7 +64,7 @@ namespace COVIDMonitoringSystem.Core
             return true;
         }
 
-        private static string BuildCsvContents(
+        [NotNull] private static string BuildCsvContents(
             [NotNull] string[] headers, 
             [NotNull] IEnumerable<Dictionary<string, string>> data)
         {
@@ -82,7 +81,7 @@ namespace COVIDMonitoringSystem.Core
 
         private static void BuildEntry(
             [NotNull] string[] headers, 
-            [NotNull] Dictionary<string, string> entry, 
+            [NotNull] IReadOnlyDictionary<string, string> entry, 
             [NotNull] StringBuilder builder)
         {
             foreach (var colName in headers)
@@ -96,7 +95,7 @@ namespace COVIDMonitoringSystem.Core
             builder.Append("\n");
         }
 
-        public static object FetchFromWeb<T>(
+        [CanBeNull] public static object FetchFromWeb<T>(
             [NotNull] string uri, 
             [NotNull] string request)
         {
@@ -112,14 +111,9 @@ namespace COVIDMonitoringSystem.Core
             return JsonConvert.DeserializeObject<T>(rawData);
         }
 
-        public static string GetObjectData(object o)
+        [NotNull] public static string GetObjectData([CanBeNull] object o)
         {
             return JsonConvert.SerializeObject(o, Formatting.Indented);
-        }
-
-        public static void DebugObject(object o)
-        {
-            Console.WriteLine(GetObjectData(o));
         }
     }
 }

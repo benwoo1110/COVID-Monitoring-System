@@ -5,9 +5,9 @@ namespace COVIDMonitoringSystem.ConsoleApp
     public class Menu
     {
         private const int ExitOption = 0;
-        
-        public string Header { get; }
-        public MenuOption[] Contents { get; }
+
+        private string Header { get; }
+        private MenuOption[] Contents { get; }
 
         public Menu(string header, MenuOption[] contents)
         {

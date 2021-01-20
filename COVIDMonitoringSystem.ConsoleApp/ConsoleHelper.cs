@@ -4,6 +4,8 @@ namespace COVIDMonitoringSystem.ConsoleApp
 {
     public static class ConsoleHelper
     {
+        
+        
         public static string GetInput(string prompt)
         {
             return GetInput(prompt, Convert.ToString);

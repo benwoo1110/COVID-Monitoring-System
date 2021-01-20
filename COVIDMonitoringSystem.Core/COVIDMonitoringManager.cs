@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using COVIDMonitoringSystem.Core.Utilities;
 
 namespace COVIDMonitoringSystem.Core
 {
     public class COVIDMonitoringManager
     {
-        public List<BusinessLocation> BusinessLocationList { get; set; }
-        public List<SHNFacility> ShnFacilitiesList { get; set; }
-        public List<Person> PersonList { get; set; }
+        public List<BusinessLocation> BusinessLocationList { get; private set; }
+        public List<SHNFacility> ShnFacilitiesList { get; private set; }
+        public List<Person> PersonList { get; private set; }
 
         public COVIDMonitoringManager()
         {
@@ -22,12 +23,12 @@ namespace COVIDMonitoringSystem.Core
         private void LoadBusinessLocationData()
         {
             //TODO Melvin: LoadBusinessLocationData
-            var locationCsvData = Utilities.ReadCsv("resources/BusinessLocation.csv");
+            var locationCsvData = CoreHelper.ReadCsv("resources/BusinessLocation.csv");
         }
 
         private void LoadSHNFacilityData()
         {
-            ShnFacilitiesList = (List<SHNFacility>) Utilities.FetchFromWeb<List<SHNFacility>>(
+            ShnFacilitiesList = (List<SHNFacility>) CoreHelper.FetchFromWeb<List<SHNFacility>>(
                 "https://covidmonitoringapiprg2.azurewebsites.net",
                 "/facility"
             ) ?? new List<SHNFacility>();
@@ -35,7 +36,7 @@ namespace COVIDMonitoringSystem.Core
 
         private void LoadPersonData()
         {
-            var personCsvData = Utilities.ReadCsv("resources/Person.csv");
+            var personCsvData = CoreHelper.ReadCsv("resources/Person.csv");
             PersonList = new List<Person>();
 
             foreach (var entry in personCsvData)

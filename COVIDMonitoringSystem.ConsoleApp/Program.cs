@@ -5,6 +5,7 @@
 //============================================================
 
 using COVIDMonitoringSystem.Core;
+using COVIDMonitoringSystem.Core.Utilities;
 
 namespace COVIDMonitoringSystem.ConsoleApp
 {
@@ -12,6 +13,7 @@ namespace COVIDMonitoringSystem.ConsoleApp
     {
         static void Main(string[] args)
         {
+            Logging.SetLogLevel(LogLevel.Debug);
             new ConsoleRunner().Run();
         }
     }
