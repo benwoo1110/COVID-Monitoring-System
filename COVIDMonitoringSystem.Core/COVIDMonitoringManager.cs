@@ -86,18 +86,14 @@ namespace COVIDMonitoringSystem.Core
 
         private TravelEntry ParseTravelEntry(IReadOnlyDictionary<string, string> entry)
         {
-            var newTravelEntry = new TravelEntry(
+            return new TravelEntry(
                 entry["travelEntryLastCountry"],
                 entry["travelEntryMode"],
-                Convert.ToDateTime(entry["travelEntryDate"])
-            )
-            {
-                ShnEndDate = Convert.ToDateTime(entry["travelShnEndDate"]),
-                IsPaid = Convert.ToBoolean(entry["travelIsPaid"]),
-                ShnFacility = FindSHNFacility(entry["facilityName"])
-            };
-            
-            return newTravelEntry;
+                Convert.ToDateTime(entry["travelEntryDate"]),
+                Convert.ToDateTime(entry["travelShnEndDate"]),
+                FindSHNFacility(entry["facilityName"]),
+                Convert.ToBoolean(entry["travelIsPaid"])
+            );
         }
 
         public void AddBusinessLocation(BusinessLocation business)
@@ -128,6 +124,11 @@ namespace COVIDMonitoringSystem.Core
         public Person FindPerson(string name)
         {
             return PersonList.Find(person => person.Name.Equals(name));
+        }
+
+        public void RegisterTravelEntry(Person person, TravelEntry entry)
+        {
+            
         }
     }
 }
