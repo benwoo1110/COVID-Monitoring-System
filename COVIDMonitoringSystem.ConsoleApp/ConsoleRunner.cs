@@ -28,7 +28,7 @@ namespace COVIDMonitoringSystem.ConsoleApp
                     new MenuOption("Assign/Replace TraceTogether Token", ManageTraceTogetherToken),
                     new MenuOption("SafeEntry Management", ManageSafeEntry),
                     new MenuOption("TravelEntry Management", ManageTravelEntry),
-                    new MenuOption("Explore Global Stats", Dummy), //TODO: Bonus stuff
+                    new MenuOption("Explore Global Stats", ExploreGlobalStats), //TODO: Bonus stuff
                 }
             ));
 
@@ -43,11 +43,6 @@ namespace COVIDMonitoringSystem.ConsoleApp
                     new MenuOption("Generate SHN Status Report", GenerateSHNReport),
                 }
             ));
-        }
-
-        private void Dummy()
-        {
-            throw new NotImplementedException();
         }
 
         public void Run()
@@ -73,6 +68,11 @@ namespace COVIDMonitoringSystem.ConsoleApp
         private void ManageSafeEntry()
         {
             Console.WriteLine("ManageSafeEntry");
+        }
+
+        private void ExploreGlobalStats()
+        {
+            Console.WriteLine("ExploreGlobalStats");
         }
     }
 }
