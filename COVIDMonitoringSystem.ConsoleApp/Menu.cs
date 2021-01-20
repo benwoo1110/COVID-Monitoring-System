@@ -1,4 +1,5 @@
 ﻿using System;
+using JetBrains.Annotations;
 
 namespace COVIDMonitoringSystem.ConsoleApp
 {
@@ -44,30 +45,44 @@ namespace COVIDMonitoringSystem.ConsoleApp
         {
             while (true)
             {
-                int input = ConsoleHelper.GetInput("Enter option: ", Convert.ToInt32);
-                if (!IsInRange(input))
-                {
-                    Console.WriteLine($"Please enter a number between 0 and {Contents.Length}!");
-                    continue;
-                }
-                if (IsExitOption(input))
+                var optionNumber = ConsoleHelper.GetInput("Enter option: ", OptionParser);
+                if (IsExitOption(optionNumber))
                 {
                     ConsoleHelper.ExitProgram();
                 }
 
-                Contents[input - 1].RunMethod();
+                Contents[optionNumber - 1].RunMethod();
                 return;
             }
         }
 
-        private static bool IsExitOption(int input)
+        private int OptionParser([CanBeNull] string input)
         {
-            return input == ExitOption;
+            int optionNumber;
+            try
+            {
+                optionNumber = Convert.ToInt32(input);
+                if (!IsInRange(optionNumber))
+                {
+                    throw new Exception();
+                }
+            }
+            catch (Exception)
+            {
+                throw new InputParseFailedException($"Please enter a number between 0 and {Contents.Length}!");
+            }
+
+            return optionNumber;
         }
 
         private bool IsInRange(int input)
         {
             return input >= 0 && input <= Contents.Length;
+        }
+
+        private static bool IsExitOption(int input)
+        {
+            return input == ExitOption;
         }
     }
 }

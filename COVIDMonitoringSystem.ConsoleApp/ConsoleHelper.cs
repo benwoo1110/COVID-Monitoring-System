@@ -11,14 +11,18 @@ namespace COVIDMonitoringSystem.ConsoleApp
             return GetInput(prompt, Convert.ToString);
         }
         
-        public static T GetInput<T>(string prompt, Func<String, T> converter)
+        public static T GetInput<T>(string prompt, Func<string, T> parser)
         {
             while (true)
             {
                 Console.Write(prompt);
                 try
                 {
-                    return converter(Console.ReadLine());
+                    return parser(Console.ReadLine());
+                }
+                catch (InputParseFailedException e)
+                {
+                    Console.WriteLine(e.Message);
                 }
                 catch (Exception)
                 {
