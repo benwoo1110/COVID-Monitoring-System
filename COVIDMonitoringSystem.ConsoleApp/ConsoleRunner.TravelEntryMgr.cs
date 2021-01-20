@@ -1,4 +1,6 @@
 ﻿using System;
+using COVIDMonitoringSystem.ConsoleApp.Utilities;
+using COVIDMonitoringSystem.Core;
 
 namespace COVIDMonitoringSystem.ConsoleApp
 {
@@ -16,7 +18,11 @@ namespace COVIDMonitoringSystem.ConsoleApp
 
         private void NewVisitor()
         {
-            Console.WriteLine("NewVisitor");
+            Manager.AddPerson(new Visitor(
+                ConsoleHelper.GetInput("Enter Name: "),
+                ConsoleHelper.GetInput("Enter Passport Number: "),
+                ConsoleHelper.GetInput("Enter Nationality: ")
+            ));
         }
 
         private void NewTravelRecord()
