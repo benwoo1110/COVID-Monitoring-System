@@ -7,7 +7,7 @@ namespace COVIDMonitoringSystem.Core
     public class COVIDMonitoringManager
     {
         public List<BusinessLocation> BusinessLocationList { get; private set; }
-        public List<SHNFacility> ShnFacilitiesList { get; private set; }
+        public List<SHNFacility> SHNFacilitiesList { get; private set; }
         public List<Person> PersonList { get; private set; }
 
         public COVIDMonitoringManager()
@@ -28,7 +28,7 @@ namespace COVIDMonitoringSystem.Core
 
         private void LoadSHNFacilityData()
         {
-            ShnFacilitiesList = (List<SHNFacility>) CoreHelper.FetchFromWeb<List<SHNFacility>>(
+            SHNFacilitiesList = (List<SHNFacility>) CoreHelper.FetchFromWeb<List<SHNFacility>>(
                 "https://covidmonitoringapiprg2.azurewebsites.net",
                 "/facility"
             ) ?? new List<SHNFacility>();
@@ -100,6 +100,21 @@ namespace COVIDMonitoringSystem.Core
             return newTravelEntry;
         }
 
+        public void AddBusinessLocation(BusinessLocation business)
+        {
+            BusinessLocationList.Add(business);
+        }
+
+        public void AddSHNFacility(SHNFacility facility)
+        {
+            SHNFacilitiesList.Add(facility);
+        }
+
+        public void AddPerson(Person person)
+        {
+            PersonList.Add(person);
+        }
+
         public BusinessLocation FindBusinessLocation(string name)
         {
             return BusinessLocationList.Find(businessLocation => businessLocation.BusinessName.Equals(name));
@@ -107,7 +122,7 @@ namespace COVIDMonitoringSystem.Core
         
         public SHNFacility FindSHNFacility(string name)
         {
-            return ShnFacilitiesList.Find(shnFacility => shnFacility.FacilityName.Equals(name));
+            return SHNFacilitiesList.Find(shnFacility => shnFacility.FacilityName.Equals(name));
         }
 
         public Person FindPerson(string name)
