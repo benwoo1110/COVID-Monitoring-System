@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using COVIDMonitoringSystem.Core.PersonMgr;
 using COVIDMonitoringSystem.Core.Utilities;
 
 namespace COVIDMonitoringSystem.Core

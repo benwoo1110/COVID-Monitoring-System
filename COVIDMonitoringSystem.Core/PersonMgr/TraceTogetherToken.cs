@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace COVIDMonitoringSystem.Core
+namespace COVIDMonitoringSystem.Core.PersonMgr
 {
     public class TraceTogetherToken
     {

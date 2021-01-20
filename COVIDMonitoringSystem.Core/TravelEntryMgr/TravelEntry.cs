@@ -1,4 +1,5 @@
 ﻿using System;
+using COVIDMonitoringSystem.Core.PersonMgr;
 using COVIDMonitoringSystem.Core.TravelEntryMgr;
 using JetBrains.Annotations;
 
@@ -6,6 +7,7 @@ namespace COVIDMonitoringSystem.Core
 {
     public class TravelEntry
     {
+        public Person TravelPerson { get; set; }
         public string LastCountryOfEmbarkation { get; }
         public string EntryMode { get; }
         public DateTime EntryDate { get; }

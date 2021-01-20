@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using COVIDMonitoringSystem.Core.TravelEntryMgr;
 
-namespace COVIDMonitoringSystem.Core
+namespace COVIDMonitoringSystem.Core.PersonMgr
 {
     public abstract class Person
     {

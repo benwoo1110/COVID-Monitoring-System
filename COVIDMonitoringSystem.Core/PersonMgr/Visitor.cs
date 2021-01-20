@@ -1,7 +1,7 @@
 ﻿using System;
 using COVIDMonitoringSystem.Core.TravelEntryMgr;
 
-namespace COVIDMonitoringSystem.Core
+namespace COVIDMonitoringSystem.Core.PersonMgr
 {
     public class Visitor : Person
     {

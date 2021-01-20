@@ -1,6 +1,7 @@
 ﻿using System;
 using COVIDMonitoringSystem.ConsoleApp.Utilities;
 using COVIDMonitoringSystem.Core;
+using COVIDMonitoringSystem.Core.PersonMgr;
 
 namespace COVIDMonitoringSystem.ConsoleApp
 {
