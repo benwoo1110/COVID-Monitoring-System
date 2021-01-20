@@ -18,7 +18,7 @@ namespace COVIDMonitoringSystem.ConsoleApp
 
         private void SetUpMenus()
         {
-            MenusCollection.Add("mainmenu", new Menu(
+            MenusCollection.Add("mainmenu", new MainMenu(
                 "------- COVID Management System -------",
                 new[]
                 {
@@ -51,7 +51,7 @@ namespace COVIDMonitoringSystem.ConsoleApp
 
         public void Run()
         {
-            MenusCollection["mainmenu"].RunMenuOptionLooped();
+            MenusCollection["mainmenu"].RunMenuOption();
         }
 
         private void ViewPersonDetails()
@@ -76,7 +76,7 @@ namespace COVIDMonitoringSystem.ConsoleApp
 
         private void ManageTravelEntry()
         {
-            MenusCollection["travelentry"].RunMenuOptionLooped();
+            MenusCollection["travelentry"].RunMenuOption();
         }
     }
 }

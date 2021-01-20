@@ -5,29 +5,33 @@ namespace COVIDMonitoringSystem.ConsoleApp
 {
     public class Menu
     {
-        private const int ExitOption = 0;
+        private const int SpecialOption = 0;
 
-        private string Header { get; }
-        private MenuOption[] Contents { get; }
+        public string Header { get; }
+        public MenuOption[] Contents { get; }
+        public string SpecialOptionName { get; set; }
+        public bool Running { get; set; }
 
         public Menu(string header, MenuOption[] contents)
         {
             Header = header;
             Contents = contents;
-        }
-
-        public void RunMenuOptionLooped()
-        {
-            while (true)
-            {
-                RunMenuOption();
-            }
+            SpecialOptionName = "Back";
         }
 
         public void RunMenuOption()
         {
-            ShowMenu();
-            DoOptionAction();
+            if (Running)
+            {
+                throw new InvalidOperationException("Nested menu call!");
+            }
+            
+            Running = true;
+            while (Running)
+            {
+                ShowMenu();
+                DoOptionAction();
+            }
         }
 
         private void ShowMenu()
@@ -38,7 +42,7 @@ namespace COVIDMonitoringSystem.ConsoleApp
             {
                 Console.WriteLine($"[{index + 1}] {Contents[index].Name}");
             }
-            Console.WriteLine($"[{ExitOption}] Exit");
+            Console.WriteLine($"[{SpecialOption}] {SpecialOptionName}");
         }
 
         private void DoOptionAction()
@@ -46,9 +50,10 @@ namespace COVIDMonitoringSystem.ConsoleApp
             while (true)
             {
                 var optionNumber = ConsoleHelper.GetInput("Enter option: ", OptionParser);
-                if (IsExitOption(optionNumber))
+                if (IsSpecialOption(optionNumber))
                 {
-                    ConsoleHelper.ExitProgram();
+                    DoSpecialOption();
+                    return;
                 }
 
                 Contents[optionNumber - 1].RunMethod();
@@ -80,9 +85,14 @@ namespace COVIDMonitoringSystem.ConsoleApp
             return input >= 0 && input <= Contents.Length;
         }
 
-        private static bool IsExitOption(int input)
+        private static bool IsSpecialOption(int input)
         {
-            return input == ExitOption;
+            return input == SpecialOption;
+        }
+
+        protected virtual void DoSpecialOption()
+        {
+            Running = false;
         }
     }
 }
