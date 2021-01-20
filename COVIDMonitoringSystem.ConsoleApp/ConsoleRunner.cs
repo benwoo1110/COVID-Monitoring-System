@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using COVIDMonitoringSystem.ConsoleApp.MenuDisplay;
 using COVIDMonitoringSystem.Core;
 
 namespace COVIDMonitoringSystem.ConsoleApp
 {
-    public class ConsoleRunner
+    public partial class ConsoleRunner
     {
         private Dictionary<string, Menu> MenusCollection { get; }
         private COVIDMonitoringManager Manager { get; }
@@ -22,7 +23,7 @@ namespace COVIDMonitoringSystem.ConsoleApp
                 "------- COVID Management System -------",
                 new[]
                 {
-                    new MenuOption("View Details of a Person's ", ViewPersonDetails),
+                    new MenuOption("View Details of a Person", ViewPersonDetails),
                     new MenuOption("View All Visitors", ViewAllVisitors),
                     new MenuOption("Assign/Replace TraceTogether Token", ManageTraceTogetherToken),
                     new MenuOption("SafeEntry Management", ManageSafeEntry),
@@ -35,11 +36,11 @@ namespace COVIDMonitoringSystem.ConsoleApp
                 "------- TravelEntry Management -------",
                 new[]
                 {
-                    new MenuOption("View SHN Facilities", Dummy),
-                    new MenuOption("Create Visitor", Dummy),
-                    new MenuOption("Create Travel Record", Dummy),
-                    new MenuOption("Calculate SHN Charges", Dummy),
-                    new MenuOption("Generate SHN Status Report", Dummy),
+                    new MenuOption("View All SHN Facilities", ViewAllSHNFacility),
+                    new MenuOption("New Visitor", NewVisitor),
+                    new MenuOption("New Travel Record", NewTravelRecord),
+                    new MenuOption("Pay SHN Charges", PaySHNCharges),
+                    new MenuOption("Generate SHN Status Report", GenerateSHNReport),
                 }
             ));
         }
@@ -72,11 +73,6 @@ namespace COVIDMonitoringSystem.ConsoleApp
         private void ManageSafeEntry()
         {
             Console.WriteLine("ManageSafeEntry");
-        }
-
-        private void ManageTravelEntry()
-        {
-            MenusCollection["travelentry"].RunMenuOption();
         }
     }
 }

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace COVIDMonitoringSystem.ConsoleApp
+namespace COVIDMonitoringSystem.ConsoleApp.Utilities
 {
     public static class ConsoleHelper
     {

@@ -2,7 +2,7 @@
 using System.Runtime.Serialization;
 using JetBrains.Annotations;
 
-namespace COVIDMonitoringSystem.ConsoleApp
+namespace COVIDMonitoringSystem.ConsoleApp.Utilities
 {
     public class InputParseFailedException : Exception
     {

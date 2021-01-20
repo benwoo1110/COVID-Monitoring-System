@@ -1,4 +1,6 @@
-﻿namespace COVIDMonitoringSystem.ConsoleApp
+﻿using COVIDMonitoringSystem.ConsoleApp.Utilities;
+
+namespace COVIDMonitoringSystem.ConsoleApp.MenuDisplay
 {
     public class MainMenu : Menu
     {

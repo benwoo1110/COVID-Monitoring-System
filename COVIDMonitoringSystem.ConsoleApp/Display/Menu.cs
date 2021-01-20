@@ -1,7 +1,8 @@
 ﻿using System;
+using COVIDMonitoringSystem.ConsoleApp.Utilities;
 using JetBrains.Annotations;
 
-namespace COVIDMonitoringSystem.ConsoleApp
+namespace COVIDMonitoringSystem.ConsoleApp.MenuDisplay
 {
     public class Menu
     {
