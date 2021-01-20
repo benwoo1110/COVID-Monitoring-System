@@ -1,4 +1,5 @@
 ﻿using System;
+using COVIDMonitoringSystem.Core.TravelEntryMgr;
 
 namespace COVIDMonitoringSystem.Core
 {
@@ -14,7 +15,7 @@ namespace COVIDMonitoringSystem.Core
             LastLeftCountry = lastLeftCountry;
         }
 
-        public override double CalculateSHNCharges()
+        public override SHNChargesReport CalculateSHNCharges()
         {
             throw new NotImplementedException();
         }

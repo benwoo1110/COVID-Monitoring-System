@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using COVIDMonitoringSystem.Core.TravelEntryMgr;
 
 namespace COVIDMonitoringSystem.Core
 {
@@ -29,7 +30,7 @@ namespace COVIDMonitoringSystem.Core
             SafeEntryList.Add(entry);
         }
 
-        public abstract double CalculateSHNCharges();
+        public abstract SHNChargesReport CalculateSHNCharges();
 
         public override string ToString()
         {
