@@ -1,6 +1,6 @@
 ﻿namespace COVIDMonitoringSystem.Core.TravelEntryMgr
 {
-    public enum SHNRequirements
+    public enum SHNType
     {
         // No SHN
         None = 0,

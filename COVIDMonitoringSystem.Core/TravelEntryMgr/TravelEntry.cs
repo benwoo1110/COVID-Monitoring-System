@@ -1,6 +1,7 @@
 ﻿using System;
 using COVIDMonitoringSystem.Core.PersonMgr;
 using COVIDMonitoringSystem.Core.TravelEntryMgr;
+using COVIDMonitoringSystem.Core.Utilities;
 using JetBrains.Annotations;
 
 namespace COVIDMonitoringSystem.Core
@@ -8,71 +9,69 @@ namespace COVIDMonitoringSystem.Core
     public class TravelEntry
     {
         public Person TravelPerson { get; set; }
-        public string LastCountryOfEmbarkation { get; }
-        public string EntryMode { get; }
-        public DateTime EntryDate { get; }
-        public DateTime ShnEndDate { get; private set; }
-        public SHNRequirements RequirementType { get; private set; }
-        public SHNFacility ShnFacility { get; private set; }
+        public string LastCountryOfEmbarkation { get; set; }
+        public string EntryMode { get; set; }
+        public DateTime EntryDate { get; set; }
         public bool IsPaid { get; set; }
-        
-        public TravelEntry(string lastCountryOfEmbarkation, string entryMode, DateTime entryDate)
+        public DateTime ShnEndDate { get; private set; }
+        public SHNFacility ShnFacility { get; private set; }
+        public ChargeCalculator Calculator { get; private set; }
+        public EntryStatus Status { get; private set; } = EntryStatus.Incomplete;
+
+        public TravelEntry()
         {
+        }
+        
+        public TravelEntry(Person travelPerson, string lastCountryOfEmbarkation, string entryMode, DateTime entryDate)
+        {
+            TravelPerson = travelPerson;
             LastCountryOfEmbarkation = lastCountryOfEmbarkation;
             EntryMode = entryMode;
             EntryDate = entryDate;
-            CalculateSHNType();
-            CalculateSHNDuration();
         }
 
-        public TravelEntry(string lastCountryOfEmbarkation, string entryMode, DateTime entryDate, DateTime shnEndDate, SHNFacility shnFacility, bool isPaid)
+        public TravelEntry(Person travelPerson, string lastCountryOfEmbarkation, string entryMode, DateTime entryDate, DateTime shnEndDate, SHNFacility shnFacility, bool isPaid)
         {
+            TravelPerson = travelPerson;
             LastCountryOfEmbarkation = lastCountryOfEmbarkation;
             EntryMode = entryMode;
             EntryDate = entryDate;
             ShnEndDate = shnEndDate;
             ShnFacility = shnFacility;
             IsPaid = isPaid;
-            CalculateSHNType();
+            Status = EntryStatus.Completed;
+            Calculator = ChargeFactory.FindAppropriateCalculator(this);
         }
 
-        private void CalculateSHNType()
+        public bool CalculateRecordDetails(bool forced = false)
         {
-            if (MatchCountry("New Zealand") || MatchCountry("Vietnam"))
+            if (!forced && Status != EntryStatus.Incomplete)
             {
-                RequirementType = SHNRequirements.None;
-                return;
+                Logging.Error("Record Details has already been calculated!");
+                return false;
             }
-
-            if (MatchCountry("Macao SAR"))
-            {
-                RequirementType = SHNRequirements.OwnAcc;
-                return;
-            }
-
-            RequirementType = SHNRequirements.Dedicated;
-        }
-
-        private bool MatchCountry([NotNull] string country)
-        {
-            return country.ToLower().Equals(LastCountryOfEmbarkation.ToLower());
-        }
-
-        private void CalculateSHNDuration()
-        {
-            ShnEndDate = EntryDate.AddDays((int) RequirementType);
-        }
-
-        public void CalculateCharges()
-        {
             
+            Calculator = ChargeFactory.FindAppropriateCalculator(this);
+            if (Calculator == null)
+            {
+                Status = EntryStatus.Error;
+                return false;
+            }
+            
+            ShnEndDate = EntryDate.AddDays(Calculator.QuarantineDays(this));
+            return true;
+        }
+
+        public double CalculateCharge()
+        {
+            return ChargeFactory.SwapTestCost + Calculator.TransportCost(this) + Calculator.SDFCost(this);
         }
 
         public void AssignSHNFacility(SHNFacility facility)
         {
             if (!RequiresSHNFacility())
             {
-                throw new InvalidOperationException($"No dedicated SHN facility needed for type: {RequirementType}");
+                throw new InvalidOperationException($"No dedicated SHN facility needed for type: {Calculator.Matcher.Type}");
             }
             
             ShnFacility = facility;
@@ -80,7 +79,7 @@ namespace COVIDMonitoringSystem.Core
 
         public bool RequiresSHNFacility()
         {
-            return RequirementType != SHNRequirements.Dedicated;
+            return Calculator.Matcher.Type != SHNType.Dedicated;
         }
         
         public override string ToString()

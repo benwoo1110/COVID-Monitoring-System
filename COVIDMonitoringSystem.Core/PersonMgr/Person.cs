@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using COVIDMonitoringSystem.Core.TravelEntryMgr;
 
 namespace COVIDMonitoringSystem.Core.PersonMgr
@@ -22,6 +23,12 @@ namespace COVIDMonitoringSystem.Core.PersonMgr
 
         public void AddTravelEntry(TravelEntry entry)
         {
+            entry.TravelPerson ??= this;
+            if (entry.TravelPerson != this)
+            {
+                throw new ArgumentException($"Travel entry is for {entry.TravelPerson.Name}, not {Name}!");
+            }
+            
             TravelEntryList.Add(entry);
         }
 

@@ -48,7 +48,7 @@ namespace COVIDMonitoringSystem.Core
 
                 if (!string.IsNullOrEmpty(entry["travelEntryLastCountry"]))
                 {
-                    newPerson.AddTravelEntry(ParseTravelEntry(entry));
+                    newPerson.AddTravelEntry(ParseTravelEntry(entry, newPerson));
                 }
 
                 PersonList.Add(newPerson);
@@ -85,9 +85,10 @@ namespace COVIDMonitoringSystem.Core
             return new Visitor(entry["name"], entry["passportNo"], entry["nationality"]);
         }
 
-        private TravelEntry ParseTravelEntry(IReadOnlyDictionary<string, string> entry)
+        private TravelEntry ParseTravelEntry(IReadOnlyDictionary<string, string> entry, Person newPerson)
         {
             return new TravelEntry(
+                newPerson,
                 entry["travelEntryLastCountry"],
                 entry["travelEntryMode"],
                 Convert.ToDateTime(entry["travelEntryDate"]),
@@ -125,11 +126,6 @@ namespace COVIDMonitoringSystem.Core
         public Person FindPerson(string name)
         {
             return PersonList.Find(person => person.Name.Equals(name));
-        }
-
-        public void RegisterTravelEntry(Person person, TravelEntry entry)
-        {
-            
         }
     }
 }
