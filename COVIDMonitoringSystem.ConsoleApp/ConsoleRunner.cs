@@ -50,8 +50,8 @@ namespace COVIDMonitoringSystem.ConsoleApp
                     new MenuOption("Assign or replace TraceTogether Token", AssignToken),
                     new MenuOption("View all business locations", ViewLocations),
                     new MenuOption("Change capacity of business location", ChangeCapacity),
-                    new MenuOption("SafeEntry Check-in", CheckIn),
-                    new MenuOption("SafeEntry Check-out", CheckOut),
+                    new MenuOption("SafeEntry Check-In", CheckIn),
+                    new MenuOption("SafeEntry Check-Out", CheckOut),
                 }
             ));
         }
