@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using JetBrains.Annotations;
 
 namespace COVIDMonitoringSystem.Core.TravelEntryMgr
 {
@@ -24,28 +25,30 @@ namespace COVIDMonitoringSystem.Core.TravelEntryMgr
         
         private static readonly SHNRequirement FallbackRequirement = Dedicated;
 
-        public static void RegisterSHNType(SHNRequirement requirement)
+        private static void RegisterRequirement([NotNull] SHNRequirement requirement)
         {
             foreach (var country in requirement.TargetCountries)
             {
-                Types.Add(country, requirement);
+                Types.Add(country.ToLower(), requirement);
             }
         }
         
-        public static SHNRequirement FindAppropriateType(TravelEntry entry)
+        [NotNull] public static SHNRequirement FindAppropriateType([NotNull] TravelEntry entry)
         {
-            return Types.GetValueOrDefault(entry.LastCountryOfEmbarkation) ?? FallbackRequirement;
+            return Types.GetValueOrDefault(entry.LastCountryOfEmbarkation.ToLower()) ?? FallbackRequirement;
         }
 
-        public int QuarantineDays { get; }
-        public string[] TargetCountries { get; }
+        public int QuarantineDays { [NotNull] get; }
+        public string[] TargetCountries { [NotNull] get; }
 
-        public SHNRequirement(int quarantineDays, string[] targetCountries)
+        private SHNRequirement(
+            int quarantineDays, 
+            [NotNull] string[] targetCountries)
         {
             QuarantineDays = quarantineDays;
             TargetCountries = targetCountries;
             
-            RegisterSHNType(this);
+            RegisterRequirement(this);
         }
 
         public bool IsThisType(string country)
