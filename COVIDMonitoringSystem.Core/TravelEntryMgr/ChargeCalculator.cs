@@ -47,30 +47,32 @@ namespace COVIDMonitoringSystem.Core.TravelEntryMgr
             (tr) => 0
         );
 
-        public static void RegisterChargeCalculator(ChargeCalculator calculator)
+        private static void RegisterChargeCalculator([NotNull] ChargeCalculator calculator)
         {
             Charges.Add(calculator.EntryType.GenerateIdentifier(), calculator);
         }
 
-        public static ChargeCalculator FindAppropriateCalculator(TravelEntry entry)
+        [CanBeNull] public static ChargeCalculator FindAppropriateCalculator([NotNull] TravelEntry entry)
         {
-            var shnType = SHNRequirement.FindAppropriateType(entry);
-            var personType = entry.TravelPerson.GetType();
-            var matcher = new TravelEntryType(personType, shnType);
-
+            var matcher = new TravelEntryType(
+                entry.TravelPerson.GetType(),
+                SHNRequirement.FindAppropriateType(entry)
+            );
             return Charges.GetValueOrDefault(matcher.GenerateIdentifier());
         }
         
-        public TravelEntryType EntryType { get; }
-        public Func<TravelEntry, double> TransportCost { get; }
-        public Func<TravelEntry, double> SDFCost { get; }
-        
-        public ChargeCalculator(TravelEntryType type, Func<TravelEntry, double> transportCost, Func<TravelEntry, double> sdfCost)
+        public TravelEntryType EntryType { [NotNull] get; }
+        public Func<TravelEntry, double> TransportCost { [NotNull] get; }
+        public Func<TravelEntry, double> SDFCost { [NotNull] get; }
+
+        private ChargeCalculator(
+            [NotNull] TravelEntryType type, 
+            [NotNull] Func<TravelEntry, double> transportCost, 
+            [NotNull] Func<TravelEntry, double> sdfCost)
         {
             EntryType = type;
             TransportCost = transportCost;
             SDFCost = sdfCost;
-            
             RegisterChargeCalculator(this);
         }
     }
