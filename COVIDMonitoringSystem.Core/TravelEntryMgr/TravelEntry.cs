@@ -106,7 +106,7 @@ namespace COVIDMonitoringSystem.Core.TravelEntryMgr
             }
             if (Requirement.RequiresSHNFacility)
             {
-                cost += Calculator.SDFCost(this);
+                cost += Calculator.DedicatedFacilityCost(this);
             }
             return cost;
         }

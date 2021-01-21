@@ -11,37 +11,37 @@ namespace COVIDMonitoringSystem.Core.TravelEntryMgr
 
         public static readonly SHNCalculator ResidentNone = new SHNCalculator(
             new TravelEntryMatcher(typeof(Resident), SHNRequirement.None),
-            (tr) => 200,
-            (tr) => 0,
-            (tr) => 0
+            tr => 200,
+            tr => 0,
+            tr => 0
         );
 
         public static readonly SHNCalculator ResidentOwnAcc = new SHNCalculator(
             new TravelEntryMatcher(typeof(Resident), SHNRequirement.OwnAcc),
-            (tr) => 200,
-            (tr) => 20,
-            (tr) => 0
+            tr => 200,
+            tr => 20,
+            tr => 0
         );
 
         public static readonly SHNCalculator ResidentDedicated = new SHNCalculator(
             new TravelEntryMatcher(typeof(Resident), SHNRequirement.Dedicated),
-            (tr) => 200,
-            (tr) => 20,
-            (tr) => 1000
+            tr => 200,
+            tr => 20,
+            tr => 1000
         );
 
         public static readonly SHNCalculator VisitorNone = new SHNCalculator(
             new TravelEntryMatcher(typeof(Visitor), SHNRequirement.None),
-            (tr) => 200,
-            (tr) => 80,
-            (tr) => 0
+            tr => 200,
+            tr => 80,
+            tr => 0
         );
 
         public static readonly SHNCalculator VisitorOwnAcc = new SHNCalculator(
             new TravelEntryMatcher(typeof(Visitor), SHNRequirement.OwnAcc),
-            (tr) => 200,
-            (tr) => 80,
-            (tr) => 0
+            tr => 200,
+            tr => 80,
+            tr => 0
         );
 
         public static readonly SHNCalculator VisitorDedicated = new SHNCalculator(
@@ -63,17 +63,17 @@ namespace COVIDMonitoringSystem.Core.TravelEntryMgr
 
         public Func<TravelEntry, double> SwapTestCost { [NotNull] get; }
         public Func<TravelEntry, double> TransportCost { [NotNull] get; }
-        public Func<TravelEntry, double> SDFCost { [NotNull] get; }
+        public Func<TravelEntry, double> DedicatedFacilityCost { [NotNull] get; }
 
         private SHNCalculator(
             [NotNull] TravelEntryMatcher matcher,
             Func<TravelEntry, double> swapTestCost,
             [NotNull] Func<TravelEntry, double> transportCost,
-            [NotNull] Func<TravelEntry, double> sdfCost)
+            [NotNull] Func<TravelEntry, double> dedicatedFacilityCost)
         {
             SwapTestCost = swapTestCost;
             TransportCost = transportCost;
-            SDFCost = sdfCost;
+            DedicatedFacilityCost = dedicatedFacilityCost;
             RegisterChargeCalculator(matcher, this);
         }
     }
