@@ -7,49 +7,47 @@ namespace COVIDMonitoringSystem.Core.TravelEntryMgr
 {
     public class SHNCalculator
     {
-        public const double SwapTestCost = 200;
-
         private static readonly Dictionary<int, SHNCalculator> Charges = new Dictionary<int, SHNCalculator>();
 
         public static readonly SHNCalculator ResidentNone = new SHNCalculator(
-            new TravelEntryMatcher(typeof(Resident), SHNRequirement.None), 
+            new TravelEntryMatcher(typeof(Resident), SHNRequirement.None),
+            (tr) => 200,
             (tr) => 0,
             (tr) => 0
         );
 
         public static readonly SHNCalculator ResidentOwnAcc = new SHNCalculator(
             new TravelEntryMatcher(typeof(Resident), SHNRequirement.OwnAcc),
+            (tr) => 200,
             (tr) => 20,
             (tr) => 0
         );
 
         public static readonly SHNCalculator ResidentDedicated = new SHNCalculator(
             new TravelEntryMatcher(typeof(Resident), SHNRequirement.Dedicated),
+            (tr) => 200,
             (tr) => 20,
             (tr) => 1000
         );
 
         public static readonly SHNCalculator VisitorNone = new SHNCalculator(
-            new TravelEntryMatcher(typeof(Visitor), SHNRequirement.None), 
+            new TravelEntryMatcher(typeof(Visitor), SHNRequirement.None),
+            (tr) => 200,
             (tr) => 80,
             (tr) => 0
         );
 
         public static readonly SHNCalculator VisitorOwnAcc = new SHNCalculator(
             new TravelEntryMatcher(typeof(Visitor), SHNRequirement.OwnAcc),
+            (tr) => 200,
             (tr) => 80,
             (tr) => 0
         );
 
         public static readonly SHNCalculator VisitorDedicated = new SHNCalculator(
             new TravelEntryMatcher(typeof(Visitor), SHNRequirement.Dedicated),
-            (tr) =>
-            {
-                var fare = 50 + tr.ShnFacility.CalculateTravelCost(tr);
-                // TODO: Surcharge
-
-                return fare;
-            },
+            (tr) => 200,
+            (tr) => tr.ShnFacility.CalculateTravelCost(tr),
             (tr) => 2000
         );
 
@@ -62,15 +60,18 @@ namespace COVIDMonitoringSystem.Core.TravelEntryMgr
         {
             return Charges.GetValueOrDefault(TravelEntryMatcher.Of(entry).GenerateIdentifier());
         }
-        
+
+        public Func<TravelEntry, double> SwapTestCost { [NotNull] get; }
         public Func<TravelEntry, double> TransportCost { [NotNull] get; }
         public Func<TravelEntry, double> SDFCost { [NotNull] get; }
 
         private SHNCalculator(
             [NotNull] TravelEntryMatcher matcher,
-            [NotNull] Func<TravelEntry, double> transportCost, 
+            Func<TravelEntry, double> swapTestCost,
+            [NotNull] Func<TravelEntry, double> transportCost,
             [NotNull] Func<TravelEntry, double> sdfCost)
         {
+            SwapTestCost = swapTestCost;
             TransportCost = transportCost;
             SDFCost = sdfCost;
             RegisterChargeCalculator(matcher, this);

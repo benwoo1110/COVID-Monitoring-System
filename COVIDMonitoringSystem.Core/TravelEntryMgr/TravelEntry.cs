@@ -1,6 +1,7 @@
 ﻿using System;
 using COVIDMonitoringSystem.Core.PersonMgr;
 using COVIDMonitoringSystem.Core.Utilities;
+using JetBrains.Annotations;
 
 namespace COVIDMonitoringSystem.Core.TravelEntryMgr
 {
@@ -17,7 +18,11 @@ namespace COVIDMonitoringSystem.Core.TravelEntryMgr
         public TravelEntryStatus Status { get; private set; } = TravelEntryStatus.Incomplete;
         public bool IsPaid { get; internal set; }
 
-        public TravelEntry(Person travelPerson, string lastCountryOfEmbarkation, TravelEntryMode entryMode, DateTime entryDate)
+        public TravelEntry(
+            [NotNull] Person travelPerson,
+            [NotNull]  string lastCountryOfEmbarkation, 
+            TravelEntryMode entryMode, 
+            DateTime entryDate)
         {
             TravelPerson = travelPerson;
             LastCountryOfEmbarkation = lastCountryOfEmbarkation;
@@ -26,7 +31,14 @@ namespace COVIDMonitoringSystem.Core.TravelEntryMgr
             CompleteEntryDetails();
         }
 
-        public TravelEntry(Person travelPerson, string lastCountryOfEmbarkation, TravelEntryMode entryMode, DateTime entryDate, DateTime shnEndDate, SHNFacility shnFacility, bool isPaid)
+        public TravelEntry(
+            [NotNull] Person travelPerson,
+            [NotNull] string lastCountryOfEmbarkation, 
+            TravelEntryMode entryMode, 
+            DateTime entryDate, 
+            DateTime shnEndDate,
+            [CanBeNull] SHNFacility shnFacility, 
+            bool isPaid)
         {
             TravelPerson = travelPerson;
             LastCountryOfEmbarkation = lastCountryOfEmbarkation;
@@ -35,39 +47,44 @@ namespace COVIDMonitoringSystem.Core.TravelEntryMgr
             ShnEndDate = shnEndDate;
             ShnFacility = shnFacility;
             IsPaid = isPaid;
-            Requirement = SHNRequirement.FindAppropriateRequirement(this);
-            Calculator = SHNCalculator.FindAppropriateCalculator(this);
-            Status = TravelEntryStatus.Completed;
+            GetRequirementAndCalculator();
+            ValidateCompletedEntry();
         }
 
-        public bool CompleteEntryDetails(bool forced = false)
+        private void CompleteEntryDetails(bool forced = false)
         {
             if (!forced && Status != TravelEntryStatus.Incomplete)
             {
-                Logging.Error("Record Details has already been calculated or there was an error!");
-                return false;
+                throw new InvalidOperationException("Record Details has already been calculated or there was an error!");
             }
-            
+
+            GetRequirementAndCalculator();
+            ShnEndDate = EntryDate.AddDays(Requirement.QuarantineDays);
+            ValidateCompletedEntry();
+        }
+
+        private void GetRequirementAndCalculator()
+        {
             Requirement = SHNRequirement.FindAppropriateRequirement(this);
             if (Requirement == null)
             {
                 Status = TravelEntryStatus.Error;
-                Logging.Error("Unable to find requirement!");
-                return false;
+                throw new InvalidOperationException("Unable to find requirement!");
             }
-            
+
             Calculator = SHNCalculator.FindAppropriateCalculator(this);
             if (Calculator == null)
             {
                 Status = TravelEntryStatus.Error;
-                Logging.Error("Unable to find calculator!");
-                return false;
+                throw new InvalidOperationException("Unable to find calculator!");
             }
-            
-            ShnEndDate = EntryDate.AddDays(Requirement.QuarantineDays);
-            return true;
         }
-        
+
+        private void ValidateCompletedEntry()
+        {
+            Status = TravelEntryStatus.Completed;
+        }
+
         public bool AssignSHNFacility(SHNFacility facility)
         {
             if (!Requirement.RequiresSHNFacility)
@@ -85,7 +102,7 @@ namespace COVIDMonitoringSystem.Core.TravelEntryMgr
             var cost = Calculator.TransportCost(this);
             if (Requirement.NeedSwapTest)
             {
-                cost += SHNCalculator.SwapTestCost;
+                cost += Calculator.SwapTestCost(this);
             }
             if (Requirement.RequiresSHNFacility)
             {
