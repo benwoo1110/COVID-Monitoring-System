@@ -54,6 +54,10 @@ namespace COVIDMonitoringSystem.ConsoleApp
         private void GenerateSHNReport()
         {
             Console.WriteLine("GenerateSHNReport");
+
+
+            DateTime n = ConsoleHelper.GetInput("Number: ", Convert.ToDateTime);
+            Console.WriteLine(n);
         }
     }
 }

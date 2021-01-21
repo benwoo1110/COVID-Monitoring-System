@@ -24,8 +24,13 @@ namespace COVIDMonitoringSystem.Core
 
         private void LoadBusinessLocationData()
         {
-            //TODO Melvin: LoadBusinessLocationData
             var locationCsvData = CoreHelper.ReadCsv("resources/BusinessLocation.csv");
+            BusinessLocationList = new List<BusinessLocation>();
+            foreach (var entry in locationCsvData)
+            {
+                var newLocation = new BusinessLocation(entry["businessname"], entry["branchcode"], Convert.ToInt32(entry["maximumcapacity"]));
+                BusinessLocationList.Add(newLocation);
+            }
         }
 
         private void LoadSHNFacilityData()
