@@ -16,6 +16,11 @@ namespace COVIDMonitoringSystem.Core.Utilities
             ReferenceLoopHandling = ReferenceLoopHandling.Serialize,
             PreserveReferencesHandling = PreserveReferencesHandling.Objects
         };
+
+        public static TE ParseEnum<TE>(string value) where TE : struct
+        {
+            return Enum.Parse<TE>(value, true);
+        }
         
         [NotNull] public static Dictionary<string, string>[] ReadCsv([NotNull] string filePath)
         {

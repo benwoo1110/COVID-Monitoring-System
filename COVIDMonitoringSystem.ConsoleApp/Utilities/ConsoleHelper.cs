@@ -1,10 +1,21 @@
 ﻿using System;
+using COVIDMonitoringSystem.Core.Utilities;
 
 namespace COVIDMonitoringSystem.ConsoleApp.Utilities
 {
     public static class ConsoleHelper
     {
-        
+        public static TE EnumParser<TE>(string value) where TE : struct
+        {
+            try
+            {
+                return CoreHelper.ParseEnum<TE>(value);
+            }
+            catch (ArgumentException)
+            {
+                throw new InputParseFailedException($"No such {typeof(TE).Name}. Available values are: {string.Join(", ", Enum.GetNames(typeof(TE)))}");
+            }
+        }
         
         public static string GetInput(string prompt)
         {
