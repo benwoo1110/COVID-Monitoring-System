@@ -22,6 +22,30 @@ namespace COVIDMonitoringSystem.Core.TravelEntryMgr
             (tr) => 0,
             (tr) => 0
         );
+        
+        private static readonly ChargeCalculator ResidentDedicated = new ChargeCalculator(
+            new TravelEntryType(typeof(Resident), SHNRequirement.Dedicated),
+            (tr) => 0,
+            (tr) => 0
+        );
+        
+        private static readonly ChargeCalculator VisitorNone = new ChargeCalculator(
+            new TravelEntryType(typeof(Visitor), SHNRequirement.None), 
+            (tr) => 0,
+            (tr) => 0
+        );
+
+        private static readonly ChargeCalculator VisitorOwnAcc = new ChargeCalculator(
+            new TravelEntryType(typeof(Visitor), SHNRequirement.OwnAcc),
+            (tr) => 0,
+            (tr) => 0
+        );
+        
+        private static readonly ChargeCalculator VisitorDedicated = new ChargeCalculator(
+            new TravelEntryType(typeof(Visitor), SHNRequirement.Dedicated),
+            (tr) => 0,
+            (tr) => 0
+        );
 
         public static void RegisterChargeCalculator(ChargeCalculator calculator)
         {
