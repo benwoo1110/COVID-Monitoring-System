@@ -10,7 +10,7 @@ namespace COVIDMonitoringSystem.Core
 {
     public class TravelEntry
     {
-        public Person TravelPerson { get; set; } //TODO: Need to ignore this in serialization
+        public Person TravelPerson { get; set; }
         public string LastCountryOfEmbarkation { get; set; }
         public string EntryMode { get; set; }
         public DateTime EntryDate { get; set; }

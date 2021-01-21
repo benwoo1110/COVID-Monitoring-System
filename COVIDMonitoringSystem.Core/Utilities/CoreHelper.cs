@@ -11,6 +11,11 @@ namespace COVIDMonitoringSystem.Core.Utilities
 {
     public static class CoreHelper
     {
+        private static JsonSerializerSettings config = new JsonSerializerSettings
+        {
+            ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+        };
+        
         [NotNull] public static Dictionary<string, string>[] ReadCsv([NotNull] string filePath)
         {
             var fileData = File.ReadAllLines(filePath);
@@ -113,7 +118,7 @@ namespace COVIDMonitoringSystem.Core.Utilities
 
         [NotNull] public static string GetObjectData([CanBeNull] object o)
         {
-            return JsonConvert.SerializeObject(o, Formatting.Indented);
+            return JsonConvert.SerializeObject(o, Formatting.Indented, config);
         }
     }
 }
