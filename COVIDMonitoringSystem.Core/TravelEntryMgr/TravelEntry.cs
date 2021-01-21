@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Runtime.Serialization;
 using COVIDMonitoringSystem.Core.PersonMgr;
 using COVIDMonitoringSystem.Core.TravelEntryMgr;
 using COVIDMonitoringSystem.Core.Utilities;
 using JetBrains.Annotations;
+using Newtonsoft.Json;
 
 namespace COVIDMonitoringSystem.Core
 {
@@ -28,6 +30,7 @@ namespace COVIDMonitoringSystem.Core
             LastCountryOfEmbarkation = lastCountryOfEmbarkation;
             EntryMode = entryMode;
             EntryDate = entryDate;
+            CalculateRecordDetails();
         }
 
         public TravelEntry(Person travelPerson, string lastCountryOfEmbarkation, string entryMode, DateTime entryDate, DateTime shnEndDate, SHNFacility shnFacility, bool isPaid)
@@ -55,6 +58,7 @@ namespace COVIDMonitoringSystem.Core
             if (Calculator == null)
             {
                 Status = EntryStatus.Error;
+                Logging.Error("Unable to find calculator!");
                 return false;
             }
             

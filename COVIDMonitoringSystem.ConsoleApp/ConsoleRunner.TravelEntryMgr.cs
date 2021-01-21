@@ -2,6 +2,7 @@
 using COVIDMonitoringSystem.ConsoleApp.Utilities;
 using COVIDMonitoringSystem.Core;
 using COVIDMonitoringSystem.Core.PersonMgr;
+using COVIDMonitoringSystem.Core.Utilities;
 
 namespace COVIDMonitoringSystem.ConsoleApp
 {
@@ -28,7 +29,23 @@ namespace COVIDMonitoringSystem.ConsoleApp
 
         private void NewTravelRecord()
         {
-            Console.WriteLine("NewTravelRecord");
+            var person = ConsoleHelper.GetInput("Enter name: ", Manager.FindPerson);
+            if (person == null)
+            {
+                //TODO: Some message
+                return;
+            }
+
+            var travelEntry = new TravelEntry(
+                person,
+                ConsoleHelper.GetInput("Last Country: "),
+                ConsoleHelper.GetInput("Entry Mode: "),
+                ConsoleHelper.GetInput("Entry Date: ", Convert.ToDateTime)
+            );
+            
+            Logging.DebugObject(travelEntry);
+            
+            person.AddTravelEntry(travelEntry);
         }
 
         private void PaySHNCharges()
