@@ -3,12 +3,12 @@ using COVIDMonitoringSystem.Core.Utilities;
 
 namespace COVIDMonitoringSystem.Core.TravelEntryMgr
 {
-    public class ChargeMatcher
+    public class TravelEntryMatcher
     {
         public Type ClassType { get; }
         public SHNType Type { get; }
 
-        public ChargeMatcher(Type classType, SHNType type)
+        public TravelEntryMatcher(Type classType, SHNType type)
         {
             ClassType = classType;
             Type = type;

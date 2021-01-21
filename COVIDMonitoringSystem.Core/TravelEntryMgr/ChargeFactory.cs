@@ -7,32 +7,33 @@ namespace COVIDMonitoringSystem.Core.TravelEntryMgr
     public static class ChargeFactory
     {
         public const double SwapTestCost = 200;
-        
-        private static readonly ChargeCalculator ResidentsNone = new ChargeCalculator(
-            new ChargeMatcher(typeof(Resident), SHNType.None), 
+
+        private static readonly Dictionary<int, ChargeCalculator> Charges = new Dictionary<int, ChargeCalculator>();
+
+        private static readonly ChargeCalculator ResidentNone = new ChargeCalculator(
+            new TravelEntryMatcher(typeof(Resident), SHNType.None), 
             (tr) => 0,
             (tr) => 0,
             (tr) => 0
         );
 
-        private static readonly ChargeCalculator ResidentsOwnAcc = new ChargeCalculator(
-            new ChargeMatcher(typeof(Resident), SHNType.OwnAcc),
+        private static readonly ChargeCalculator ResidentOwnAcc = new ChargeCalculator(
+            new TravelEntryMatcher(typeof(Resident), SHNType.OwnAcc),
             (tr) => 7,
             (tr) => 0,
             (tr) => 0
         );
 
-        private static readonly Dictionary<int, ChargeCalculator> Charges = new Dictionary<int, ChargeCalculator>()
+        public static void RegisterChargeCalculator(ChargeCalculator calculator)
         {
-            {ResidentsNone.Matcher.GenerateIdentifier(), ResidentsNone},
-            {ResidentsOwnAcc.Matcher.GenerateIdentifier(), ResidentsOwnAcc}
-        };
+            Charges.Add(calculator.Matcher.GenerateIdentifier(), calculator);
+        }
 
         public static ChargeCalculator FindAppropriateCalculator(TravelEntry entry)
         {
             var shnType = CalculateSHNType(entry);
             var personType = entry.TravelPerson.GetType();
-            var chargeMatcher = new ChargeMatcher(personType, shnType);
+            var chargeMatcher = new TravelEntryMatcher(personType, shnType);
 
             return Charges.GetValueOrDefault(chargeMatcher.GenerateIdentifier());
         }
