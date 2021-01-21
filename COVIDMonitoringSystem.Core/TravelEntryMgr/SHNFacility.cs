@@ -4,43 +4,22 @@ namespace COVIDMonitoringSystem.Core.TravelEntryMgr
 {
     public class SHNFacility
     {
-        public string FacilityName { get; set; }
-        public int FacilityCapacity { get; set; }
-        public int FacilityVacancy { get; set; }
-        public double DistFromAirCheckpoint { get; set; }
-        public double DistFromSeaCheckpoint { get; set; }
-        public double DistFromLandCheckpoint { get; set; }
+        public string FacilityName { get; }
+        public int FacilityCapacity { get; }
+        public int FacilityVacancy { get; }
+        public CheckPointDistance Distance { get; }
 
         public SHNFacility(string facilityName, int facilityCapacity, double distFromAirCheckpoint, double distFromSeaCheckpoint, double distFromLandCheckpoint)
         {
             FacilityName = facilityName;
             FacilityCapacity = facilityCapacity;
             FacilityVacancy = facilityCapacity;
-            DistFromAirCheckpoint = distFromAirCheckpoint;
-            DistFromSeaCheckpoint = distFromSeaCheckpoint;
-            DistFromLandCheckpoint = distFromLandCheckpoint;
+            Distance = new CheckPointDistance(distFromAirCheckpoint, distFromSeaCheckpoint, distFromLandCheckpoint);
         }
 
         public double CalculateTravelCost(TravelEntry entry)
         {
-            double dist;
-            
-            switch (entry.EntryMode)
-            {
-                case TravelEntryMode.Land:
-                    dist = DistFromLandCheckpoint;
-                    break;
-                case TravelEntryMode.Sea:
-                    dist = DistFromSeaCheckpoint;
-                    break;
-                case TravelEntryMode.Air:
-                    dist = DistFromAirCheckpoint;
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException();
-            }
-
-            return dist * 0.22;
+            return Distance.FromMode(entry.EntryMode);
         }
 
         public bool IsAvailable()
