@@ -11,44 +11,29 @@ namespace COVIDMonitoringSystem.Core.TravelEntryMgr
         private static readonly Dictionary<int, ChargeCalculator> Charges = new Dictionary<int, ChargeCalculator>();
 
         private static readonly ChargeCalculator ResidentNone = new ChargeCalculator(
-            new TravelEntryMatcher(typeof(Resident), SHNType.None), 
-            (tr) => 0,
+            new TravelEntryType(typeof(Resident), SHNRequirement.None), 
             (tr) => 0,
             (tr) => 0
         );
 
         private static readonly ChargeCalculator ResidentOwnAcc = new ChargeCalculator(
-            new TravelEntryMatcher(typeof(Resident), SHNType.OwnAcc),
-            (tr) => 7,
+            new TravelEntryType(typeof(Resident), SHNRequirement.OwnAcc),
             (tr) => 0,
             (tr) => 0
         );
 
         public static void RegisterChargeCalculator(ChargeCalculator calculator)
         {
-            Charges.Add(calculator.Matcher.GenerateIdentifier(), calculator);
+            Charges.Add(calculator.EntryType.GenerateIdentifier(), calculator);
         }
 
         public static ChargeCalculator FindAppropriateCalculator(TravelEntry entry)
         {
-            var shnType = CalculateSHNType(entry);
+            var shnType = SHNRequirement.FindAppropriateType(entry);
             var personType = entry.TravelPerson.GetType();
-            var chargeMatcher = new TravelEntryMatcher(personType, shnType);
+            var matcher = new TravelEntryType(personType, shnType);
 
-            return Charges.GetValueOrDefault(chargeMatcher.GenerateIdentifier());
-        }
-
-        private static SHNType CalculateSHNType([NotNull] TravelEntry entry)
-        {
-            if (MatchCountry(entry, "New Zealand") || MatchCountry(entry, "Vietnam"))
-            {
-                return SHNType.None;
-            }
-            if (MatchCountry(entry, "Macao SAR"))
-            {
-                return SHNType.OwnAcc;
-            }
-            return SHNType.Dedicated;
+            return Charges.GetValueOrDefault(matcher.GenerateIdentifier());
         }
 
         private static bool MatchCountry([NotNull] TravelEntry entry, [NotNull] string country)

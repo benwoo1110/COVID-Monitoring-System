@@ -43,8 +43,6 @@ namespace COVIDMonitoringSystem.ConsoleApp
                 ConsoleHelper.GetInput("Entry Date: ", Convert.ToDateTime)
             );
             
-            Logging.DebugObject(travelEntry);
-            
             person.AddTravelEntry(travelEntry);
         }
 

@@ -6,16 +6,13 @@ namespace COVIDMonitoringSystem.Core.TravelEntryMgr
 {
     public class ChargeCalculator
     {
-        public TravelEntryMatcher Matcher { get; set; }
-        public Func<TravelEntry, int> QuarantineDays { get; }
+        public TravelEntryType EntryType { get; }
         public Func<TravelEntry, double> TransportCost { get; }
         public Func<TravelEntry, double> SDFCost { get; }
-
-
-        public ChargeCalculator(TravelEntryMatcher matcher, Func<TravelEntry, int> quarantineDays, Func<TravelEntry, double> transportCost, Func<TravelEntry, double> sdfCost)
+        
+        public ChargeCalculator(TravelEntryType type, Func<TravelEntry, double> transportCost, Func<TravelEntry, double> sdfCost)
         {
-            Matcher = matcher;
-            QuarantineDays = quarantineDays;
+            EntryType = type;
             TransportCost = transportCost;
             SDFCost = sdfCost;
             

@@ -11,7 +11,7 @@ namespace COVIDMonitoringSystem.Core.Utilities
 {
     public static class CoreHelper
     {
-        private static JsonSerializerSettings config = new JsonSerializerSettings
+        private static readonly JsonSerializerSettings Config = new JsonSerializerSettings
         {
             ReferenceLoopHandling = ReferenceLoopHandling.Serialize,
             PreserveReferencesHandling = PreserveReferencesHandling.Objects
@@ -119,7 +119,7 @@ namespace COVIDMonitoringSystem.Core.Utilities
 
         [NotNull] public static string GetObjectData([CanBeNull] object o)
         {
-            return JsonConvert.SerializeObject(o, Formatting.Indented, config);
+            return JsonConvert.SerializeObject(o, Formatting.Indented, Config);
         }
     }
 }

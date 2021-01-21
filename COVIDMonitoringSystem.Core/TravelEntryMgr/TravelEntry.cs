@@ -59,7 +59,7 @@ namespace COVIDMonitoringSystem.Core
                 return false;
             }
             
-            ShnEndDate = EntryDate.AddDays(Calculator.QuarantineDays(this));
+            ShnEndDate = EntryDate.AddDays(Calculator.EntryType.RequirementType.QuarantineDays);
             return true;
         }
 
@@ -72,7 +72,7 @@ namespace COVIDMonitoringSystem.Core
         {
             if (!RequiresSHNFacility())
             {
-                throw new InvalidOperationException($"No dedicated SHN facility needed for type: {Calculator.Matcher.Type}");
+                throw new InvalidOperationException($"No dedicated SHN facility needed for type: {Calculator.EntryType.RequirementType}");
             }
             
             ShnFacility = facility;
@@ -80,7 +80,7 @@ namespace COVIDMonitoringSystem.Core
 
         public bool RequiresSHNFacility()
         {
-            return Calculator.Matcher.Type != SHNType.Dedicated;
+            return Calculator.EntryType.RequirementType != SHNRequirement.Dedicated;
         }
         
         public override string ToString()
