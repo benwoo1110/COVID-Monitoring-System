@@ -14,12 +14,12 @@ namespace COVIDMonitoringSystem.Core.TravelEntryMgr
         );
         
         public static readonly SHNRequirement OwnAcc = new SHNRequirement(
-            0, 
+            7, 
             new []{ "Macao SAR" }
         );
         
         public static readonly SHNRequirement Dedicated = new SHNRequirement(
-            0, 
+            14, 
             new string[]{ }
         );
         
