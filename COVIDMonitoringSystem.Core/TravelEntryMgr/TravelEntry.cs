@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Runtime.Serialization;
 using COVIDMonitoringSystem.Core.PersonMgr;
 using COVIDMonitoringSystem.Core.TravelEntryMgr;
 using COVIDMonitoringSystem.Core.Utilities;
-using JetBrains.Annotations;
-using Newtonsoft.Json;
 
 namespace COVIDMonitoringSystem.Core
 {
