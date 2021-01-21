@@ -40,7 +40,7 @@ namespace COVIDMonitoringSystem.Core
             ShnFacility = shnFacility;
             IsPaid = isPaid;
             Status = EntryStatus.Completed;
-            Calculator = ChargeFactory.FindAppropriateCalculator(this);
+            Calculator = ChargeCalculator.FindAppropriateCalculator(this);
         }
 
         public bool CalculateRecordDetails(bool forced = false)
@@ -51,7 +51,7 @@ namespace COVIDMonitoringSystem.Core
                 return false;
             }
             
-            Calculator = ChargeFactory.FindAppropriateCalculator(this);
+            Calculator = ChargeCalculator.FindAppropriateCalculator(this);
             if (Calculator == null)
             {
                 Status = EntryStatus.Error;
@@ -65,7 +65,7 @@ namespace COVIDMonitoringSystem.Core
 
         public double CalculateCharge()
         {
-            return ChargeFactory.SwapTestCost + Calculator.TransportCost(this) + Calculator.SDFCost(this);
+            return ChargeCalculator.SwapTestCost + Calculator.TransportCost(this) + Calculator.SDFCost(this);
         }
 
         public void AssignSHNFacility(SHNFacility facility)
