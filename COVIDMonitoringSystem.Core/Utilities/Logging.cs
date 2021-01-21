@@ -49,7 +49,7 @@ namespace COVIDMonitoringSystem.Core.Utilities
 
         private static bool ShouldLogAtLevel(LogLevel level)
         {
-            return level >= CurrentLevel;
+            return CurrentLevel != LogLevel.None && level >= CurrentLevel;
         }
 
         private static void DoLog(LogLevel level, [CanBeNull] string message)
