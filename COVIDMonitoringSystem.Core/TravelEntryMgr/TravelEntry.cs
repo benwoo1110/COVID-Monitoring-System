@@ -9,7 +9,7 @@ namespace COVIDMonitoringSystem.Core
     {
         public Person TravelPerson { get; set; }
         public string LastCountryOfEmbarkation { get; set; }
-        public string EntryMode { get; set; }
+        public TravelEntryMode EntryMode { get; set; }
         public DateTime EntryDate { get; set; }
         public bool IsPaid { get; set; }
         public DateTime ShnEndDate { get; private set; }
@@ -21,7 +21,7 @@ namespace COVIDMonitoringSystem.Core
         {
         }
         
-        public TravelEntry(Person travelPerson, string lastCountryOfEmbarkation, string entryMode, DateTime entryDate)
+        public TravelEntry(Person travelPerson, string lastCountryOfEmbarkation, TravelEntryMode entryMode, DateTime entryDate)
         {
             TravelPerson = travelPerson;
             LastCountryOfEmbarkation = lastCountryOfEmbarkation;
@@ -30,7 +30,7 @@ namespace COVIDMonitoringSystem.Core
             CalculateRecordDetails();
         }
 
-        public TravelEntry(Person travelPerson, string lastCountryOfEmbarkation, string entryMode, DateTime entryDate, DateTime shnEndDate, SHNFacility shnFacility, bool isPaid)
+        public TravelEntry(Person travelPerson, string lastCountryOfEmbarkation, TravelEntryMode entryMode, DateTime entryDate, DateTime shnEndDate, SHNFacility shnFacility, bool isPaid)
         {
             TravelPerson = travelPerson;
             LastCountryOfEmbarkation = lastCountryOfEmbarkation;

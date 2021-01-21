@@ -2,7 +2,7 @@
 using COVIDMonitoringSystem.ConsoleApp.Utilities;
 using COVIDMonitoringSystem.Core;
 using COVIDMonitoringSystem.Core.PersonMgr;
-using COVIDMonitoringSystem.Core.Utilities;
+using COVIDMonitoringSystem.Core.TravelEntryMgr;
 
 namespace COVIDMonitoringSystem.ConsoleApp
 {
@@ -39,7 +39,7 @@ namespace COVIDMonitoringSystem.ConsoleApp
             var travelEntry = new TravelEntry(
                 person,
                 ConsoleHelper.GetInput("Last Country: "),
-                ConsoleHelper.GetInput("Entry Mode: "),
+                ConsoleHelper.GetInput("Entry Mode: ", ConsoleHelper.EnumParser<TravelEntryMode>),
                 ConsoleHelper.GetInput("Entry Date: ", Convert.ToDateTime)
             );
             

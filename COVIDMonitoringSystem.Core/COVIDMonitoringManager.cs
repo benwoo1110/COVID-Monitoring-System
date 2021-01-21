@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using COVIDMonitoringSystem.Core.PersonMgr;
+using COVIDMonitoringSystem.Core.TravelEntryMgr;
 using COVIDMonitoringSystem.Core.Utilities;
 
 namespace COVIDMonitoringSystem.Core
@@ -90,7 +91,7 @@ namespace COVIDMonitoringSystem.Core
             return new TravelEntry(
                 newPerson,
                 entry["travelEntryLastCountry"],
-                entry["travelEntryMode"],
+                CoreHelper.ParseEnum<TravelEntryMode>(entry["travelEntryMode"]),
                 Convert.ToDateTime(entry["travelEntryDate"]),
                 Convert.ToDateTime(entry["travelShnEndDate"]),
                 FindSHNFacility(entry["facilityName"]),

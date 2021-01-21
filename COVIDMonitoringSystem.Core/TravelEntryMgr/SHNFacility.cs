@@ -1,4 +1,5 @@
 ﻿using System;
+using COVIDMonitoringSystem.Core.TravelEntryMgr;
 
 namespace COVIDMonitoringSystem.Core
 {
@@ -15,6 +16,7 @@ namespace COVIDMonitoringSystem.Core
         {
             FacilityName = facilityName;
             FacilityCapacity = facilityCapacity;
+            FacilityVacancy = facilityCapacity;
             DistFromAirCheckpoint = distFromAirCheckpoint;
             DistFromSeaCheckpoint = distFromSeaCheckpoint;
             DistFromLandCheckpoint = distFromLandCheckpoint;
@@ -22,12 +24,29 @@ namespace COVIDMonitoringSystem.Core
 
         public double CalculateTravelCost(TravelEntry entry)
         {
-            throw new NotImplementedException();
+            double dist;
+            
+            switch (entry.EntryMode)
+            {
+                case TravelEntryMode.Land:
+                    dist = DistFromLandCheckpoint;
+                    break;
+                case TravelEntryMode.Sea:
+                    dist = DistFromSeaCheckpoint;
+                    break;
+                case TravelEntryMode.Air:
+                    dist = DistFromAirCheckpoint;
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+
+            return dist * 0.22;
         }
 
         public bool IsAvailable()
         {
-            throw new NotImplementedException();
+            return FacilityVacancy > 0;
         }
 
         public override string ToString()
