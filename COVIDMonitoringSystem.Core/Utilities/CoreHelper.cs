@@ -13,7 +13,8 @@ namespace COVIDMonitoringSystem.Core.Utilities
     {
         private static JsonSerializerSettings config = new JsonSerializerSettings
         {
-            ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+            ReferenceLoopHandling = ReferenceLoopHandling.Serialize,
+            PreserveReferencesHandling = PreserveReferencesHandling.Objects
         };
         
         [NotNull] public static Dictionary<string, string>[] ReadCsv([NotNull] string filePath)
