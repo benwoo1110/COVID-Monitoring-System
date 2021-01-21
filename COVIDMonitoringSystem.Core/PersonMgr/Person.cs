@@ -37,7 +37,7 @@ namespace COVIDMonitoringSystem.Core.PersonMgr
             SafeEntryList.Add(entry);
         }
 
-        public abstract SHNChargesReport CalculateSHNCharges();
+        public abstract SHNPayment CalculateSHNCharges();
 
         public override string ToString()
         {

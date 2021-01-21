@@ -14,8 +14,9 @@ namespace COVIDMonitoringSystem.Core
         public bool IsPaid { get; set; }
         public DateTime ShnEndDate { get; private set; }
         public SHNFacility ShnFacility { get; private set; }
-        public ChargeCalculator Calculator { get; private set; }
-        public EntryStatus Status { get; private set; } = EntryStatus.Incomplete;
+        public SHNRequirement Requirement { get; private set; }
+        public SHNCalculator Calculator { get; private set; }
+        public TravelEntryStatus Status { get; private set; } = TravelEntryStatus.Incomplete;
 
         public TravelEntry()
         {
@@ -39,50 +40,53 @@ namespace COVIDMonitoringSystem.Core
             ShnEndDate = shnEndDate;
             ShnFacility = shnFacility;
             IsPaid = isPaid;
-            Status = EntryStatus.Completed;
-            Calculator = ChargeCalculator.FindAppropriateCalculator(this);
+            Status = TravelEntryStatus.Completed;
+            Calculator = SHNCalculator.FindAppropriateCalculator(this);
         }
 
         public bool CalculateRecordDetails(bool forced = false)
         {
-            if (!forced && Status != EntryStatus.Incomplete)
+            if (!forced && Status != TravelEntryStatus.Incomplete)
             {
                 Logging.Error("Record Details has already been calculated!");
                 return false;
             }
             
-            Calculator = ChargeCalculator.FindAppropriateCalculator(this);
+            Requirement = SHNRequirement.FindAppropriateType(this);
+            Calculator = SHNCalculator.FindAppropriateCalculator(this);
             if (Calculator == null)
             {
-                Status = EntryStatus.Error;
+                Status = TravelEntryStatus.Error;
                 Logging.Error("Unable to find calculator!");
                 return false;
             }
             
-            ShnEndDate = EntryDate.AddDays(Calculator.EntryType.RequirementType.QuarantineDays);
+            ShnEndDate = EntryDate.AddDays(Requirement.QuarantineDays);
             return true;
         }
 
         public double CalculateCharge()
         {
-            return ChargeCalculator.SwapTestCost + Calculator.TransportCost(this) + Calculator.SDFCost(this);
+            return SHNCalculator.SwapTestCost + Calculator.TransportCost(this) + Calculator.SDFCost(this);
         }
 
         public void AssignSHNFacility(SHNFacility facility)
         {
-            if (!RequiresSHNFacility())
+            if (!Requirement.RequiresSHNFacility)
             {
-                throw new InvalidOperationException($"No dedicated SHN facility needed for type: {Calculator.EntryType.RequirementType}");
+                throw new InvalidOperationException($"No dedicated SHN facility needed for type: {Requirement}");
             }
             
             ShnFacility = facility;
         }
 
-        public bool RequiresSHNFacility()
+        public bool ValidateFacilityStatus()
         {
-            return Calculator.EntryType.RequirementType != SHNRequirement.Dedicated;
+            return Requirement.RequiresSHNFacility
+                ? ShnFacility != null
+                : ShnFacility == null;
         }
-        
+
         public override string ToString()
         {
             return base.ToString();

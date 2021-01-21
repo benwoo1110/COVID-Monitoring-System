@@ -14,7 +14,7 @@ namespace COVIDMonitoringSystem.Core.PersonMgr
             Nationality = nationality;
         }
 
-        public override SHNChargesReport CalculateSHNCharges()
+        public override SHNPayment CalculateSHNCharges()
         {
             throw new NotImplementedException();
         }

@@ -1,6 +1,6 @@
 ﻿namespace COVIDMonitoringSystem.Core.TravelEntryMgr
 {
-    public enum EntryStatus
+    public enum TravelEntryStatus
     {
         Incomplete,
         Completed,

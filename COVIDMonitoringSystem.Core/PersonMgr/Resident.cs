@@ -15,7 +15,7 @@ namespace COVIDMonitoringSystem.Core.PersonMgr
             LastLeftCountry = lastLeftCountry;
         }
 
-        public override SHNChargesReport CalculateSHNCharges()
+        public override SHNPayment CalculateSHNCharges()
         {
             throw new NotImplementedException();
         }

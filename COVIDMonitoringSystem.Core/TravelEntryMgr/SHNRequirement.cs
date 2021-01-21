@@ -10,16 +10,22 @@ namespace COVIDMonitoringSystem.Core.TravelEntryMgr
         
         public static readonly SHNRequirement None = new SHNRequirement(
             0, 
+            true,
+            false,
             new []{ "New Zealand", "Vietnam" }
         );
         
         public static readonly SHNRequirement OwnAcc = new SHNRequirement(
-            7, 
+            7,
+            true,
+            false,
             new []{ "Macao SAR" }
         );
         
         public static readonly SHNRequirement Dedicated = new SHNRequirement(
-            14, 
+            14,
+            true,
+            true,
             new string[]{ }
         );
         
@@ -39,21 +45,21 @@ namespace COVIDMonitoringSystem.Core.TravelEntryMgr
         }
 
         public int QuarantineDays { [NotNull] get; }
+        public bool NeedSwapTest { [NotNull] get; }
+        public bool RequiresSHNFacility { [NotNull] get; }
         public string[] TargetCountries { [NotNull] get; }
 
         private SHNRequirement(
-            int quarantineDays, 
+            int quarantineDays,
+            bool needSwapTest,
+            bool requiresShnFacility,
             [NotNull] string[] targetCountries)
         {
             QuarantineDays = quarantineDays;
             TargetCountries = targetCountries;
-            
+            NeedSwapTest = needSwapTest;
+            RequiresSHNFacility = requiresShnFacility;
             RegisterRequirement(this);
-        }
-
-        public bool IsThisType(string country)
-        {
-            return TargetCountries.Contains(country);
         }
     }
 }

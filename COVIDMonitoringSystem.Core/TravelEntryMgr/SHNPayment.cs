@@ -1,6 +1,6 @@
 ﻿namespace COVIDMonitoringSystem.Core.TravelEntryMgr
 {
-    public class SHNChargesReport
+    public class SHNPayment
     {
         
     }

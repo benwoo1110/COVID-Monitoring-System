@@ -3,12 +3,17 @@ using COVIDMonitoringSystem.Core.Utilities;
 
 namespace COVIDMonitoringSystem.Core.TravelEntryMgr
 {
-    public class TravelEntryType
+    public class TravelEntryMatcher
     {
+        public static TravelEntryMatcher Of(TravelEntry entry)
+        {
+            return new TravelEntryMatcher(entry.TravelPerson.GetType(), entry.Requirement);
+        }
+        
         public Type PersonType { get; }
         public SHNRequirement RequirementType { get; }
 
-        public TravelEntryType(Type personType, SHNRequirement requirementType)
+        public TravelEntryMatcher(Type personType, SHNRequirement requirementType)
         {
             PersonType = personType;
             RequirementType = requirementType;
