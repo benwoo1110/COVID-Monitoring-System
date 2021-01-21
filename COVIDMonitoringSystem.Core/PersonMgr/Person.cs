@@ -23,7 +23,6 @@ namespace COVIDMonitoringSystem.Core.PersonMgr
 
         public void AddTravelEntry(TravelEntry entry)
         {
-            entry.TravelPerson ??= this;
             if (entry.TravelPerson != this)
             {
                 throw new ArgumentException($"Travel entry is for {entry.TravelPerson.Name}, not {Name}!");

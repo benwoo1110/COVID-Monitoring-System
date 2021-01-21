@@ -39,7 +39,7 @@ namespace COVIDMonitoringSystem.Core.TravelEntryMgr
             }
         }
         
-        [NotNull] public static SHNRequirement FindAppropriateType([NotNull] TravelEntry entry)
+        [NotNull] public static SHNRequirement FindAppropriateRequirement([NotNull] TravelEntry entry)
         {
             return Types.GetValueOrDefault(entry.LastCountryOfEmbarkation.ToLower()) ?? FallbackRequirement;
         }

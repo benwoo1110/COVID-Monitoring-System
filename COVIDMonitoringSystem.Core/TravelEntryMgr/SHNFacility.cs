@@ -1,7 +1,6 @@
 ﻿using System;
-using COVIDMonitoringSystem.Core.TravelEntryMgr;
 
-namespace COVIDMonitoringSystem.Core
+namespace COVIDMonitoringSystem.Core.TravelEntryMgr
 {
     public class SHNFacility
     {
