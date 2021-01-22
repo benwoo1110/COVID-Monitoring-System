@@ -67,8 +67,10 @@ namespace COVIDMonitoringSystem.Core.Utilities
                 var byteContents = new UTF8Encoding(true).GetBytes(contents);
                 fs.Write(byteContents, 0, contents.Length);
             }
-            catch (IOException)
+            catch (IOException e)
             {
+                Logging.Error(e.Message);
+                Logging.Debug(e.StackTrace);
                 return false;
             }
 

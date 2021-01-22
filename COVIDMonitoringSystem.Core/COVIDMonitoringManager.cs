@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using COVIDMonitoringSystem.Core.PersonMgr;
 using COVIDMonitoringSystem.Core.TravelEntryMgr;
 using COVIDMonitoringSystem.Core.Utilities;
@@ -102,6 +103,36 @@ namespace COVIDMonitoringSystem.Core
                 FindSHNFacility(entry["facilityName"]),
                 Convert.ToBoolean(entry["travelIsPaid"])
             );
+        }
+
+        public bool GenerateSHNStatusReportFile(DateTime dateTime)
+        {
+            var csvData = new List<Dictionary<string, string>>();
+
+            PersonList.ForEach(person => person.TravelEntryList.ForEach(entry =>
+            {
+                if (entry.IsWithinQuarantineTime(dateTime))
+                {
+                    csvData.Add(GenerateSingleTravelEntryReport(entry));
+                }
+            }));
+
+            return CoreHelper.WriteCsv(
+                $"SHNStatusReport_{dateTime:yyyy-MM-dd_HH-mm-ss}.csv",
+                new []{ "Type", "Name", "End Date", "Facility Name" },
+                csvData
+            );
+        }
+
+        private Dictionary<string, string> GenerateSingleTravelEntryReport(TravelEntry entry)
+        {
+            return new Dictionary<string, string>
+            {
+                {"Type", ReflectHelper.GetTypeName(entry.TravelPerson)},
+                {"Name", entry.TravelPerson.Name},
+                {"End Date", entry.ShnEndDate.ToString(CultureInfo.InvariantCulture)},
+                {"Facility Name", entry.GetFacilityName()},
+            };
         }
 
         public void AddBusinessLocation(BusinessLocation business)

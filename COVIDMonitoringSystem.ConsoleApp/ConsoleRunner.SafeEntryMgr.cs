@@ -11,7 +11,7 @@ namespace COVIDMonitoringSystem.ConsoleApp
     {
         private void ManageSafeEntry()
         {
-            MenusCollection["safe-entry"].RunMenuOption();
+            MenusCollection["safeEntry"].RunMenuOption();
         }
         private void AssignToken()
         {

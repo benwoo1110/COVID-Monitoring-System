@@ -103,6 +103,28 @@ namespace COVIDMonitoringSystem.Core.TravelEntryMgr
             return Conditions.CalculateCharges(this);
         }
 
+        public bool IsWithinQuarantineTime(DateTime dateTime)
+        {
+            if (EntryDate.Equals(ShnEndDate))
+            {
+                return false;
+            }
+            return dateTime >= EntryDate && dateTime <= ShnEndDate;
+        }
+
+        public string GetFacilityName()
+        {
+            if (Tier == SHNTier.None)
+            {
+                return "";
+            }
+            if (Tier == SHNTier.OwnAcc)
+            {
+                return "Own Accommodation";
+            }
+            return ShnFacility.FacilityName;
+        }
+
         public override string ToString()
         {
             return base.ToString();
