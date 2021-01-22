@@ -80,5 +80,25 @@ namespace COVIDMonitoringSystem.ConsoleApp.Utilities
             Console.WriteLine("Exiting...");
             Environment.Exit(0);
         }
+
+        public static string CenterText(string text, int width)
+        {
+            var spaceNeeded = width - text.Length;
+            if (spaceNeeded <= 0)
+            {
+                return text;
+            }
+            
+            var left = spaceNeeded / 2;
+            return $"{new string(' ', left)}{text}{new string(' ', spaceNeeded - left)}";
+        }
+
+        public static string LeftText(string text, int width)
+        {
+            var spaceNeeded = width - text.Length;
+            return spaceNeeded <= 0 
+                ? text 
+                : text + new string(' ', spaceNeeded);
+        }
     }
 }

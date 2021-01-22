@@ -73,16 +73,8 @@ namespace COVIDMonitoringSystem.ConsoleApp.Display
         public static void PrintHeader(string text, int width)
         {
             ConsoleHelper.WriteSeparator(width);
-            ConsoleHelper.WriteWithPipe(CenterText(text, width - 4));
+            ConsoleHelper.WriteWithPipe(ConsoleHelper.CenterText(text, width - 4));
             ConsoleHelper.WriteSeparator(width);
-        }
-
-        private static string CenterText(string text, int width)
-        {
-            var spaceNeeded = width - text.Length;
-            var left = spaceNeeded > 0 ? spaceNeeded / 2 : 0;
-
-            return $"{new string(' ', left)}{text}{new string(' ', spaceNeeded - left)}";
         }
     }
 }

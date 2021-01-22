@@ -1,5 +1,6 @@
 ﻿using System;
 using COVIDMonitoringSystem.ConsoleApp.Utilities;
+using COVIDMonitoringSystem.Core.Utilities;
 using JetBrains.Annotations;
 
 namespace COVIDMonitoringSystem.ConsoleApp.Display
@@ -7,7 +8,8 @@ namespace COVIDMonitoringSystem.ConsoleApp.Display
     public class Menu
     {
         private const int SpecialOption = 0;
-        private const int Length = 40;
+        private const int Padding = 12;
+        private static int length;
 
         public string Header { get; }
         public MenuOption[] Contents { get; }
@@ -19,6 +21,19 @@ namespace COVIDMonitoringSystem.ConsoleApp.Display
             Header = header;
             Contents = contents;
             SpecialOptionName = "Back";
+            SetMaxLength();
+        }
+
+        private void SetMaxLength()
+        {
+            foreach (var menuOption in Contents)
+            {
+                if (menuOption.Name.Length + Padding > length)
+                {
+                    length = menuOption.Name.Length + Padding;
+                }
+            }
+            Logging.Debug(length.ToString());
         }
 
         public void RunMenuOption()
@@ -39,15 +54,15 @@ namespace COVIDMonitoringSystem.ConsoleApp.Display
         private void ShowMenu()
         {
             ConsoleHelper.EmptyLine();
-            FancyObjectDisplay.PrintHeader(Header, Length);
+            FancyObjectDisplay.PrintHeader(Header, length);
             for (var index = 0; index < Contents.Length; index++)
             {
-                ConsoleHelper.WriteWithPipe($"{$"[{index + 1}] {Contents[index].Name}",-(Length-4)}");
+                ConsoleHelper.WriteWithPipe(ConsoleHelper.LeftText($"[{index + 1}] {Contents[index].Name}", length - 4));
             }
 
-            ConsoleHelper.WriteSubSeparator(Length);
-            ConsoleHelper.WriteWithPipe($"{$"[{SpecialOption}] {SpecialOptionName}",-(Length - 4)}");
-            ConsoleHelper.WriteSeparator(Length);
+            ConsoleHelper.WriteSubSeparator(length);
+            ConsoleHelper.WriteWithPipe(ConsoleHelper.LeftText($"[{SpecialOption}] {SpecialOptionName}", length - 4));
+            ConsoleHelper.WriteSeparator(length);
         }
 
         private void DoOptionAction()

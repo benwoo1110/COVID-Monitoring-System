@@ -33,7 +33,7 @@ namespace COVIDMonitoringSystem.ConsoleApp
             ));
 
             MenusCollection.Add("travelEntry", new Menu(
-                "------- TravelEntry Management -------",
+                "TravelEntry Management",
                 new[]
                 {
                     new MenuOption("View All SHN Facilities", ViewAllSHNFacility),
@@ -45,7 +45,7 @@ namespace COVIDMonitoringSystem.ConsoleApp
             ));
 
             MenusCollection.Add("safeEntry", new Menu(
-                "------- SafeEntry Management -------",
+                "SafeEntry Management",
                 new[]
                 {
                     new MenuOption("Assign or replace TraceTogether Token", AssignToken),
