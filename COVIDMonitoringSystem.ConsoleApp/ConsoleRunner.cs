@@ -20,7 +20,7 @@ namespace COVIDMonitoringSystem.ConsoleApp
 
         private void SetUpMenus()
         {
-            MenusCollection.Add("mainmenu", new MainMenu(
+            MenusCollection.Add("mainMenu", new MainMenu(
                 "------- COVID Management System -------",
                 new[]
                 {
@@ -32,7 +32,7 @@ namespace COVIDMonitoringSystem.ConsoleApp
                 }
             ));
 
-            MenusCollection.Add("travelentry", new Menu(
+            MenusCollection.Add("travelEntry", new Menu(
                 "------- TravelEntry Management -------",
                 new[]
                 {
@@ -44,7 +44,7 @@ namespace COVIDMonitoringSystem.ConsoleApp
                 }
             ));
 
-            MenusCollection.Add("safe-entry", new Menu(
+            MenusCollection.Add("safeEntry", new Menu(
                 "------- SafeEntry Management -------",
                 new[]
                 {
@@ -59,7 +59,7 @@ namespace COVIDMonitoringSystem.ConsoleApp
 
         public void Run()
         {
-            MenusCollection["mainmenu"].RunMenuOption();
+            MenusCollection["mainMenu"].RunMenuOption();
         }
 
         private void ViewPersonDetails()

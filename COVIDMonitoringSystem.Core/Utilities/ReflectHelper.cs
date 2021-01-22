@@ -9,7 +9,7 @@ namespace COVIDMonitoringSystem.Core.Utilities
         public static Dictionary<string, string> GetAllPropertyValues<T>(T obj) where T : class
         {
             var propertyValues = new Dictionary<string, string>();
-            GetAllPropertyValues<T>(propertyValues, obj);
+            GetAllPropertyValues(propertyValues, obj);
             return propertyValues;
         }
         
@@ -48,6 +48,11 @@ namespace COVIDMonitoringSystem.Core.Utilities
         public static bool IsCollection(Type type)
         {
             return typeof(ICollection).IsAssignableFrom(type);
+        }
+
+        public static string GetTypeName<T>(T obj)
+        {
+            return obj.GetType().Name;
         }
     }
 }

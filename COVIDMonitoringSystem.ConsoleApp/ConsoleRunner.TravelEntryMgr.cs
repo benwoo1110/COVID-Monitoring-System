@@ -1,7 +1,6 @@
 ﻿using System;
 using COVIDMonitoringSystem.ConsoleApp.Display;
 using COVIDMonitoringSystem.ConsoleApp.Utilities;
-using COVIDMonitoringSystem.Core;
 using COVIDMonitoringSystem.Core.PersonMgr;
 using COVIDMonitoringSystem.Core.TravelEntryMgr;
 
@@ -11,7 +10,7 @@ namespace COVIDMonitoringSystem.ConsoleApp
     {
         private void ManageTravelEntry()
         {
-            MenusCollection["travelentry"].RunMenuOption();
+            MenusCollection["travelEntry"].RunMenuOption();
         }
 
         private void ViewAllSHNFacility()
@@ -46,6 +45,8 @@ namespace COVIDMonitoringSystem.ConsoleApp
                 ConsoleHelper.GetInput("Entry Mode: ", ConsoleHelper.EnumParser<TravelEntryMode>),
                 ConsoleHelper.GetInput("Entry Date: ", Convert.ToDateTime)
             );
+            
+            //TODO: Add SHN Facility
             
             targetPerson.AddTravelEntry(travelEntry);
         }
@@ -88,11 +89,10 @@ namespace COVIDMonitoringSystem.ConsoleApp
 
         private void GenerateSHNReport()
         {
-            Console.WriteLine("GenerateSHNReport");
-
-
-            DateTime n = ConsoleHelper.GetInput("Number: ", Convert.ToDateTime);
-            Console.WriteLine(n);
+            var targetDate = ConsoleHelper.GetInput("Enter Date to Report: ", Convert.ToDateTime);
+            Console.WriteLine(Manager.GenerateSHNStatusReportFile(targetDate)
+                ? "Successfully generated report file."
+                : "There was an error generating report file.");
         }
     }
 }
