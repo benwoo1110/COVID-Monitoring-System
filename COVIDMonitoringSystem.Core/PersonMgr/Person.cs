@@ -23,7 +23,7 @@ namespace COVIDMonitoringSystem.Core.PersonMgr
 
         public void AddTravelEntry(TravelEntry entry)
         {
-            if (entry.TravelPerson != this)
+            if (!TravelEntryBelongsToMe(entry))
             {
                 throw new ArgumentException($"Travel entry is for {entry.TravelPerson.Name}, not {Name}!");
             }
@@ -31,12 +31,20 @@ namespace COVIDMonitoringSystem.Core.PersonMgr
             TravelEntryList.Add(entry);
         }
 
+        public bool TravelEntryBelongsToMe(TravelEntry entry)
+        {
+            return entry.TravelPerson == this;
+        }
+
         public void AddSafeEntry(SafeEntry entry)
         {
             SafeEntryList.Add(entry);
         }
 
-        public abstract SHNPayment CalculateSHNCharges();
+        public SHNPayment GenerateSHNPaymentDetails()
+        {
+            return new SHNPayment(this);
+        }
 
         public override string ToString()
         {

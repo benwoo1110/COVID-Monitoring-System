@@ -7,21 +7,21 @@ namespace COVIDMonitoringSystem.Core.TravelEntryMgr
     {
         public static TravelEntryMatcher Of(TravelEntry entry)
         {
-            return new TravelEntryMatcher(entry.TravelPerson.GetType(), entry.Requirement);
+            return new TravelEntryMatcher(entry.TravelPerson.GetType(), entry.Tier);
         }
         
         public Type PersonType { get; }
-        public SHNRequirement RequirementType { get; }
+        public AccommodationTier Tier { get; }
 
-        public TravelEntryMatcher(Type personType, SHNRequirement requirementType)
+        public TravelEntryMatcher(Type personType, AccommodationTier tier)
         {
             PersonType = personType;
-            RequirementType = requirementType;
+            Tier = tier;
         }
 
         public int GenerateIdentifier()
         {
-            var code = HashCode.Combine(PersonType, RequirementType);
+            var code = HashCode.Combine(PersonType, Tier);
             Logging.Debug(code.ToString());
             return code;
         }

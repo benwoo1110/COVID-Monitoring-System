@@ -13,8 +13,8 @@ namespace COVIDMonitoringSystem.Core.TravelEntryMgr
         public DateTime EntryDate { get; }
         public DateTime ShnEndDate { get; private set; }
         public SHNFacility ShnFacility { get; private set; }
-        public SHNRequirement Requirement { get; private set; }
-        public SHNCalculator Calculator { get; private set; }
+        public AccommodationTier Tier { get; private set; }
+        public SHNConditions Conditions { get; private set; }
         public TravelEntryStatus Status { get; private set; } = TravelEntryStatus.Incomplete;
         public bool IsPaid { get; internal set; }
 
@@ -59,21 +59,21 @@ namespace COVIDMonitoringSystem.Core.TravelEntryMgr
             }
 
             GetRequirementAndCalculator();
-            ShnEndDate = EntryDate.AddDays(Requirement.QuarantineDays);
+            ShnEndDate = EntryDate.AddDays(Conditions.QuarantineDays);
             ValidateCompletedEntry();
         }
 
         private void GetRequirementAndCalculator()
         {
-            Requirement = SHNRequirement.FindAppropriateRequirement(this);
-            if (Requirement == null)
+            Tier = AccommodationTier.FindAppropriateTier(this);
+            if (Tier == null)
             {
                 Status = TravelEntryStatus.Error;
                 throw new InvalidOperationException("Unable to find requirement!");
             }
 
-            Calculator = SHNCalculator.FindAppropriateCalculator(this);
-            if (Calculator == null)
+            Conditions = SHNConditions.FindAppropriateCalculator(this);
+            if (Conditions == null)
             {
                 Status = TravelEntryStatus.Error;
                 throw new InvalidOperationException("Unable to find calculator!");
@@ -82,14 +82,15 @@ namespace COVIDMonitoringSystem.Core.TravelEntryMgr
 
         private void ValidateCompletedEntry()
         {
+            //TODO: Do actual checking
             Status = TravelEntryStatus.Completed;
         }
 
         public bool AssignSHNFacility(SHNFacility facility)
         {
-            if (!Requirement.RequiresSHNFacility)
+            if (!Conditions.RequireDedicatedFacility)
             {
-                Logging.Error($"No dedicated SHN facility needed for type: {Requirement}");
+                Logging.Error($"No dedicated SHN facility needed for type: {Tier}");
                 return false;
             }
             
@@ -97,18 +98,9 @@ namespace COVIDMonitoringSystem.Core.TravelEntryMgr
             return true;
         }
 
-        public double CalculateCharge()
+        public double CalculateCharges()
         {
-            var cost = Calculator.TransportCost(this);
-            if (Requirement.NeedSwapTest)
-            {
-                cost += Calculator.SwapTestCost(this);
-            }
-            if (Requirement.RequiresSHNFacility)
-            {
-                cost += Calculator.DedicatedFacilityCost(this);
-            }
-            return cost;
+            return Conditions.CalculateCharges(this);
         }
 
         public override string ToString()

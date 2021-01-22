@@ -13,12 +13,7 @@ namespace COVIDMonitoringSystem.Core.PersonMgr
             PassportNo = passportNo;
             Nationality = nationality;
         }
-
-        public override SHNPayment CalculateSHNCharges()
-        {
-            throw new NotImplementedException();
-        }
-
+        
         public override string ToString()
         {
             return base.ToString();

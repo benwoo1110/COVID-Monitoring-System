@@ -17,11 +17,6 @@ namespace COVIDMonitoringSystem.Core.TravelEntryMgr
             Distance = new CheckPointDistance(distFromAirCheckpoint, distFromSeaCheckpoint, distFromLandCheckpoint);
         }
 
-        public double CalculateTravelCost(TravelEntry entry)
-        {
-            return Distance.FromMode(entry.EntryMode);
-        }
-
         public bool IsAvailable()
         {
             return FacilityVacancy > 0;

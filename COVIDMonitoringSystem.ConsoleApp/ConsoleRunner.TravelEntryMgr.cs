@@ -29,26 +29,47 @@ namespace COVIDMonitoringSystem.ConsoleApp
 
         private void NewTravelRecord()
         {
-            var person = ConsoleHelper.GetInput("Enter name: ", Manager.FindPerson);
-            if (person == null)
+            var targetPerson = ConsoleHelper.GetInput("Enter name: ", Manager.FindPerson);
+            if (targetPerson == null)
             {
                 //TODO: Some message
                 return;
             }
 
             var travelEntry = new TravelEntry(
-                person,
+                targetPerson,
                 ConsoleHelper.GetInput("Last Country: "),
                 ConsoleHelper.GetInput("Entry Mode: ", ConsoleHelper.EnumParser<TravelEntryMode>),
                 ConsoleHelper.GetInput("Entry Date: ", Convert.ToDateTime)
             );
             
-            person.AddTravelEntry(travelEntry);
+            targetPerson.AddTravelEntry(travelEntry);
         }
 
         private void PaySHNCharges()
         {
-            Console.WriteLine("PaySHNCharges");
+            var targetPerson = ConsoleHelper.GetInput("Enter name: ", Manager.FindPerson);
+            if (targetPerson == null)
+            {
+                //TODO: Some message
+                return;
+            }
+
+            var payment = targetPerson.GenerateSHNPaymentDetails();
+            
+            Console.WriteLine($"{targetPerson.Name} has {payment.NumberOfUnpaidEntries()} unpaid travel entries.");
+            //TODO: Show info on each travel entry
+            Console.WriteLine($"Subtotal: ${payment.SubTotalPrice:0.00}");
+            Console.WriteLine($"Total: ${payment.TotalPrice:0.00} (include 7% GST)");
+            
+            if (!ConsoleHelper.Confirm("Do you want to pay the travel entries now?"))
+            {
+                Console.WriteLine("No payment made, you can come again on a later date to do so.");
+                return;
+            }
+            
+            payment.DoPayment();
+            Console.WriteLine($"Payment for {payment.NumberOfUnpaidEntries()} travel entries has be successfully made!");
         }
 
         private void GenerateSHNReport()
