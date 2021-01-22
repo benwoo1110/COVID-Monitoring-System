@@ -29,9 +29,8 @@ namespace COVIDMonitoringSystem.ConsoleApp
                     var expiry = inputCollectDate.AddMonths(6);
                     TraceTogetherToken newT = new TraceTogetherToken(finalSerial, inputCollectLocation, expiry);
                     targetResident.Token = newT;
-                    Console.WriteLine("A new token has been issued to you. Your serial number is " + finalSerial +
-                        ", your collection location is at " + inputCollectLocation + " and the expiry date of your token is "
-                        + expiry + ".");
+                    Console.WriteLine($"A new token has been issued to you. Your serial number is {finalSerial}, " +
+                        $"your collection location is at {inputCollectLocation} and the expiry date of your token is {expiry}.");
                 }
                 else if (targetResident.Token.IsEligibleForReplacement())
                 {
@@ -41,9 +40,9 @@ namespace COVIDMonitoringSystem.ConsoleApp
                     var finalSerial = "T" + Convert.ToString(serialnum);
                     var inputCollectLocation = ConsoleHelper.GetInput("Enter your collection location: ");
                     targetResident.Token.ReplaceToken(finalSerial, inputCollectLocation);
-                    Console.WriteLine("A new token has been issued to you. Your serial number is " + finalSerial +
-                        ", your collection location is at " + inputCollectLocation + " and the expiry date of your token is "
-                        + targetResident.Token.ExpiryDate + ".");
+                    Console.WriteLine($"A new token has been issued to you. Your serial number is {finalSerial}, " +
+                        $"your collection location is at {inputCollectLocation} and the expiry date of your token is " +
+                        $"{targetResident.Token.ExpiryDate}.");
                 }
                 else
                 {
