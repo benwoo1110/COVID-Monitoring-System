@@ -2,15 +2,10 @@
 
 namespace COVIDMonitoringSystem.ConsoleApp.Display
 {
-    public class MenuOption
+    public class MenuOption : Option
     {
-        public string Name { get; }
-        public Action RunMethod { get; }
-
-        public MenuOption(string name, Action runMethod)
+        public MenuOption(string name, Action runMethod) : base(name, runMethod)
         {
-            Name = name;
-            RunMethod = runMethod;
         }
     }
 }

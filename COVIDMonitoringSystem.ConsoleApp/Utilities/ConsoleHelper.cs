@@ -41,7 +41,12 @@ namespace COVIDMonitoringSystem.ConsoleApp.Utilities
                 }
             }
         }
-
+        
+        public static void Pause(string message)
+        {
+            GetInput(message);
+        }
+        
         public static bool Confirm(string prompt)
         {
             return GetInput($"{prompt} [y/n]: ", input =>
@@ -53,6 +58,19 @@ namespace COVIDMonitoringSystem.ConsoleApp.Utilities
 
                 return input.ToLower().Equals("y");
             });
+        }
+
+        public static void PadHeight()
+        {
+            PadHeight(Console.WindowHeight);
+        }
+
+        public static void PadHeight(int height)
+        {
+            for (var i = 0; i < height; i++)
+            {
+                EmptyLine();
+            }
         }
         
         public static void WriteSeparator(int length)

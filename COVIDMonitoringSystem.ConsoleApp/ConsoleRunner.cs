@@ -24,11 +24,11 @@ namespace COVIDMonitoringSystem.ConsoleApp
                 "COVID Management System",
                 new[]
                 {
-                    new MenuOption("View Details of a Person", ViewPersonDetails),
-                    new MenuOption("View All Visitors", ViewAllVisitors),
+                    new Option("View Details of a Person", ViewPersonDetails),
+                    new Option("View All Visitors", ViewAllVisitors),
                     new MenuOption("SafeEntry Management", ManageSafeEntry),
                     new MenuOption("TravelEntry Management", ManageTravelEntry),
-                    new MenuOption("Explore Global Stats", ExploreGlobalStats), //TODO: Bonus stuff
+                    new Option("Explore Global Stats", ExploreGlobalStats), //TODO: Bonus stuff
                 }
             ));
 
@@ -36,11 +36,11 @@ namespace COVIDMonitoringSystem.ConsoleApp
                 "TravelEntry Management",
                 new[]
                 {
-                    new MenuOption("View All SHN Facilities", ViewAllSHNFacility),
-                    new MenuOption("New Visitor", NewVisitor),
-                    new MenuOption("New Travel Record", NewTravelRecord),
-                    new MenuOption("Pay SHN Charges", PaySHNCharges),
-                    new MenuOption("Generate SHN Status Report", GenerateSHNReport),
+                    new Option("View All SHN Facilities", ViewAllSHNFacility),
+                    new Option("New Visitor", NewVisitor),
+                    new Option("New Travel Record", NewTravelRecord),
+                    new Option("Pay SHN Charges", PaySHNCharges),
+                    new Option("Generate SHN Status Report", GenerateSHNReport),
                 }
             ));
 
@@ -48,11 +48,11 @@ namespace COVIDMonitoringSystem.ConsoleApp
                 "SafeEntry Management",
                 new[]
                 {
-                    new MenuOption("Assign or replace TraceTogether Token", AssignToken),
-                    new MenuOption("View all business locations", ViewLocations),
-                    new MenuOption("Change capacity of business location", ChangeCapacity),
-                    new MenuOption("SafeEntry Check-In", CheckIn),
-                    new MenuOption("SafeEntry Check-Out", CheckOut),
+                    new Option("Assign or replace TraceTogether Token", AssignToken),
+                    new Option("View all business locations", ViewLocations),
+                    new Option("Change capacity of business location", ChangeCapacity),
+                    new Option("SafeEntry Check-In", CheckIn),
+                    new Option("SafeEntry Check-Out", CheckOut),
                 }
             ));
         }

@@ -4,7 +4,7 @@ namespace COVIDMonitoringSystem.ConsoleApp.Display
 {
     public class MainMenu : Menu
     {
-        public MainMenu(string header, MenuOption[] contents) : base(header, contents)
+        public MainMenu(string header, Option[] contents) : base(header, contents)
         {
             SpecialOptionName = "Exit";
         }

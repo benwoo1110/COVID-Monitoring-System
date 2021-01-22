@@ -12,11 +12,11 @@ namespace COVIDMonitoringSystem.ConsoleApp.Display
         private static int length;
 
         public string Header { get; }
-        public MenuOption[] Contents { get; }
+        public Option[] Contents { get; }
         public string SpecialOptionName { get; set; }
         public bool Running { get; set; }
 
-        public Menu(string header, MenuOption[] contents)
+        public Menu(string header, Option[] contents)
         {
             Header = header;
             Contents = contents;
@@ -63,21 +63,24 @@ namespace COVIDMonitoringSystem.ConsoleApp.Display
             ConsoleHelper.WriteSubSeparator(length);
             ConsoleHelper.WriteWithPipe(ConsoleHelper.LeftText($"[{SpecialOption}] {SpecialOptionName}", length - 4));
             ConsoleHelper.WriteSeparator(length);
+            ConsoleHelper.PadHeight(Console.WindowHeight - GetMenuHeight() - 1);
         }
 
         private void DoOptionAction()
         {
-            while (true)
+            var optionNumber = ConsoleHelper.GetInput("Enter option: ", OptionParser);
+            if (IsSpecialOption(optionNumber))
             {
-                var optionNumber = ConsoleHelper.GetInput("Enter option: ", OptionParser);
-                if (IsSpecialOption(optionNumber))
-                {
-                    DoSpecialOption();
-                    return;
-                }
-
-                Contents[optionNumber - 1].RunMethod();
+                DoSpecialOption();
                 return;
+            }
+
+            Console.Clear();
+            Contents[optionNumber - 1].RunMethod();
+            ConsoleHelper.EmptyLine();
+            if (!(Contents[optionNumber - 1] is MenuOption))
+            {
+                ConsoleHelper.Pause("Back to menu...");
             }
         }
 
@@ -113,6 +116,11 @@ namespace COVIDMonitoringSystem.ConsoleApp.Display
         protected virtual void DoSpecialOption()
         {
             Running = false;
+        }
+
+        public int GetMenuHeight()
+        {
+            return Contents.Length + 6;
         }
     }
 }
