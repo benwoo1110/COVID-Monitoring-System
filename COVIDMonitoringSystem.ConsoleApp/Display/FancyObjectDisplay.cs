@@ -2,37 +2,62 @@
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using COVIDMonitoringSystem.ConsoleApp.Utilities;
+using COVIDMonitoringSystem.Core.Utilities;
 
 namespace COVIDMonitoringSystem.ConsoleApp.Display
 {
     public static class FancyObjectDisplay
     {
-        public static void PrintList<T>(List<T> objList)
+        private const int ColumnGap = 4;
+        
+        public static void PrintList<T>(ICollection<T> objList, string[] propertyToInclude) where T : class
         {
-            var properties = typeof(T).GetProperties();
-            var headings = new string[properties.Length];
+            var columnWidths = new int[propertyToInclude.Length];
+            
+            var headerItems = new string[propertyToInclude.Length];
+            for (var i = 0; i < propertyToInclude.Length; i++)
+            {
+                headerItems[i] = SplitPascalCase(propertyToInclude[i]);
+            }
+            
+            for (var i = 0; i < headerItems.Length; i++)
+            {
+                columnWidths[i] = propertyToInclude[i].Length;
+            }
 
-            var index = 0;
-            foreach (var property in properties)
-            {
-                headings[index] = SplitPascalCase(property.Name);
-                index++;
-            }
-            
-            foreach (var heading in headings)
-            {
-                Console.Write($"{heading,-24}");
-            }
-            ConsoleHelper.EmptyLine();
-            
+            var valuesArray = new Dictionary<string, string>[objList.Count];
+            var x = 0;
             foreach (var item in objList)
             {
-                foreach (var property in properties)
+                var propertyValues = ReflectHelper.GetAllPropertyValues(item);
+                for (var index = 0; index < propertyToInclude.Length; index++)
                 {
-                    Console.Write($"{property.GetValue(item),-24}");
+                    var textLength = propertyValues[propertyToInclude[index]].Length;
+                    if (textLength > columnWidths[index])
+                    {
+                        columnWidths[index] = textLength;
+                    }
                 }
+                valuesArray[x++] = propertyValues;
+            }
 
-                ConsoleHelper.EmptyLine();
+            for (var index = 0; index < columnWidths.Length; index++)
+            {
+                var format = $"{{0,-{columnWidths[index] + ColumnGap}}}";
+                Console.Write(format, headerItems[index]);
+            }
+
+            ConsoleHelper.EmptyLine();
+            ;
+
+            foreach (var propertyValues in valuesArray)
+            {
+                for (var index = 0; index < columnWidths.Length; index++)
+                {
+                    var format = $"{{0,-{columnWidths[index] + ColumnGap}}}";
+                    Console.Write(format, propertyValues[propertyToInclude[index]]);
+                }
+                ConsoleHelper.EmptyLine();;
             }
         }
 

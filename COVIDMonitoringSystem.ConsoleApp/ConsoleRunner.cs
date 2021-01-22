@@ -69,7 +69,9 @@ namespace COVIDMonitoringSystem.ConsoleApp
 
         private void ViewAllVisitors()
         {
+            /*
             FancyObjectDisplay.PrintList(Manager.PersonList.FindAll(p => p is Visitor).ConvertAll(p => (Visitor) p));
+        */
         }
 
         private void ExploreGlobalStats()
