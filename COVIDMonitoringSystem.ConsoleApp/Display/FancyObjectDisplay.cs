@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text.RegularExpressions;
 using COVIDMonitoringSystem.ConsoleApp.Utilities;
 using COVIDMonitoringSystem.Core.Utilities;
@@ -9,20 +10,20 @@ namespace COVIDMonitoringSystem.ConsoleApp.Display
     public static class FancyObjectDisplay
     {
         private const int ColumnGap = 4;
-        
+
         public static void PrintList<T>(ICollection<T> objList, string[] propertyToInclude) where T : class
         {
             var columnWidths = new int[propertyToInclude.Length];
-            
+
             var headerItems = new string[propertyToInclude.Length];
             for (var i = 0; i < propertyToInclude.Length; i++)
             {
                 headerItems[i] = SplitPascalCase(propertyToInclude[i]);
             }
-            
+
             for (var i = 0; i < headerItems.Length; i++)
             {
-                columnWidths[i] = propertyToInclude[i].Length;
+                columnWidths[i] = headerItems[i].Length;
             }
 
             var valuesArray = new Dictionary<string, string>[objList.Count];
@@ -38,6 +39,7 @@ namespace COVIDMonitoringSystem.ConsoleApp.Display
                         columnWidths[index] = textLength;
                     }
                 }
+
                 valuesArray[x++] = propertyValues;
             }
 
@@ -48,7 +50,8 @@ namespace COVIDMonitoringSystem.ConsoleApp.Display
             }
 
             ConsoleHelper.EmptyLine();
-            ;
+
+            Console.WriteLine(new string('-', columnWidths.Sum() + (columnWidths.Length - 1) * ColumnGap));
 
             foreach (var propertyValues in valuesArray)
             {
@@ -57,7 +60,8 @@ namespace COVIDMonitoringSystem.ConsoleApp.Display
                     var format = $"{{0,-{columnWidths[index] + ColumnGap}}}";
                     Console.Write(format, propertyValues[propertyToInclude[index]]);
                 }
-                ConsoleHelper.EmptyLine();;
+
+                ConsoleHelper.EmptyLine();
             }
         }
 
