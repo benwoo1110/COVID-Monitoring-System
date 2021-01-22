@@ -152,7 +152,7 @@ namespace COVIDMonitoringSystem.Core
 
         public BusinessLocation FindBusinessLocation(string name)
         {
-            return BusinessLocationList.Find(businessLocation => businessLocation.BusinessName.Equals(name));
+            return BusinessLocationList.Find(businessLocation => businessLocation.BusinessName.ToLower().Equals(name.ToLower()));
         }
         
         public SHNFacility FindSHNFacility(string name)

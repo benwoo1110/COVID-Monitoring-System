@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Text;
 using COVIDMonitoringSystem.ConsoleApp.Display;
+using COVIDMonitoringSystem.ConsoleApp.Utilities;
+using COVIDMonitoringSystem.Core.PersonMgr;
 
 namespace COVIDMonitoringSystem.ConsoleApp
 {
@@ -13,7 +15,8 @@ namespace COVIDMonitoringSystem.ConsoleApp
         }
         private void AssignToken()
         {
-            Console.WriteLine("Assign Token");
+            var targetPerson = ConsoleHelper.GetInput("Enter person's name: ", Manager.FindPerson);
+
         }
 
         private void ViewLocations()
@@ -26,7 +29,16 @@ namespace COVIDMonitoringSystem.ConsoleApp
 
         private void ChangeCapacity()
         {
-            Console.WriteLine("Change business location capacity");
+            var targetBusiness = ConsoleHelper.GetInput("Enter business name to search for: ", Manager.FindBusinessLocation);
+            if (targetBusiness != null)
+            {
+                int newCapacity = ConsoleHelper.GetInput("Enter new maximum capacity: ", Convert.ToInt32);
+                targetBusiness.MaximumCapacity = newCapacity;
+            }
+            else
+            {
+                Console.WriteLine("Business not found. Dumbass");
+            }
         }
 
         private void CheckIn()
