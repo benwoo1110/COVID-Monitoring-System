@@ -13,14 +13,14 @@ namespace COVIDMonitoringSystem.Core.TravelEntryMgr
         public static readonly SHNConditions ResidentNone = new SHNConditionsBuilder()
             .WithQuarantineDays(0)
             .WithSwapTest()
-            .WithMatcher(new TravelEntryMatcher(typeof(Resident), AccommodationTier.None))
+            .WithMatcher(new TravelEntryMatcher(typeof(Resident), SHNTier.None))
             .Build();
 
         public static readonly SHNConditions ResidentOwnAcc = new SHNConditionsBuilder()
             .WithQuarantineDays(7)
             .WithSwapTest()
             .WithTransport(tr => 20)
-            .WithMatcher(new TravelEntryMatcher(typeof(Resident), AccommodationTier.OwnAcc))
+            .WithMatcher(new TravelEntryMatcher(typeof(Resident), SHNTier.OwnAcc))
             .Build();
 
         public static readonly SHNConditions ResidentDedicated = new SHNConditionsBuilder()
@@ -28,21 +28,21 @@ namespace COVIDMonitoringSystem.Core.TravelEntryMgr
             .WithSwapTest()
             .WithTransport(tr => 20)
             .WithDedicatedFacility(tr => 1000)
-            .WithMatcher(new TravelEntryMatcher(typeof(Resident), AccommodationTier.Dedicated))
+            .WithMatcher(new TravelEntryMatcher(typeof(Resident), SHNTier.Dedicated))
             .Build();
 
         public static readonly SHNConditions VisitorNone = new SHNConditionsBuilder()
             .WithQuarantineDays(0)
             .WithSwapTest()
             .WithTransport(tr => 80)
-            .WithMatcher(new TravelEntryMatcher(typeof(Visitor), AccommodationTier.None))
+            .WithMatcher(new TravelEntryMatcher(typeof(Visitor), SHNTier.None))
             .Build();
 
         public static readonly SHNConditions VisitorOwnAcc = new SHNConditionsBuilder()
             .WithQuarantineDays(7)
             .WithSwapTest()
             .WithTransport(tr => 80)
-            .WithMatcher(new TravelEntryMatcher(typeof(Visitor), AccommodationTier.OwnAcc))
+            .WithMatcher(new TravelEntryMatcher(typeof(Visitor), SHNTier.OwnAcc))
             .Build();
 
         public static readonly SHNConditions VisitorDedicated = new SHNConditionsBuilder()
@@ -50,7 +50,7 @@ namespace COVIDMonitoringSystem.Core.TravelEntryMgr
             .WithSwapTest()
             .WithTransport(tr => 100) //TODO: Do real calculation
             .WithDedicatedFacility(tr => 2000)
-            .WithMatcher(new TravelEntryMatcher(typeof(Visitor), AccommodationTier.Dedicated))
+            .WithMatcher(new TravelEntryMatcher(typeof(Visitor), SHNTier.Dedicated))
             .Build();
 
         public static void RegisterChargeCalculator([NotNull] TravelEntryMatcher matcher, [NotNull] SHNConditions conditions)

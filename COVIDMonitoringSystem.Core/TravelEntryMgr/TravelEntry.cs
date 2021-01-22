@@ -13,7 +13,7 @@ namespace COVIDMonitoringSystem.Core.TravelEntryMgr
         public DateTime EntryDate { get; }
         public DateTime ShnEndDate { get; private set; }
         public SHNFacility ShnFacility { get; private set; }
-        public AccommodationTier Tier { get; private set; }
+        public SHNTier Tier { get; private set; }
         public SHNConditions Conditions { get; private set; }
         public TravelEntryStatus Status { get; private set; } = TravelEntryStatus.Incomplete;
         public bool IsPaid { get; internal set; }
@@ -65,7 +65,7 @@ namespace COVIDMonitoringSystem.Core.TravelEntryMgr
 
         private void GetRequirementAndCalculator()
         {
-            Tier = AccommodationTier.FindAppropriateTier(this);
+            Tier = SHNTier.FindAppropriateTier(this);
             if (Tier == null)
             {
                 Status = TravelEntryStatus.Error;

@@ -11,9 +11,9 @@ namespace COVIDMonitoringSystem.Core.TravelEntryMgr
         }
         
         public Type PersonType { get; }
-        public AccommodationTier Tier { get; }
+        public SHNTier Tier { get; }
 
-        public TravelEntryMatcher(Type personType, AccommodationTier tier)
+        public TravelEntryMatcher(Type personType, SHNTier tier)
         {
             PersonType = personType;
             Tier = tier;

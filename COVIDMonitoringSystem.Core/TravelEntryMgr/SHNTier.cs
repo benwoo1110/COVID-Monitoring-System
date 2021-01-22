@@ -4,25 +4,25 @@ using JetBrains.Annotations;
 
 namespace COVIDMonitoringSystem.Core.TravelEntryMgr
 {
-    public class AccommodationTier
+    public class SHNTier
     {
-        private static readonly Dictionary<string, AccommodationTier> Types = new Dictionary<string, AccommodationTier>();
+        private static readonly Dictionary<string, SHNTier> Types = new Dictionary<string, SHNTier>();
         
-        public static readonly AccommodationTier None = new AccommodationTier(
+        public static readonly SHNTier None = new SHNTier(
             new []{ "New Zealand", "Vietnam" }
         );
         
-        public static readonly AccommodationTier OwnAcc = new AccommodationTier(
+        public static readonly SHNTier OwnAcc = new SHNTier(
             new []{ "Macao SAR" }
         );
         
-        public static readonly AccommodationTier Dedicated = new AccommodationTier(
+        public static readonly SHNTier Dedicated = new SHNTier(
             new string[]{ }
         );
         
-        private static readonly AccommodationTier FallbackRequirement = Dedicated;
+        private static readonly SHNTier FallbackRequirement = Dedicated;
 
-        private static void RegisterRequirement([NotNull] AccommodationTier requirement)
+        private static void RegisterRequirement([NotNull] SHNTier requirement)
         {
             foreach (var country in requirement.TargetCountries)
             {
@@ -30,14 +30,14 @@ namespace COVIDMonitoringSystem.Core.TravelEntryMgr
             }
         }
         
-        [NotNull] public static AccommodationTier FindAppropriateTier([NotNull] TravelEntry entry)
+        [NotNull] public static SHNTier FindAppropriateTier([NotNull] TravelEntry entry)
         {
             return Types.GetValueOrDefault(entry.LastCountryOfEmbarkation.ToLower()) ?? FallbackRequirement;
         }
         
         public string[] TargetCountries { [NotNull] get; }
 
-        private AccommodationTier(
+        private SHNTier(
             [NotNull] string[] targetCountries)
         {
             TargetCountries = targetCountries;
