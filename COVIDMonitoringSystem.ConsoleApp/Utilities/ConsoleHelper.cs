@@ -54,6 +54,21 @@ namespace COVIDMonitoringSystem.ConsoleApp.Utilities
                 return input.ToLower().Equals("y");
             });
         }
+        
+        public static void WriteSeparator(int length)
+        {
+            Console.WriteLine($"+{new string('-', length - 2)}+");
+        }
+
+        public static void WriteSubSeparator(int length)
+        {
+            Console.WriteLine($"|{new string('-', length - 2)}|");
+        }
+
+        public static void WriteWithPipe(string text)
+        {
+            Console.WriteLine($"| {text} |");
+        }
 
         public static void EmptyLine()
         {

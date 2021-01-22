@@ -7,6 +7,7 @@ namespace COVIDMonitoringSystem.ConsoleApp.Display
     public class Menu
     {
         private const int SpecialOption = 0;
+        private const int Length = 40;
 
         public string Header { get; }
         public MenuOption[] Contents { get; }
@@ -38,12 +39,15 @@ namespace COVIDMonitoringSystem.ConsoleApp.Display
         private void ShowMenu()
         {
             ConsoleHelper.EmptyLine();
-            Console.WriteLine(Header);
+            FancyObjectDisplay.PrintHeader(Header, Length);
             for (var index = 0; index < Contents.Length; index++)
             {
-                Console.WriteLine($"[{index + 1}] {Contents[index].Name}");
+                ConsoleHelper.WriteWithPipe($"{$"[{index + 1}] {Contents[index].Name}",-(Length-4)}");
             }
-            Console.WriteLine($"[{SpecialOption}] {SpecialOptionName}");
+
+            ConsoleHelper.WriteSubSeparator(Length);
+            ConsoleHelper.WriteWithPipe($"{$"[{SpecialOption}] {SpecialOptionName}",-(Length - 4)}");
+            ConsoleHelper.WriteSeparator(Length);
         }
 
         private void DoOptionAction()

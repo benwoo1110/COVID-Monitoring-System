@@ -70,9 +70,34 @@ namespace COVIDMonitoringSystem.ConsoleApp.Display
             return Regex.Replace(text, @"(?<=[A-Za-z])(?=[A-Z][a-z])|(?<=[a-z0-9])(?=[0-9]?[A-Z])", " ");
         }
 
-        public static void PrintHeader()
+        public static void PrintHeader(string text, int width)
         {
-            Console.WriteLine(Console.WindowHeight);
+            ConsoleHelper.WriteSeparator(width);
+            ConsoleHelper.WriteWithPipe(CenterText(text, width - 4));
+            ConsoleHelper.WriteSeparator(width);
+        }
+
+        private static string CenterText(string text, int width)
+        {
+            var spaceNeeded = width - text.Length;
+            var left = spaceNeeded > 0 ? spaceNeeded / 2 : 0;
+
+            return $"{new string(' ', left)}{text}{new string(' ', spaceNeeded - left)}";
         }
     }
 }
+
+/*
+
++-----------------------------------+
+|      COVID Management System      |
++-----------------------------------+
+| [1] View Details of a Person      |
+| [2] View All Visitors             |
+| [3] SafeEntry Management          |
+| [4] TravelEntry Management        |
+| [5] Explore Global Stats          |
+| [0] Exit                          |
++-----------------------------------+
+
+*/

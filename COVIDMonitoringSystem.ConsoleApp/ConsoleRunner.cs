@@ -21,7 +21,7 @@ namespace COVIDMonitoringSystem.ConsoleApp
         private void SetUpMenus()
         {
             MenusCollection.Add("mainMenu", new MainMenu(
-                "------- COVID Management System -------",
+                "COVID Management System",
                 new[]
                 {
                     new MenuOption("View Details of a Person", ViewPersonDetails),

@@ -18,7 +18,6 @@ namespace COVIDMonitoringSystem.ConsoleApp
 
         private void ViewLocations()
         {
-            FancyObjectDisplay.PrintHeader();
             FancyObjectDisplay.PrintList(
                 Manager.BusinessLocationList,
                 new []{ "BusinessName", "BranchCode", "MaximumCapacity", "VisitorsNow" }    
