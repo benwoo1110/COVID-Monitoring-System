@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using COVIDMonitoringSystem.ConsoleApp.Display;
 
 namespace COVIDMonitoringSystem.ConsoleApp
 {
@@ -17,11 +18,7 @@ namespace COVIDMonitoringSystem.ConsoleApp
 
         private void ViewLocations()
         {
-            Console.WriteLine("{0,10} {1,10} {2,10}", "Business Name", "Branch Code", "Max Capacity");
-            foreach (var b in Manager.BusinessLocationList)
-            {
-                Console.WriteLine("{0,10} {1,10} {2,10}", b.BusinessName, b.BranchCode, b.MaximumCapacity);
-            }
+            FancyObjectDisplay.PrintList(Manager.BusinessLocationList);
         }
 
         private void ChangeCapacity()

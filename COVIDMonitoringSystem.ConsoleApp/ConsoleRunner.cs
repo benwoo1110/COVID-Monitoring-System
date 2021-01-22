@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using COVIDMonitoringSystem.ConsoleApp.Display;
 using COVIDMonitoringSystem.Core;
+using COVIDMonitoringSystem.Core.PersonMgr;
 
 namespace COVIDMonitoringSystem.ConsoleApp
 {
@@ -68,7 +69,7 @@ namespace COVIDMonitoringSystem.ConsoleApp
 
         private void ViewAllVisitors()
         {
-            Console.WriteLine("ViewAllVisitors");
+            FancyObjectDisplay.PrintList(Manager.PersonList.FindAll(p => p is Visitor).ConvertAll(p => (Visitor) p));
         }
 
         private void ExploreGlobalStats()

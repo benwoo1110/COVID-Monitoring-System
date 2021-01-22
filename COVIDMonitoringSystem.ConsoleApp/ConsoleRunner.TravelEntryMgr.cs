@@ -1,4 +1,5 @@
 ﻿using System;
+using COVIDMonitoringSystem.ConsoleApp.Display;
 using COVIDMonitoringSystem.ConsoleApp.Utilities;
 using COVIDMonitoringSystem.Core;
 using COVIDMonitoringSystem.Core.PersonMgr;
@@ -15,7 +16,7 @@ namespace COVIDMonitoringSystem.ConsoleApp
 
         private void ViewAllSHNFacility()
         {
-            Console.WriteLine("ViewAllSHNFacility");
+            FancyObjectDisplay.PrintList(Manager.SHNFacilitiesList);
         }
 
         private void NewVisitor()
