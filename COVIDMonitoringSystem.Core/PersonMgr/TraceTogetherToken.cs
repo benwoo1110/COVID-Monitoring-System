@@ -19,12 +19,15 @@ namespace COVIDMonitoringSystem.Core.PersonMgr
 
         public bool IsEligibleForReplacement()
         {
-            throw new NotImplementedException();
+            int expiryCheck = ((ExpiryDate.Year - DateTime.Now.Year) * 12) + ExpiryDate.Month - DateTime.Now.Month;
+            return expiryCheck <= 1;
         }
 
         public void ReplaceToken(string no, string location)
         {
-            throw new NotImplementedException();
+            SerialNo = no;
+            CollectionLocation = location;
+            ExpiryDate = DateTime.Now.AddMonths(6);
         }
 
         public override string ToString()

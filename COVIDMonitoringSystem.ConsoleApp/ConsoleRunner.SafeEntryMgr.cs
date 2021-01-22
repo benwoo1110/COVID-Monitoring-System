@@ -15,8 +15,44 @@ namespace COVIDMonitoringSystem.ConsoleApp
         }
         private void AssignToken()
         {
-            var targetPerson = ConsoleHelper.GetInput("Enter person's name: ", Manager.FindPerson);
-
+            Resident targetResident = ConsoleHelper.GetInput("Enter resident name: ", Manager.FindPersonOfType<Resident>);
+            if (targetResident != null)
+            {
+                if (targetResident.Token == null)
+                {
+                    Console.WriteLine("A new token will be issued to you.");
+                    Random generator = new Random();
+                    int serialnum = generator.Next(10000, 100000);
+                    var finalSerial = "T" + Convert.ToString(serialnum);
+                    var inputCollectLocation = ConsoleHelper.GetInput("Enter your collection location: ");
+                    var inputCollectDate = DateTime.Now;
+                    var expiry = inputCollectDate.AddMonths(6);
+                    TraceTogetherToken newT = new TraceTogetherToken(finalSerial, inputCollectLocation, expiry);
+                    targetResident.Token = newT;
+                    Console.WriteLine("A new token has been issued to you. Your serial number is " + finalSerial +
+                        ", your collection location is at " + inputCollectLocation + " and the expiry date of your token is "
+                        + expiry + ".");
+                }
+                else if (targetResident.Token.IsEligibleForReplacement())
+                {
+                    Console.WriteLine("Your token is expiring soon. A new token will be issued to you.");
+                    Random generator = new Random();
+                    var serialnum = generator.Next(10000, 100000);
+                    var finalSerial = "T" + Convert.ToString(serialnum);
+                    var inputCollectLocation = ConsoleHelper.GetInput("Enter your collection location: ");
+                    targetResident.Token.ReplaceToken(finalSerial, inputCollectLocation);
+                    Console.WriteLine("A new token has been issued to you. Your serial number is " + finalSerial +
+                        ", your collection location is at " + inputCollectLocation + " and the expiry date of your token is "
+                        + targetResident.Token.ExpiryDate + ".");
+                }
+                else
+                {
+                    Console.WriteLine("Your token has not expired. Dumbass");
+                }
+                return;
+            }
+            Console.WriteLine("Resident does not exist, or person is not a resident.");
+            
         }
 
         private void ViewLocations()
