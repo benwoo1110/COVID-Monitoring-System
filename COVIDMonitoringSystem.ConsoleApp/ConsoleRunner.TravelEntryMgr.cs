@@ -16,7 +16,10 @@ namespace COVIDMonitoringSystem.ConsoleApp
 
         private void ViewAllSHNFacility()
         {
-            /*FancyObjectDisplay.PrintList(Manager.SHNFacilitiesList);*/
+            FancyObjectDisplay.PrintList(
+                Manager.SHNFacilitiesList,
+                new []{ "FacilityName", "FacilityCapacity", "FacilityVacancy", "FromLand", "FromSea", "FromAir" }
+            );
         }
 
         private void NewVisitor()
