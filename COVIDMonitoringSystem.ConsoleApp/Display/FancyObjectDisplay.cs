@@ -78,18 +78,3 @@ namespace COVIDMonitoringSystem.ConsoleApp.Display
         }
     }
 }
-
-/*
-
-+-----------------------------------+
-|      COVID Management System      |
-+-----------------------------------+
-| [1] View Details of a Person      |
-| [2] View All Visitors             |
-| [3] SafeEntry Management          |
-| [4] TravelEntry Management        |
-| [5] Explore Global Stats          |
-| [0] Exit                          |
-+-----------------------------------+
-
-*/
