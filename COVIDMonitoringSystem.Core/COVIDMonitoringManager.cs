@@ -165,6 +165,11 @@ namespace COVIDMonitoringSystem.Core
             return PersonList.Find(person => person.Name.Equals(name));
         }
 
+        public T FindPersonOfType<T>(string name) where T : Person
+        {
+            return GetAllPersonOfType<T>().Find(person => person.Name.ToLower().Equals(name.ToLower()));
+        }
+
         public List<T> GetAllPersonOfType<T>() where T : Person
         {
             return PersonList.FindAll(p => p is T).ConvertAll(p => (T) p);
