@@ -53,7 +53,7 @@ namespace COVIDMonitoringSystem.ConsoleApp.Display
 
         private void ShowMenu()
         {
-            ConsoleHelper.EmptyLine();
+            Console.Clear();
             FancyObjectDisplay.PrintHeader(Header, length);
             for (var index = 0; index < Contents.Length; index++)
             {
@@ -63,11 +63,12 @@ namespace COVIDMonitoringSystem.ConsoleApp.Display
             ConsoleHelper.WriteSubSeparator(length);
             ConsoleHelper.WriteWithPipe(ConsoleHelper.LeftText($"[{SpecialOption}] {SpecialOptionName}", length - 4));
             ConsoleHelper.WriteSeparator(length);
-            ConsoleHelper.PadHeight(Console.WindowHeight - GetMenuHeight() - 1);
+            ConsoleHelper.PadHeight(Console.WindowHeight - GetMenuHeight() - 2);
         }
 
         private void DoOptionAction()
         {
+            ConsoleHelper.EmptyLine();
             var optionNumber = ConsoleHelper.GetInput("Enter option: ", OptionParser);
             if (IsSpecialOption(optionNumber))
             {
@@ -97,6 +98,7 @@ namespace COVIDMonitoringSystem.ConsoleApp.Display
             }
             catch (Exception)
             {
+                ShowMenu();
                 throw new InputParseFailedException($"Please enter a number between 0 and {Contents.Length}!");
             }
 

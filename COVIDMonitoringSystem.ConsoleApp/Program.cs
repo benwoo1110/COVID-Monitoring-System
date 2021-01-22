@@ -4,6 +4,7 @@
 // Module Group   : T06
 //============================================================
 
+using System;
 using COVIDMonitoringSystem.Core.Utilities;
 
 namespace COVIDMonitoringSystem.ConsoleApp
@@ -12,6 +13,7 @@ namespace COVIDMonitoringSystem.ConsoleApp
     {
         static void Main(string[] args)
         {
+            Console.ForegroundColor = ConsoleColor.DarkCyan;
             Logging.SetLogLevel(LogLevel.Debug);
             new ConsoleRunner().Run();
         }
