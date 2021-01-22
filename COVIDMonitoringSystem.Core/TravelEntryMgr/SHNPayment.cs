@@ -31,6 +31,11 @@ namespace COVIDMonitoringSystem.Core.TravelEntryMgr
         {
             return Entries.Count;
         }
+        
+        public bool HasUnpaidEntries()
+        {
+            return Entries.Count > 0;
+        }
 
         public void DoPayment()
         {

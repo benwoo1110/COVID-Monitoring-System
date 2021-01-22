@@ -56,9 +56,19 @@ namespace COVIDMonitoringSystem.ConsoleApp
             }
 
             var payment = targetPerson.GenerateSHNPaymentDetails();
+            if (!payment.HasUnpaidEntries())
+            {
+                Console.WriteLine($"{targetPerson.Name} does not make any unpaid travel entries.");
+                return;
+            }
             
             Console.WriteLine($"{targetPerson.Name} has {payment.NumberOfUnpaidEntries()} unpaid travel entries.");
-            //TODO: Show info on each travel entry
+            var index = 1;
+            foreach (var entry in payment.Entries)
+            {
+                Console.WriteLine($"{index} - {entry.LastCountryOfEmbarkation,-20} | ${entry.CalculateCharges():0.00}");
+                index++;
+            }
             Console.WriteLine($"Subtotal: ${payment.SubTotalPrice:0.00}");
             Console.WriteLine($"Total: ${payment.TotalPrice:0.00} (include 7% GST)");
             
