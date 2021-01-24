@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using COVIDMonitoringSystem.Core.SafeEntryMgr;
 using COVIDMonitoringSystem.Core.TravelEntryMgr;
 
 namespace COVIDMonitoringSystem.Core.PersonMgr

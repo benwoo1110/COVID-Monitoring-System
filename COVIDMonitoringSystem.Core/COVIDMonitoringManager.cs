@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Globalization;
 using COVIDMonitoringSystem.Core.PersonMgr;
+using COVIDMonitoringSystem.Core.SafeEntryMgr;
 using COVIDMonitoringSystem.Core.TravelEntryMgr;
 using COVIDMonitoringSystem.Core.Utilities;
 

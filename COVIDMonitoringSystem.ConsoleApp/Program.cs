@@ -13,7 +13,6 @@ namespace COVIDMonitoringSystem.ConsoleApp
     {
         static void Main(string[] args)
         {
-            Console.ForegroundColor = ConsoleColor.DarkCyan;
             Logging.SetLogLevel(LogLevel.Debug);
             new ConsoleRunner().Run();
         }

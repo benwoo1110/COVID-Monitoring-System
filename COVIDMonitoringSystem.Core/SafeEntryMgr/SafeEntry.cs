@@ -1,7 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 
-namespace COVIDMonitoringSystem.Core
+namespace COVIDMonitoringSystem.Core.SafeEntryMgr
 {
     public class SafeEntry
     {

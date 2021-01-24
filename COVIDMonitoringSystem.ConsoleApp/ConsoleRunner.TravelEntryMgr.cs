@@ -1,38 +1,63 @@
 ﻿using System;
 using COVIDMonitoringSystem.ConsoleApp.Display;
+using COVIDMonitoringSystem.ConsoleApp.Display.Builders;
+using COVIDMonitoringSystem.ConsoleApp.Display.Elements;
 using COVIDMonitoringSystem.ConsoleApp.Utilities;
 using COVIDMonitoringSystem.Core.PersonMgr;
+using COVIDMonitoringSystem.Core.SafeEntryMgr;
 using COVIDMonitoringSystem.Core.TravelEntryMgr;
 
 namespace COVIDMonitoringSystem.ConsoleApp
 {
     public partial class ConsoleRunner
     {
-        private void ManageTravelEntry()
+        private void SetUpTravelEntryScreens()
         {
-            MenusCollection["travelEntry"].RunMenuOption();
-        }
-
-        private void ViewAllSHNFacility()
-        {
-            FancyObjectDisplay.PrintList(
-                Manager.SHNFacilitiesList,
-                new []{ "FacilityName", "FacilityCapacity", "FacilityVacancy", "FromLand", "FromSea", "FromAir" }
+            DisplayManager.RegisterScreen(new ScreenBuilder(DisplayManager)
+                .OfName("viewFacilities")
+                .WithHeader("View All SHN Facilities")
+                .AddElement(new ObjectList<BusinessLocation>(
+                    new[] {"BusinessName", "BranchCode", "MaximumCapacity", "VisitorsNow"},
+                    () => Manager.BusinessLocationList
+                ))
+                .Build()
             );
-        }
 
-        private void NewVisitor()
-        {
-            Manager.AddPerson(new Visitor(
-                ConsoleHelper.GetInput("Enter Name: "),
-                ConsoleHelper.GetInput("Enter Passport Number: "),
-                ConsoleHelper.GetInput("Enter Nationality: ")
+            DisplayManager.RegisterScreen(new ScreenBuilder(DisplayManager)
+                .OfName("newVisitor")
+                .WithHeader("Create New Visitor")
+                .AddElement(new Input("Name"))
+                .AddElement(new Input("Passport Number"))
+                .AddElement(new Input("Nationality"))
+                .AddElement(new Label())
+                .Build()
+            );
+
+            DisplayManager.RegisterScreen(new LegacyScreen(
+                DisplayManager,
+                "travelRecord",
+                "New Travel Record",
+                NewTravelRecord
+            ));
+
+            DisplayManager.RegisterScreen(new LegacyScreen(
+                DisplayManager,
+                "paySHNCharges",
+                "Pay SHN Charges",
+                PaySHNCharges
+            ));
+
+            DisplayManager.RegisterScreen(new LegacyScreen(
+                DisplayManager,
+                "shnReport",
+                "Generate SHN Status Report",
+                GenerateSHNReport
             ));
         }
 
         private void NewTravelRecord()
         {
-            var targetPerson = ConsoleHelper.GetInput("Enter name: ", Manager.FindPerson);
+            var targetPerson = CHelper.GetInput("Enter name: ", Manager.FindPerson);
             if (targetPerson == null)
             {
                 //TODO: Some message
@@ -41,9 +66,9 @@ namespace COVIDMonitoringSystem.ConsoleApp
 
             var travelEntry = new TravelEntry(
                 targetPerson,
-                ConsoleHelper.GetInput("Last Country: "),
-                ConsoleHelper.GetInput("Entry Mode: ", ConsoleHelper.EnumParser<TravelEntryMode>),
-                ConsoleHelper.GetInput("Entry Date: ", Convert.ToDateTime)
+                CHelper.GetInput("Last Country: "),
+                CHelper.GetInput<TravelEntryMode>("Entry Mode: ", CHelper.EnumParser<TravelEntryMode>),
+                CHelper.GetInput("Entry Date: ", Convert.ToDateTime)
             );
             
             //TODO: Add SHN Facility
@@ -53,7 +78,7 @@ namespace COVIDMonitoringSystem.ConsoleApp
 
         private void PaySHNCharges()
         {
-            var targetPerson = ConsoleHelper.GetInput("Enter name: ", Manager.FindPerson);
+            var targetPerson = CHelper.GetInput("Enter name: ", Manager.FindPerson);
             if (targetPerson == null)
             {
                 //TODO: Some message
@@ -77,7 +102,7 @@ namespace COVIDMonitoringSystem.ConsoleApp
             Console.WriteLine($"Subtotal: ${payment.SubTotalPrice:0.00}");
             Console.WriteLine($"Total: ${payment.TotalPrice:0.00} (include 7% GST)");
             
-            if (!ConsoleHelper.Confirm("Do you want to pay the travel entries now?"))
+            if (!CHelper.Confirm("Do you want to pay the travel entries now?"))
             {
                 Console.WriteLine("No payment made, you can come again on a later date to do so.");
                 return;
@@ -89,7 +114,7 @@ namespace COVIDMonitoringSystem.ConsoleApp
 
         private void GenerateSHNReport()
         {
-            var targetDate = ConsoleHelper.GetInput("Enter Date to Report: ", Convert.ToDateTime);
+            var targetDate = CHelper.GetInput("Enter Date to Report: ", Convert.ToDateTime);
             Console.WriteLine(Manager.GenerateSHNStatusReportFile(targetDate)
                 ? "Successfully generated report file."
                 : "There was an error generating report file.");
