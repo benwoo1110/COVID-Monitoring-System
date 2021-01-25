@@ -22,7 +22,7 @@ namespace COVIDMonitoringSystem.ConsoleApp
                 .OfName("viewPersonDetails")
                 .WithHeader("View Details of a Person")
                 .AddElement(new Input("name", "Name"))
-                .AddElement(new Label(""))
+                .AddElement(new Spacer())
                 .Build()
             );
 

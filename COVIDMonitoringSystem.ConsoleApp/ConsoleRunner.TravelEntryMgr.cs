@@ -3,6 +3,7 @@ using COVIDMonitoringSystem.ConsoleApp.Display;
 using COVIDMonitoringSystem.ConsoleApp.Display.Builders;
 using COVIDMonitoringSystem.ConsoleApp.Display.Elements;
 using COVIDMonitoringSystem.ConsoleApp.Utilities;
+using COVIDMonitoringSystem.Core.PersonMgr;
 using COVIDMonitoringSystem.Core.TravelEntryMgr;
 
 namespace COVIDMonitoringSystem.ConsoleApp
@@ -22,12 +23,14 @@ namespace COVIDMonitoringSystem.ConsoleApp
             DisplayManager.RegisterScreen(new ScreenBuilder(DisplayManager)
                 .OfName("newVisitor")
                 .WithHeader("Create New Visitor")
+                .AddElement(new Label("header", "Please Enter Details of the Visitor"))
+                .AddElement(new Spacer())
                 .AddElement(new Input("name", "Name"))
                 .AddElement(new Input("passportNo", "Passport Number"))
                 .AddElement(new Input("nationality", "Nationality"))
-                .AddElement(new Label(""))
+                .AddElement(new Spacer())
                 .AddElement(new Button("create", "[Create]", Visitor))
-                .AddElement(new Label(""))
+                .AddElement(new Spacer())
                 .AddElement(new Label("result"))
                 .Build()
             );
@@ -56,7 +59,17 @@ namespace COVIDMonitoringSystem.ConsoleApp
 
         private void Visitor(Screen screen)
         {
-            screen.FindElementOfType<TextElement>("result").Text = "HAHAH";
+            var name = screen.FindElementOfType<Input>("name");
+            var passportNo = screen.FindElementOfType<Input>("passportNo");
+            var nationality = screen.FindElementOfType<Input>("nationality");
+            
+            Manager.AddPerson(new Visitor(name.Text, passportNo.Text, nationality.Text));
+            screen.FindElementOfType<TextElement>("result").Text = $"New visitor {name.Text} has been added to the system.";
+
+            name.Clear();
+            passportNo.Clear();
+            nationality.Clear();
+            
             screen.Display();
         }
 

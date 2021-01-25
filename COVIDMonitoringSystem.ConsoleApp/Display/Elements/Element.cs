@@ -9,6 +9,11 @@ namespace COVIDMonitoringSystem.ConsoleApp.Display.Elements
         public Box BoundingBox { get; set; }
         public bool Hidden { get; set; } = false;
 
+        protected Element()
+        {
+            BoundingBox = new Box();
+        }
+
         protected Element(string name)
         {
             Name = name;

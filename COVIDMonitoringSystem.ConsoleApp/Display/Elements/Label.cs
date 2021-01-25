@@ -5,5 +5,9 @@
         public Label(string name) : base(name)
         {
         }
+
+        public Label(string name, string text) : base(name, text)
+        {
+        }
     }
 }

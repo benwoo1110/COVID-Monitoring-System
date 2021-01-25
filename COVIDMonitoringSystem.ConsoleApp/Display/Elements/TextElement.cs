@@ -10,6 +10,11 @@ namespace COVIDMonitoringSystem.ConsoleApp.Display.Elements
         {
         }
 
+        protected TextElement(string name, string text) : base(name)
+        {
+            Text = text;
+        }
+
         public override void Display()
         {
             CHelper.WriteLine(Text);
