@@ -21,8 +21,8 @@ namespace COVIDMonitoringSystem.ConsoleApp.Utilities
             
             cachedWidth = Console.WindowWidth;
             cachedHeight = Console.WindowHeight;
-            
-            Console.SetWindowSize(Console.WindowWidth, Console.WindowHeight);
+
+            Clear();
             Console.SetBufferSize(Console.WindowWidth, Console.WindowHeight);
             
             return true;
