@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using COVIDMonitoringSystem.ConsoleApp.Display.Elements;
 using COVIDMonitoringSystem.ConsoleApp.Utilities;
+using COVIDMonitoringSystem.Core.Utilities;
 
 namespace COVIDMonitoringSystem.ConsoleApp.Display
 {
@@ -49,8 +50,7 @@ namespace COVIDMonitoringSystem.ConsoleApp.Display
 
         public virtual void Unload()
         {
-            SelectedIndex = -1;
-            SelectedElement = null;
+            ClearSelection();
             Active = false;
         }
 
@@ -123,7 +123,7 @@ namespace COVIDMonitoringSystem.ConsoleApp.Display
                 DisplayNormal(SelectedElement);
             }
 
-            SelectedIndex = Mod(to, CachedSelectableElement.Count);
+            SelectedIndex = CoreHelper.Mod(to, CachedSelectableElement.Count);
             SelectedElement = CachedSelectableElement[SelectedIndex];
             DisplaySelected(SelectedElement);
             Console.SetCursorPosition(SelectedElement.BoundingBox.Left, SelectedElement.BoundingBox.Top);
@@ -134,11 +134,15 @@ namespace COVIDMonitoringSystem.ConsoleApp.Display
             SetSelection(SelectedIndex + by);
         }
 
-        private static int Mod(int value, int modulus)
+        public void ClearSelection()
         {
-            return value == 0
-                ? 0
-                : ((value % modulus) + modulus) % modulus;
+            SelectedIndex = -1;
+            SelectedElement = null;
+        }
+
+        public bool HasSelection()
+        {
+            return SelectedIndex >= 0 && SelectedElement != null;
         }
 
         public Element FindElement(string name)

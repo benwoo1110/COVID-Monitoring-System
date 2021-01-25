@@ -8,18 +8,18 @@ namespace COVIDMonitoringSystem.ConsoleApp.Utilities
         
         public static readonly TextAlign Left = new TextAlign((text) =>
         {
-            var spaceNeeded = CHelper.WindowWidth - text.Length;
+            var spaceNeeded = CHelper.WindowWidth - text.Length - 4;
             return spaceNeeded <= 0
                 ? text
-                : text + new string(' ', spaceNeeded);
+                : "    " + text + new string(' ', spaceNeeded);
         });
 
         public static readonly TextAlign Right = new TextAlign((text) =>
         {
-            var spaceNeeded = CHelper.WindowWidth - text.Length;
+            var spaceNeeded = CHelper.WindowWidth - text.Length - 4;
             return spaceNeeded <= 0
                 ? text
-                : new string(' ', spaceNeeded) + text;
+                : new string(' ', spaceNeeded) + text + "    ";
         });
 
         public static readonly TextAlign Center = new TextAlign((text) =>

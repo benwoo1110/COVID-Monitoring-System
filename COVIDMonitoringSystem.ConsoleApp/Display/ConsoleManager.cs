@@ -22,6 +22,7 @@ namespace COVIDMonitoringSystem.ConsoleApp.Display
 
         private void SetDefaultKeyMap()
         {
+            KeyActionMap.Add(ConsoleKey.Tab, NextSelection);
             KeyActionMap.Add(ConsoleKey.DownArrow, NextSelection);
             KeyActionMap.Add(ConsoleKey.UpArrow, PreviousSelection);
             KeyActionMap.Add(ConsoleKey.Enter, DoSelection);
@@ -72,6 +73,13 @@ namespace COVIDMonitoringSystem.ConsoleApp.Display
 
         private void EscapeBack(ConsoleKeyInfo key)
         {
+            if (CurrentScreen.HasSelection())
+            {
+                CurrentScreen.ClearSelection();
+                CurrentScreen.Display();
+                return;
+            }
+            
             PopScreen();
         }
         
