@@ -11,12 +11,12 @@ namespace COVIDMonitoringSystem.ConsoleApp.Display.Builders
             OptionCount = 0;
         }
 
-        public MenuBuilder AddOption(string optionName, string targetMenu)
+        public MenuBuilder AddOption(string optionName, string targetScreen)
         {
             TargetScreen.AddElement(new Button
             {
                 Text = $"[{++OptionCount}] {optionName}",
-                Run = () => Manager.PushScreen(targetMenu)
+                Run = () => Manager.PushScreen(targetScreen)
             });
             return this;
         }

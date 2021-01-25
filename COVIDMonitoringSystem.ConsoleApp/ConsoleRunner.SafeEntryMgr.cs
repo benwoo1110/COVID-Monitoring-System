@@ -53,19 +53,19 @@ namespace COVIDMonitoringSystem.ConsoleApp
         
         private void AssignToken()
         {
-            Resident targetResident = CHelper.GetInput("Enter resident name: ", Manager.FindPersonOfType<Resident>);
+            var targetResident = CHelper.GetInput("Enter resident name: ", Manager.FindPersonOfType<Resident>);
             if (targetResident != null)
             {
                 if (targetResident.Token == null)
                 {
                     Console.WriteLine("A new token will be issued to you.");
-                    Random generator = new Random();
-                    int serialnum = generator.Next(10000, 100000);
-                    var finalSerial = "T" + Convert.ToString(serialnum);
+                    var generator = new Random();
+                    var serialNum = generator.Next(10000, 100000);
+                    var finalSerial = "T" + Convert.ToString(serialNum);
                     var inputCollectLocation = CHelper.GetInput("Enter your collection location: ");
                     var inputCollectDate = DateTime.Now;
                     var expiry = inputCollectDate.AddMonths(6);
-                    TraceTogetherToken newT = new TraceTogetherToken(finalSerial, inputCollectLocation, expiry);
+                    var newT = new TraceTogetherToken(finalSerial, inputCollectLocation, expiry);
                     targetResident.Token = newT;
                     Console.WriteLine($"A new token has been issued to you. Your serial number is {finalSerial}, " +
                         $"your collection location is at {inputCollectLocation} and the expiry date of your token is {expiry}.");
@@ -73,9 +73,9 @@ namespace COVIDMonitoringSystem.ConsoleApp
                 else if (targetResident.Token.IsEligibleForReplacement())
                 {
                     Console.WriteLine("Your token is expiring soon. A new token will be issued to you.");
-                    Random generator = new Random();
-                    var serialnum = generator.Next(10000, 100000);
-                    var finalSerial = "T" + Convert.ToString(serialnum);
+                    var generator = new Random();
+                    var serialNum = generator.Next(10000, 100000);
+                    var finalSerial = "T" + Convert.ToString(serialNum);
                     var inputCollectLocation = CHelper.GetInput("Enter your collection location: ");
                     targetResident.Token.ReplaceToken(finalSerial, inputCollectLocation);
                     Console.WriteLine($"A new token has been issued to you. Your serial number is {finalSerial}, " +
@@ -97,7 +97,7 @@ namespace COVIDMonitoringSystem.ConsoleApp
             var targetBusiness = CHelper.GetInput("Enter business name to search for: ", Manager.FindBusinessLocation);
             if (targetBusiness != null)
             {
-                int newCapacity = CHelper.GetInput("Enter new maximum capacity: ", Convert.ToInt32);
+                var newCapacity = CHelper.GetInput("Enter new maximum capacity: ", Convert.ToInt32);
                 targetBusiness.MaximumCapacity = newCapacity;
             }
             else

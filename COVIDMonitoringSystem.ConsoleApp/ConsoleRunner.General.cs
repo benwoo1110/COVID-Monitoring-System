@@ -1,4 +1,5 @@
-﻿using COVIDMonitoringSystem.ConsoleApp.Display;
+﻿using System;
+using COVIDMonitoringSystem.ConsoleApp.Display;
 using COVIDMonitoringSystem.ConsoleApp.Display.Builders;
 using COVIDMonitoringSystem.ConsoleApp.Display.Elements;
 using COVIDMonitoringSystem.Core.PersonMgr;
@@ -33,6 +34,11 @@ namespace COVIDMonitoringSystem.ConsoleApp
                 "Explore Global Stats",
                 ExploreGlobalStats
             ));
+        }
+
+        private void ExploreGlobalStats()
+        {
+            Console.WriteLine("ExploreGlobalStats");
         }
     }
 }

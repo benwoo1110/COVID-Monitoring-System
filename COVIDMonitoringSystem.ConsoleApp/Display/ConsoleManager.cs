@@ -77,7 +77,11 @@ namespace COVIDMonitoringSystem.ConsoleApp.Display
         
         public ConsoleManager RegisterScreen(Screen screen)
         {
-            screen.Manager = this;
+            if (screen.Manager != this)
+            {
+                throw new InvalidOperationException("Screen does not belong to this manager.");
+            }
+            
             ScreenMap.Add(screen.Name, screen);
             return this;
         }

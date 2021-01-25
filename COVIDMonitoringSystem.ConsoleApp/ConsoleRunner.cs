@@ -1,10 +1,6 @@
-﻿using System;
-using COVIDMonitoringSystem.ConsoleApp.Display;
+﻿using COVIDMonitoringSystem.ConsoleApp.Display;
 using COVIDMonitoringSystem.ConsoleApp.Display.Builders;
-using COVIDMonitoringSystem.ConsoleApp.Display.Elements;
 using COVIDMonitoringSystem.Core;
-using COVIDMonitoringSystem.Core.PersonMgr;
-using COVIDMonitoringSystem.Core.SafeEntryMgr;
 
 namespace COVIDMonitoringSystem.ConsoleApp
 {
@@ -64,11 +60,6 @@ namespace COVIDMonitoringSystem.ConsoleApp
         public void Run()
         {
             DisplayManager.Run("mainMenu");
-        }
-
-        private void ExploreGlobalStats()
-        {
-            Console.WriteLine("ExploreGlobalStats");
         }
     }
 }

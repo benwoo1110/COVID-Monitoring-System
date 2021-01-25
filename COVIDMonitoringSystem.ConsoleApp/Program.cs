@@ -4,7 +4,6 @@
 // Module Group   : T06
 //============================================================
 
-using System;
 using COVIDMonitoringSystem.Core.Utilities;
 
 namespace COVIDMonitoringSystem.ConsoleApp

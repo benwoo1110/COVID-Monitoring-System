@@ -16,9 +16,10 @@ namespace COVIDMonitoringSystem.ConsoleApp.Display
         public int SelectedIndex { get; set; }
         public SelectableElement SelectedElement { get; set; }
         public bool Active { get; set; }
-        
+
         public Screen(ConsoleManager manager)
         {
+            Manager = manager;
             ElementList = new List<Element>();
             CachedSelectableElement = new List<SelectableElement>();
         }
@@ -26,7 +27,7 @@ namespace COVIDMonitoringSystem.ConsoleApp.Display
         public void AddElement(Element element)
         {
             ElementList.Add(element);
-            
+
             if (element is SelectableElement selectableElement)
             {
                 CachedSelectableElement.Add(selectableElement);
@@ -39,7 +40,7 @@ namespace COVIDMonitoringSystem.ConsoleApp.Display
             {
                 throw new InvalidOperationException("Nested screen stacking not supported.");
             }
-            
+
             Display();
             SetSelection(0);
             Active = true;
@@ -54,7 +55,6 @@ namespace COVIDMonitoringSystem.ConsoleApp.Display
 
         public virtual void OnView()
         {
-            
         }
 
         public virtual void Display()
@@ -83,7 +83,7 @@ namespace COVIDMonitoringSystem.ConsoleApp.Display
             foreach (var element in ElementList.Where(element => !element.Hidden))
             {
                 element.UpdateBox();
-                
+
                 if (element.Equals(SelectedElement) && SelectedElement.Enabled)
                 {
                     DisplaySelected(element);
@@ -135,8 +135,8 @@ namespace COVIDMonitoringSystem.ConsoleApp.Display
 
         private static int Mod(int value, int modulus)
         {
-            return value == 0 
-                ? 0 
+            return value == 0
+                ? 0
                 : ((value % modulus) + modulus) % modulus;
         }
     }

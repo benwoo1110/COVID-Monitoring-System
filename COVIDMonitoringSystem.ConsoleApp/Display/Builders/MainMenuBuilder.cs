@@ -13,7 +13,7 @@ namespace COVIDMonitoringSystem.ConsoleApp.Display.Builders
             TargetScreen.AddElement(new Button
             {
                 Text = "[0] Exit",
-                Run = () => Manager.PopScreen(true)
+                Run = () => Manager.Stop()
             });
         }
     }

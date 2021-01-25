@@ -3,7 +3,6 @@ using COVIDMonitoringSystem.ConsoleApp.Display;
 using COVIDMonitoringSystem.ConsoleApp.Display.Builders;
 using COVIDMonitoringSystem.ConsoleApp.Display.Elements;
 using COVIDMonitoringSystem.ConsoleApp.Utilities;
-using COVIDMonitoringSystem.Core.PersonMgr;
 using COVIDMonitoringSystem.Core.SafeEntryMgr;
 using COVIDMonitoringSystem.Core.TravelEntryMgr;
 
@@ -60,19 +59,19 @@ namespace COVIDMonitoringSystem.ConsoleApp
             var targetPerson = CHelper.GetInput("Enter name: ", Manager.FindPerson);
             if (targetPerson == null)
             {
-                //TODO: Some message
+                CHelper.WriteLine("No such person found!");
                 return;
             }
 
             var travelEntry = new TravelEntry(
                 targetPerson,
                 CHelper.GetInput("Last Country: "),
-                CHelper.GetInput<TravelEntryMode>("Entry Mode: ", CHelper.EnumParser<TravelEntryMode>),
+                CHelper.GetInput("Entry Mode: ", CHelper.EnumParser<TravelEntryMode>),
                 CHelper.GetInput("Entry Date: ", Convert.ToDateTime)
             );
-            
+
             //TODO: Add SHN Facility
-            
+
             targetPerson.AddTravelEntry(travelEntry);
         }
 
@@ -81,7 +80,7 @@ namespace COVIDMonitoringSystem.ConsoleApp
             var targetPerson = CHelper.GetInput("Enter name: ", Manager.FindPerson);
             if (targetPerson == null)
             {
-                //TODO: Some message
+                CHelper.WriteLine("No such person found!");
                 return;
             }
 
@@ -91,7 +90,7 @@ namespace COVIDMonitoringSystem.ConsoleApp
                 Console.WriteLine($"{targetPerson.Name} does not make any unpaid travel entries.");
                 return;
             }
-            
+
             Console.WriteLine($"{targetPerson.Name} has {payment.NumberOfUnpaidEntries()} unpaid travel entries.");
             var index = 1;
             foreach (var entry in payment.Entries)
@@ -99,15 +98,16 @@ namespace COVIDMonitoringSystem.ConsoleApp
                 Console.WriteLine($"{index} - {entry.LastCountryOfEmbarkation,-20} | ${entry.CalculateCharges():0.00}");
                 index++;
             }
+
             Console.WriteLine($"Subtotal: ${payment.SubTotalPrice:0.00}");
             Console.WriteLine($"Total: ${payment.TotalPrice:0.00} (include 7% GST)");
-            
+
             if (!CHelper.Confirm("Do you want to pay the travel entries now?"))
             {
                 Console.WriteLine("No payment made, you can come again on a later date to do so.");
                 return;
             }
-            
+
             payment.DoPayment();
             Console.WriteLine($"Payment for {payment.NumberOfUnpaidEntries()} travel entries has be successfully made!");
         }

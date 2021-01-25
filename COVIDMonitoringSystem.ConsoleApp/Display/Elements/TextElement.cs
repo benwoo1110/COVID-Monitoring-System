@@ -1,5 +1,4 @@
-﻿using System;
-using COVIDMonitoringSystem.ConsoleApp.Utilities;
+﻿using COVIDMonitoringSystem.ConsoleApp.Utilities;
 
 namespace COVIDMonitoringSystem.ConsoleApp.Display.Elements
 {
