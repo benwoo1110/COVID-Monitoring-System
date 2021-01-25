@@ -81,7 +81,7 @@ namespace COVIDMonitoringSystem.ConsoleApp
                 }
                 else
                 {
-                    CHelper.WriteLine("Your token has not expired. Dumbass");
+                    CHelper.WriteLine("Your token has not expired. Sorry ;(");
                 }
                 return;
             }
@@ -99,7 +99,7 @@ namespace COVIDMonitoringSystem.ConsoleApp
             }
             else
             {
-                CHelper.WriteLine("Business not found. Dumbass");
+                CHelper.WriteLine("Business not found. Sorry ;(");
             }
         }
 

@@ -34,9 +34,9 @@ namespace COVIDMonitoringSystem.ConsoleApp.Utilities
             return $"{new string(' ', left)}{text}{new string(' ', spaceNeeded - left)}";
         });
         
-        public Func<string, string> DoAlignment { get; set; }
+        public Func<string, string> DoAlignment { get; }
 
-        public TextAlign(Func<string, string> doAlignment)
+        private TextAlign(Func<string, string> doAlignment)
         {
             DoAlignment = doAlignment;
         }

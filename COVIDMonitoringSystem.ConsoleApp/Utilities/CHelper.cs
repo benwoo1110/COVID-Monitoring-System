@@ -7,7 +7,7 @@ namespace COVIDMonitoringSystem.ConsoleApp.Utilities
     {
         public static int WindowWidth => Console.WindowWidth;
         public static int WindowHeight => Console.WindowHeight - 1;
-        public static int LinesPrinted { get; set; }
+        public static int LinesPrinted { get; private set; }
 
         private static int cachedWidth;
         private static int cachedHeight;
