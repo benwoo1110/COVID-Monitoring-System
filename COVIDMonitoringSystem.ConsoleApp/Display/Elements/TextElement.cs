@@ -20,7 +20,14 @@ namespace COVIDMonitoringSystem.ConsoleApp.Display.Elements
             CHelper.WriteLine(Text);
         }
 
-        public virtual void Clear()
+        public bool HasText(bool allowWhiteSpace = false)
+        {
+            return allowWhiteSpace 
+                ? !string.IsNullOrEmpty(Text) 
+                : !string.IsNullOrWhiteSpace(Text);
+        }
+
+        public virtual void ClearText()
         {
             Text = "";
         }

@@ -19,6 +19,7 @@ namespace COVIDMonitoringSystem.ConsoleApp.Display
             ColourSelector.Element();
             Console.SetCursorPosition(0, 4);
             Runner.Invoke();
+            CHelper.WriteEmpty();
             CHelper.Pause("Continue to menu...");
             Manager.PopScreen();
         }

@@ -11,7 +11,7 @@ namespace COVIDMonitoringSystem.ConsoleApp.Display.Elements
 
         public override void Display()
         {
-            CHelper.WriteLine("");
+            CHelper.WriteEmpty();
         }
     }
 }

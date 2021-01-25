@@ -62,13 +62,21 @@ namespace COVIDMonitoringSystem.ConsoleApp
             var name = screen.FindElementOfType<Input>("name");
             var passportNo = screen.FindElementOfType<Input>("passportNo");
             var nationality = screen.FindElementOfType<Input>("nationality");
+            var result = screen.FindElementOfType<TextElement>("result");
+
+            if (!name.HasText() || !passportNo.HasText() || !nationality.HasText())
+            {
+                result.Text = "Incomplete details. No visitor has been added to the system.";
+                screen.Display();
+                return;
+            }
             
             Manager.AddPerson(new Visitor(name.Text, passportNo.Text, nationality.Text));
-            screen.FindElementOfType<TextElement>("result").Text = $"New visitor {name.Text} has been added to the system.";
+            result.Text = $"New visitor {name.Text} has been added to the system.";
 
-            name.Clear();
-            passportNo.Clear();
-            nationality.Clear();
+            name.ClearText();
+            passportNo.ClearText();
+            nationality.ClearText();
             
             screen.Display();
         }
