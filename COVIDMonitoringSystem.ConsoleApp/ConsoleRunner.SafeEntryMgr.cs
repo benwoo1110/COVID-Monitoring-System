@@ -105,12 +105,37 @@ namespace COVIDMonitoringSystem.ConsoleApp
 
         private void CheckIn()
         {
-            CHelper.WriteLine("Check In for SafeEntry");
+            /*var inputName = CHelper.GetInput("Enter your name: ", Manager.FindPerson);
+            if (inputName != null)
+            {
+                var inputLocation = CHelper.GetInput("Enter business location to check in to: ", Manager.FindBusinessLocation);
+                if (inputLocation.IsFull())
+                {
+                    CHelper.WriteLine("This store is full, please try again later.");
+                }
+                else
+                {
+                    var checkIn = new SafeEntry(DateTime.Now, inputLocation);
+                    var personEntry = new Person()
+                    inputLocation.VisitorsNow += 1;
+                }
+                return;
+            }
+            else
+            {
+                CHelper.WriteLine("Name is not found, please try again.");
+            }*/
+            CHelper.WriteLine("Check In");
         }
 
         private void CheckOut()
         {
-            CHelper.WriteLine("Check Out for SafeEntry");
+            /*var inputName = CHelper.GetInput("Enter your name: ", Manager.FindPerson);
+            if (inputName != null)
+            {
+
+            }*/
+            CHelper.WriteLine("Check out");
         }
     }
 

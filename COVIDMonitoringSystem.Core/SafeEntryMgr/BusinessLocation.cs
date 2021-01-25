@@ -19,7 +19,8 @@ namespace COVIDMonitoringSystem.Core.SafeEntryMgr
 
         public bool IsFull()
         {
-            throw new NotImplementedException();
+            int capacityCheck = MaximumCapacity - VisitorsNow;
+            return capacityCheck < 0;
         }
 
         public override string ToString()
