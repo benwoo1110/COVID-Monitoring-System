@@ -87,18 +87,18 @@ namespace COVIDMonitoringSystem.ConsoleApp.Utilities
         {
             while (true)
             {
-                Console.Write(prompt);
+                WriteLine(prompt, TextAlign.None);
                 try
                 {
                     return parser(Console.ReadLine());
                 }
                 catch (InputParseFailedException e)
                 {
-                    Console.WriteLine(e.Message);
+                    WriteLine(e.Message);
                 }
                 catch (Exception)
                 {
-                    Console.WriteLine("Input is in invalid format. Please try again!");
+                    WriteLine("Input is in invalid format. Please try again!");
                 }
             }
         }

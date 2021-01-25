@@ -29,7 +29,7 @@ namespace COVIDMonitoringSystem.ConsoleApp
                 .AddElement(new Input("passportNo", "Passport Number"))
                 .AddElement(new Input("nationality", "Nationality"))
                 .AddElement(new Spacer())
-                .AddElement(new Button("create", "[Create]", Visitor))
+                .AddElement(new Button("create", "[Create]", CreateNewVisitor))
                 .AddElement(new Spacer())
                 .AddElement(new Label("result"))
                 .Build()
@@ -57,7 +57,7 @@ namespace COVIDMonitoringSystem.ConsoleApp
             ));
         }
 
-        private void Visitor(Screen screen)
+        private void CreateNewVisitor(Screen screen)
         {
             var name = screen.FindElementOfType<Input>("name");
             var passportNo = screen.FindElementOfType<Input>("passportNo");
@@ -114,35 +114,35 @@ namespace COVIDMonitoringSystem.ConsoleApp
             var payment = targetPerson.GenerateSHNPaymentDetails();
             if (!payment.HasUnpaidEntries())
             {
-                Console.WriteLine($"{targetPerson.Name} does not make any unpaid travel entries.");
+                CHelper.WriteLine($"{targetPerson.Name} does not make any unpaid travel entries.");
                 return;
             }
 
-            Console.WriteLine($"{targetPerson.Name} has {payment.NumberOfUnpaidEntries()} unpaid travel entries.");
+            CHelper.WriteLine($"{targetPerson.Name} has {payment.NumberOfUnpaidEntries()} unpaid travel entries.");
             var index = 1;
             foreach (var entry in payment.Entries)
             {
-                Console.WriteLine($"{index} - {entry.LastCountryOfEmbarkation,-20} | ${entry.CalculateCharges():0.00}");
+                CHelper.WriteLine($"{index} - {entry.LastCountryOfEmbarkation,-20} | ${entry.CalculateCharges():0.00}");
                 index++;
             }
 
-            Console.WriteLine($"Subtotal: ${payment.SubTotalPrice:0.00}");
-            Console.WriteLine($"Total: ${payment.TotalPrice:0.00} (include 7% GST)");
+            CHelper.WriteLine($"Subtotal: ${payment.SubTotalPrice:0.00}");
+            CHelper.WriteLine($"Total: ${payment.TotalPrice:0.00} (include 7% GST)");
 
             if (!CHelper.Confirm("Do you want to pay the travel entries now?"))
             {
-                Console.WriteLine("No payment made, you can come again on a later date to do so.");
+                CHelper.WriteLine("No payment made, you can come again on a later date to do so.");
                 return;
             }
 
             payment.DoPayment();
-            Console.WriteLine($"Payment for {payment.NumberOfUnpaidEntries()} travel entries has be successfully made!");
+            CHelper.WriteLine($"Payment for {payment.NumberOfUnpaidEntries()} travel entries has be successfully made!");
         }
 
         private void GenerateSHNReport()
         {
             var targetDate = CHelper.GetInput("Enter Date to Report: ", Convert.ToDateTime);
-            Console.WriteLine(Manager.GenerateSHNStatusReportFile(targetDate)
+            CHelper.WriteLine(Manager.GenerateSHNStatusReportFile(targetDate)
                 ? "Successfully generated report file."
                 : "There was an error generating report file.");
         }

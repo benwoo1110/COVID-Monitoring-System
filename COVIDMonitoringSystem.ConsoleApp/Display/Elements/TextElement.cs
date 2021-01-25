@@ -27,7 +27,7 @@ namespace COVIDMonitoringSystem.ConsoleApp.Display.Elements
                 : !string.IsNullOrWhiteSpace(Text);
         }
 
-        public virtual void ClearText()
+        public void ClearText()
         {
             Text = "";
         }

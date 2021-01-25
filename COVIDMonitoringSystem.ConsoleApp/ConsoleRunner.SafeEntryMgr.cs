@@ -1,7 +1,6 @@
 ﻿using System;
 using COVIDMonitoringSystem.ConsoleApp.Display;
 using COVIDMonitoringSystem.ConsoleApp.Display.Builders;
-using COVIDMonitoringSystem.ConsoleApp.Display.Elements;
 using COVIDMonitoringSystem.ConsoleApp.Utilities;
 using COVIDMonitoringSystem.Core.PersonMgr;
 using COVIDMonitoringSystem.Core.SafeEntryMgr;
@@ -56,7 +55,7 @@ namespace COVIDMonitoringSystem.ConsoleApp
             {
                 if (targetResident.Token == null)
                 {
-                    Console.WriteLine("A new token will be issued to you.");
+                    CHelper.WriteLine("A new token will be issued to you.");
                     var generator = new Random();
                     var serialNum = generator.Next(10000, 100000);
                     var finalSerial = "T" + Convert.ToString(serialNum);
@@ -65,29 +64,29 @@ namespace COVIDMonitoringSystem.ConsoleApp
                     var expiry = inputCollectDate.AddMonths(6);
                     var newT = new TraceTogetherToken(finalSerial, inputCollectLocation, expiry);
                     targetResident.Token = newT;
-                    Console.WriteLine($"A new token has been issued to you. Your serial number is {finalSerial}, " +
-                        $"your collection location is at {inputCollectLocation} and the expiry date of your token is {expiry}.");
+                    CHelper.WriteLine($"A new token has been issued to you. Your serial number is {finalSerial}, " +
+                                      $"your collection location is at {inputCollectLocation} and the expiry date of your token is {expiry}.");
                 }
                 else if (targetResident.Token.IsEligibleForReplacement())
                 {
-                    Console.WriteLine("Your token is expiring soon. A new token will be issued to you.");
+                    CHelper.WriteLine("Your token is expiring soon. A new token will be issued to you.");
                     var generator = new Random();
                     var serialNum = generator.Next(10000, 100000);
                     var finalSerial = "T" + Convert.ToString(serialNum);
                     var inputCollectLocation = CHelper.GetInput("Enter your collection location: ");
                     targetResident.Token.ReplaceToken(finalSerial, inputCollectLocation);
-                    Console.WriteLine($"A new token has been issued to you. Your serial number is {finalSerial}, " +
-                        $"your collection location is at {inputCollectLocation} and the expiry date of your token is " +
-                        $"{targetResident.Token.ExpiryDate}.");
+                    CHelper.WriteLine($"A new token has been issued to you. Your serial number is {finalSerial}, " +
+                                      $"your collection location is at {inputCollectLocation} and the expiry date of your token is " +
+                                      $"{targetResident.Token.ExpiryDate}.");
                 }
                 else
                 {
-                    Console.WriteLine("Your token has not expired. Dumbass");
+                    CHelper.WriteLine("Your token has not expired. Dumbass");
                 }
                 return;
             }
-            Console.WriteLine("Resident does not exist, or person is not a resident.");
-            
+
+            CHelper.WriteLine("Resident does not exist, or person is not a resident.");
         }
 
         private void ChangeCapacity()
@@ -100,18 +99,18 @@ namespace COVIDMonitoringSystem.ConsoleApp
             }
             else
             {
-                Console.WriteLine("Business not found. Dumbass");
+                CHelper.WriteLine("Business not found. Dumbass");
             }
         }
 
         private void CheckIn()
         {
-            Console.WriteLine("Check In for SafeEntry");
+            CHelper.WriteLine("Check In for SafeEntry");
         }
 
         private void CheckOut()
         {
-            Console.WriteLine("Check Out for SafeEntry");
+            CHelper.WriteLine("Check Out for SafeEntry");
         }
     }
 

@@ -20,7 +20,7 @@ namespace COVIDMonitoringSystem.ConsoleApp.Display
             Console.SetCursorPosition(0, 4);
             Runner.Invoke();
             CHelper.WriteEmpty();
-            CHelper.Pause("Continue to menu...");
+            CHelper.Pause("Back to menu...");
             Manager.PopScreen();
         }
     }
