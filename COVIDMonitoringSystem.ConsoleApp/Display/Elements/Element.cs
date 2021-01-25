@@ -4,12 +4,14 @@ namespace COVIDMonitoringSystem.ConsoleApp.Display.Elements
 {
     public abstract class Element
     {
+        public Screen TargetScreen { get; set; }
         public string Name { get; set; }
         public Box BoundingBox { get; set; }
         public bool Hidden { get; set; } = false;
 
-        protected Element()
+        protected Element(string name)
         {
+            Name = name;
             BoundingBox = new Box();
         }
 

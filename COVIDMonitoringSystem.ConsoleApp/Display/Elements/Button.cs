@@ -4,6 +4,21 @@ namespace COVIDMonitoringSystem.ConsoleApp.Display.Elements
 {
     public class Button : SelectableElement
     {
-        public Action Run { get; set; }
+        public Action<Screen> Runner { get; set; }
+
+        public Button(string name) : base(name)
+        {
+        }
+
+        public Button(string name, string text, Action<Screen> runner) : base(name)
+        {
+            Text = text;
+            Runner = runner;
+        }
+
+        public void RunAction()
+        {
+            Runner?.Invoke(TargetScreen);
+        }
     }
 }

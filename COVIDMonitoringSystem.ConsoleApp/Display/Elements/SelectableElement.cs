@@ -4,7 +4,7 @@
     {
         public bool Enabled { get; set; } = true;
 
-        protected SelectableElement()
+        protected SelectableElement(string name) : base(name)
         {
         }
     }

@@ -6,7 +6,7 @@ namespace COVIDMonitoringSystem.ConsoleApp.Display.Elements
     {
         public string Text { get; set; } = "";
 
-        protected TextElement()
+        protected TextElement(string name) : base(name)
         {
         }
 

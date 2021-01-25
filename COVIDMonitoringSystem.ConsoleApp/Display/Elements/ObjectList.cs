@@ -14,11 +14,11 @@ namespace COVIDMonitoringSystem.ConsoleApp.Display.Elements
         public string[] PropertyToInclude { get; set; }
         public Func<List<T>> ListGetter { get; set; }
 
-        public ObjectList()
+        public ObjectList(string name) : base(name)
         {
         }
 
-        public ObjectList(string[] propertyToInclude, Func<List<T>> listGetter)
+        public ObjectList(string name, string[] propertyToInclude, Func<List<T>> listGetter) : base(name)
         {
             PropertyToInclude = propertyToInclude;
             ListGetter = listGetter;

@@ -21,8 +21,8 @@ namespace COVIDMonitoringSystem.ConsoleApp
             DisplayManager.RegisterScreen(new ScreenBuilder(DisplayManager)
                 .OfName("viewPersonDetails")
                 .WithHeader("View Details of a Person")
-                .AddElement(new Input("Name"))
-                .AddElement(new Label())
+                .AddElement(new Input("name", "Name"))
+                .AddElement(new Label(""))
                 .Build()
             );
 

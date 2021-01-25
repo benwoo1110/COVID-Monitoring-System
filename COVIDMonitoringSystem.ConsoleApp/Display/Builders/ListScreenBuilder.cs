@@ -10,7 +10,7 @@ namespace COVIDMonitoringSystem.ConsoleApp.Display.Builders
         
         public ListScreenBuilder(ConsoleManager manager) : base(manager)
         {
-            ListObject = new ObjectList<T>();
+            ListObject = new ObjectList<T>(typeof(T).Name);
         }
 
         public ListScreenBuilder<T> WithProperties(string[] properties)

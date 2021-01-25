@@ -10,10 +10,10 @@ namespace COVIDMonitoringSystem.ConsoleApp.Display.Builders
 
         protected override void AddSpecialOption()
         {
-            TargetScreen.AddElement(new Button
+            TargetScreen.AddElement(new Button("exit")
             {
                 Text = "[0] Exit",
-                Run = () => Manager.Stop()
+                Runner = s => Manager.Stop()
             });
         }
     }

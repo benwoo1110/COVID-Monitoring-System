@@ -12,17 +12,17 @@ namespace COVIDMonitoringSystem.ConsoleApp.Display.Builders
 
         public MenuBuilder AddOption(string optionName, string targetScreen)
         {
-            TargetScreen.AddElement(new Button
+            TargetScreen.AddElement(new Button(optionName)
             {
                 Text = $"[{++OptionCount}] {optionName}",
-                Run = () => Manager.PushScreen(targetScreen)
+                Runner = (s) => Manager.PushScreen(targetScreen)
             });
             return this;
         }
 
         public override Screen Build()
         {
-            TargetScreen.AddElement(new Label
+            TargetScreen.AddElement(new Label("separator")
             {
                 Text = "----"
             });
@@ -33,10 +33,10 @@ namespace COVIDMonitoringSystem.ConsoleApp.Display.Builders
 
         protected virtual void AddSpecialOption()
         {
-            TargetScreen.AddElement(new Button
+            TargetScreen.AddElement(new Button("back")
             {
                 Text = "[0] Back",
-                Run = () => Manager.PopScreen()
+                Runner = s => Manager.PopScreen()
             });
         }
     }

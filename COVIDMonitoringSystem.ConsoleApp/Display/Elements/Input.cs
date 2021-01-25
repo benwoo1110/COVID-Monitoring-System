@@ -6,11 +6,7 @@ namespace COVIDMonitoringSystem.ConsoleApp.Display.Elements
     {
         public string Prompt { get; set; }
 
-        public Input()
-        {
-        }
-
-        public Input(string prompt)
+        public Input(string name, string prompt) : base(name)
         {
             Prompt = prompt;
         }

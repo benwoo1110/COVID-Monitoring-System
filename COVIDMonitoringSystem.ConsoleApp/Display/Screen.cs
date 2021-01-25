@@ -26,6 +26,7 @@ namespace COVIDMonitoringSystem.ConsoleApp.Display
 
         public void AddElement(Element element)
         {
+            element.TargetScreen = this;
             ElementList.Add(element);
 
             if (element is SelectableElement selectableElement)
@@ -138,6 +139,16 @@ namespace COVIDMonitoringSystem.ConsoleApp.Display
             return value == 0
                 ? 0
                 : ((value % modulus) + modulus) % modulus;
+        }
+
+        public Element FindElement(string name)
+        {
+            return ElementList.Find(e => e.Name.ToLower().Equals(name.ToLower()));
+        }
+
+        public T FindElementOfType<T>(string name) where T : Element
+        {
+            return (T) ElementList.Find(e => e is T && e.Name.ToLower().Equals(name.ToLower()));
         }
     }
 }

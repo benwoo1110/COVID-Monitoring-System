@@ -22,10 +22,13 @@ namespace COVIDMonitoringSystem.ConsoleApp
             DisplayManager.RegisterScreen(new ScreenBuilder(DisplayManager)
                 .OfName("newVisitor")
                 .WithHeader("Create New Visitor")
-                .AddElement(new Input("Name"))
-                .AddElement(new Input("Passport Number"))
-                .AddElement(new Input("Nationality"))
-                .AddElement(new Label())
+                .AddElement(new Input("name", "Name"))
+                .AddElement(new Input("passportNo", "Passport Number"))
+                .AddElement(new Input("nationality", "Nationality"))
+                .AddElement(new Label(""))
+                .AddElement(new Button("create", "[Create]", Visitor))
+                .AddElement(new Label(""))
+                .AddElement(new Label("result"))
                 .Build()
             );
 
@@ -49,6 +52,12 @@ namespace COVIDMonitoringSystem.ConsoleApp
                 "Generate SHN Status Report",
                 GenerateSHNReport
             ));
+        }
+
+        private void Visitor(Screen screen)
+        {
+            screen.FindElementOfType<TextElement>("result").Text = "HAHAH";
+            screen.Display();
         }
 
         private void NewTravelRecord()

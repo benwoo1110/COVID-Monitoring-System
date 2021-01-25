@@ -42,7 +42,7 @@ namespace COVIDMonitoringSystem.ConsoleApp.Display
         {
             if (CurrentScreen.SelectedElement is Button buttonElement)
             {
-                buttonElement.Run();
+                buttonElement.RunAction();
             }
         }
 
