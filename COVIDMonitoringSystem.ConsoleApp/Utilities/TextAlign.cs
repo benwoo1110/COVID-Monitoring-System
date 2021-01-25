@@ -4,7 +4,7 @@ namespace COVIDMonitoringSystem.ConsoleApp.Utilities
 {
     public class TextAlign
     {
-        public static readonly TextAlign None = new TextAlign((text) => text);
+        public static readonly TextAlign None = new TextAlign((text) => "    " + text);
         
         public static readonly TextAlign Left = new TextAlign((text) =>
         {
