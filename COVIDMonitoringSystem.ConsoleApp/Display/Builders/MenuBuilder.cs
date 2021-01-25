@@ -2,13 +2,12 @@
 
 namespace COVIDMonitoringSystem.ConsoleApp.Display.Builders
 {
-    public class MenuBuilder : AbstractScreenBuilder<MenuBuilder>
+    public class MenuBuilder : AbstractScreenBuilder<MenuBuilder, Screen>
     { 
         private int OptionCount { get; set; }
 
         public MenuBuilder(ConsoleManager manager) : base(manager)
         {
-            OptionCount = 0;
         }
 
         public MenuBuilder AddOption(string optionName, string targetScreen)

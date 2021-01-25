@@ -19,13 +19,11 @@ namespace COVIDMonitoringSystem.ConsoleApp
                 AssignToken
             ));
 
-            DisplayManager.RegisterScreen(new ScreenBuilder(DisplayManager)
+            DisplayManager.RegisterScreen(new ListScreenBuilder<BusinessLocation>(DisplayManager)
                 .OfName("viewLocations")
                 .WithHeader("View All Visitors")
-                .AddElement(new ObjectList<BusinessLocation>(
-                    new[] {"BusinessName", "BranchCode", "MaximumCapacity", "VisitorsNow"},
-                    () => Manager.BusinessLocationList
-                ))
+                .WithProperties(new[] {"BusinessName", "BranchCode", "MaximumCapacity", "VisitorsNow"})
+                .WithGetter(() => Manager.BusinessLocationList)
                 .Build()
             );
 

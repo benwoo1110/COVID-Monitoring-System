@@ -3,7 +3,6 @@ using COVIDMonitoringSystem.ConsoleApp.Display;
 using COVIDMonitoringSystem.ConsoleApp.Display.Builders;
 using COVIDMonitoringSystem.ConsoleApp.Display.Elements;
 using COVIDMonitoringSystem.ConsoleApp.Utilities;
-using COVIDMonitoringSystem.Core.SafeEntryMgr;
 using COVIDMonitoringSystem.Core.TravelEntryMgr;
 
 namespace COVIDMonitoringSystem.ConsoleApp
@@ -12,13 +11,11 @@ namespace COVIDMonitoringSystem.ConsoleApp
     {
         private void SetUpTravelEntryScreens()
         {
-            DisplayManager.RegisterScreen(new ScreenBuilder(DisplayManager)
+            DisplayManager.RegisterScreen(new ListScreenBuilder<SHNFacility>(DisplayManager)
                 .OfName("viewFacilities")
                 .WithHeader("View All SHN Facilities")
-                .AddElement(new ObjectList<BusinessLocation>(
-                    new[] {"BusinessName", "BranchCode", "MaximumCapacity", "VisitorsNow"},
-                    () => Manager.BusinessLocationList
-                ))
+                .WithProperties(new[] {"FacilityName", "FacilityCapacity", "FacilityVacancy", "FromLand", "FromSea", "FromAir"})
+                .WithGetter(() => Manager.SHNFacilitiesList)
                 .Build()
             );
 
