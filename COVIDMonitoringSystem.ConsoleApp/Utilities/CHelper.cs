@@ -5,12 +5,12 @@ namespace COVIDMonitoringSystem.ConsoleApp.Utilities
 {
     public static class CHelper
     {
-        public static int WindowWidth => Console.WindowWidth - 1;
+        public static int WindowWidth => Console.WindowWidth;
         public static int WindowHeight => Console.WindowHeight - 1;
         public static int LinesPrinted { get; set; }
 
-        private static int cachedWidth = Console.WindowWidth;
-        private static int cachedHeight = Console.WindowHeight;
+        private static int cachedWidth;
+        private static int cachedHeight;
         
         public static bool DidChangeWindowSize()
         {
@@ -21,6 +21,10 @@ namespace COVIDMonitoringSystem.ConsoleApp.Utilities
             
             cachedWidth = Console.WindowWidth;
             cachedHeight = Console.WindowHeight;
+            
+            Console.SetWindowSize(Console.WindowWidth, Console.WindowHeight);
+            Console.SetBufferSize(Console.WindowWidth, Console.WindowHeight);
+            
             return true;
         }
 
@@ -31,14 +35,14 @@ namespace COVIDMonitoringSystem.ConsoleApp.Utilities
         
         public static void WriteLine(string text, TextAlign textAlign)
         {
-            Console.WriteLine(textAlign.DoAlignment($"    {text}"));
+            Console.Write(textAlign.DoAlignment($"    {text}"));
             LinesPrinted++;
             //TODO: What if its multi-lined ;(
         }
 
         public static void FillLine(char c)
         {
-            Console.WriteLine(new string(c, WindowWidth));
+            Console.Write(new string(c, WindowWidth));
             LinesPrinted++;
         }
 

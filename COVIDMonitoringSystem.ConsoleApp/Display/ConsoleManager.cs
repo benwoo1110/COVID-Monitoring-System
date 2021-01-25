@@ -75,7 +75,7 @@ namespace COVIDMonitoringSystem.ConsoleApp.Display
             PopScreen();
         }
         
-        public ConsoleManager RegisterScreen(Screen screen)
+        public void RegisterScreen(Screen screen)
         {
             if (screen.Manager != this)
             {
@@ -83,7 +83,6 @@ namespace COVIDMonitoringSystem.ConsoleApp.Display
             }
             
             ScreenMap.Add(screen.Name, screen);
-            return this;
         }
         
         public void Run(string startingScreenName)
