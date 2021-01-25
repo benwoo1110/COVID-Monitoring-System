@@ -128,5 +128,12 @@ namespace COVIDMonitoringSystem.Core.Utilities
         {
             return JsonConvert.SerializeObject(o, Formatting.Indented, Config);
         }
+
+        public static int Mod(int value, int modulus)
+        {
+            return value == 0
+                ? 0
+                : ((value % modulus) + modulus) % modulus;
+        }
     }
 }
