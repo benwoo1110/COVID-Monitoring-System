@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using COVIDMonitoringSystem.ConsoleApp.Display.Elements;
+using COVIDMonitoringSystem.ConsoleApp.Utilities;
 
 namespace COVIDMonitoringSystem.ConsoleApp.Display
 {

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace COVIDMonitoringSystem.ConsoleApp.Display
+namespace COVIDMonitoringSystem.ConsoleApp.Utilities
 {
     public static class ColourSelector
     {

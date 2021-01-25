@@ -1,8 +1,7 @@
 ﻿using System;
-using COVIDMonitoringSystem.ConsoleApp.Utilities;
 using COVIDMonitoringSystem.Core.Utilities;
 
-namespace COVIDMonitoringSystem.ConsoleApp.Display
+namespace COVIDMonitoringSystem.ConsoleApp.Utilities
 {
     public static class CHelper
     {

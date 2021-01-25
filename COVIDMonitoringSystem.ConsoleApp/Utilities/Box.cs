@@ -1,4 +1,4 @@
-﻿namespace COVIDMonitoringSystem.ConsoleApp.Display
+﻿namespace COVIDMonitoringSystem.ConsoleApp.Utilities
 {
     public class Box
     {
