@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using COVIDMonitoringSystem.ConsoleApp.Utilities;
 using JetBrains.Annotations;
@@ -49,8 +50,21 @@ namespace COVIDMonitoringSystem.ConsoleApp.Display.Elements
             BoundingBox.Top = CHelper.LinesPrinted;
         }
 
-        public abstract void Display();
-        
+        public virtual void Display()
+        {
+            Console.SetCursorPosition(0, BoundingBox.Top);
+            SelectColour();
+            WriteToScreen();
+            Console.SetCursorPosition(BoundingBox.Left, BoundingBox.Top);
+        }
+
+        protected virtual void SelectColour()
+        {
+            ColourSelector.Element();
+        }
+
+        protected abstract void WriteToScreen();
+
         protected void OnPropertyChanged()
         {
             TargetScreen?.AddToUpdateQueue(this);

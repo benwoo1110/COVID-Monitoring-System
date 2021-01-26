@@ -14,12 +14,16 @@ namespace COVIDMonitoringSystem.ConsoleApp.Display.Elements
         {
         }
 
-        public override void Display()
+        protected override void WriteToScreen()
         {
-            ColourSelector.Header();
             CHelper.WriteEmpty();
             CHelper.WriteLine(Text, Align);
             CHelper.WriteEmpty();
+        }
+
+        protected override void SelectColour()
+        {
+            ColourSelector.Header();
         }
     }
 }

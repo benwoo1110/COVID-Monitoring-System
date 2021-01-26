@@ -16,5 +16,10 @@ namespace COVIDMonitoringSystem.ConsoleApp.Display.Elements
             Console.SetCursorPosition(0, BoundingBox.Top);
             CHelper.WriteEmpty();
         }
+
+        protected override void WriteToScreen()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -37,10 +37,8 @@ namespace COVIDMonitoringSystem.ConsoleApp.Display.Elements
             Text = text;
         }
 
-        public override void Display()
+        protected override void WriteToScreen()
         {
-            ColourSelector.Element();
-            Console.SetCursorPosition(0, BoundingBox.Top);
             CHelper.WriteLine(Text, Align);
         }
 

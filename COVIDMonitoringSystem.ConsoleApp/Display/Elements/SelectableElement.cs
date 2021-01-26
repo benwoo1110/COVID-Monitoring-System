@@ -32,7 +32,7 @@ namespace COVIDMonitoringSystem.ConsoleApp.Display.Elements
         {
         }
 
-        public override void Display()
+        protected override void SelectColour()
         {
             if (!Enabled)
             {
@@ -46,10 +46,6 @@ namespace COVIDMonitoringSystem.ConsoleApp.Display.Elements
             {
                 ColourSelector.Element();
             }
-            
-            Console.SetCursorPosition(0, BoundingBox.Top);
-            CHelper.WriteLine(Text, Align);
-            Console.SetCursorPosition(BoundingBox.Left, BoundingBox.Top);
         }
     }
 }
