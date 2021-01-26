@@ -7,15 +7,20 @@ namespace COVIDMonitoringSystem.ConsoleApp.Display.Elements
     {
         public string Prompt { get; set; }
 
+        public override string Text
+        {
+            get => _text;
+            set
+            {
+                _text = value;
+                UpdateWidth();
+                OnPropertyChanged();
+            }
+        }
+
         public Input(string name, string prompt) : base(name)
         {
             Prompt = prompt;
-        }
-
-        public override void UpdateBox()
-        {
-            base.UpdateBox();
-            UpdateWidth();
         }
 
         protected override void WriteToScreen()
