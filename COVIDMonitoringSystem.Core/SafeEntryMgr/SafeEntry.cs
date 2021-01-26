@@ -23,7 +23,7 @@ namespace COVIDMonitoringSystem.Core.SafeEntryMgr
 
         public override string ToString()
         {
-            return "Check-in time: " + CheckIn + "\tLocation: " + Location;
+            return $"Check-in time: {CheckIn, -22} Location: {Location}";
         }
     }
 }

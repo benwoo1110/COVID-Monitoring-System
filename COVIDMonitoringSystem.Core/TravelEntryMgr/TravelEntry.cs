@@ -127,7 +127,7 @@ namespace COVIDMonitoringSystem.Core.TravelEntryMgr
 
         public override string ToString()
         {
-            return base.ToString();
+            return $"{LastCountryOfEmbarkation}";
         }
     }
 }

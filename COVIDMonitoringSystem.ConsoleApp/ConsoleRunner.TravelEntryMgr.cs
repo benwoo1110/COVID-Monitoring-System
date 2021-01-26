@@ -67,7 +67,6 @@ namespace COVIDMonitoringSystem.ConsoleApp
             if (!name.HasText() || !passportNo.HasText() || !nationality.HasText())
             {
                 result.Text = "Incomplete details. No visitor has been added to the system.";
-                screen.Display();
                 return;
             }
             
@@ -77,8 +76,6 @@ namespace COVIDMonitoringSystem.ConsoleApp
             name.ClearText();
             passportNo.ClearText();
             nationality.ClearText();
-            
-            screen.Display();
         }
 
         private void NewTravelRecord()

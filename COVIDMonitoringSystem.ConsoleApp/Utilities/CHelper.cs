@@ -35,9 +35,14 @@ namespace COVIDMonitoringSystem.ConsoleApp.Utilities
         
         public static void WriteLine(string text, TextAlign textAlign)
         {
-            Console.Write(textAlign.DoAlignment(text));
-            LinesPrinted++;
-            //TODO: What if its multi-lined ;(
+            var lines = text.Split("\n");
+            
+            foreach (var line in lines)
+            {
+                Console.Write(textAlign.DoAlignment(line));
+                LinesPrinted++;
+                //TODO: What if its too long for one line?
+            }
         }
 
         public static void FillLine(char c)
