@@ -26,26 +26,26 @@ namespace COVIDMonitoringSystem.ConsoleApp
                 .Build()
             );
 
-            DisplayManager.RegisterScreen(new LegacyScreen(
-                DisplayManager,
-                "changeCapacity",
-                "Change capacity of business location",
-                ChangeCapacity
-            ));
+            DisplayManager.RegisterScreen(new LegacyScreenBuilder(DisplayManager)
+                .OfName("changeCapacity")
+                .WithHeader("Change capacity of business location")
+                .WithRunner(ChangeCapacity)
+                .Build()
+            );
 
-            DisplayManager.RegisterScreen(new LegacyScreen(
-                DisplayManager,
-                "checkIn",
-                "SafeEntry Check-In",
-                CheckIn
-            ));
+            DisplayManager.RegisterScreen(new LegacyScreenBuilder(DisplayManager)
+                .OfName("checkIn")
+                .WithHeader("SafeEntry Check-In")
+                .WithRunner(CheckIn)
+                .Build()
+            );
 
-            DisplayManager.RegisterScreen(new LegacyScreen(
-                DisplayManager,
-                "checkOut",
-                "SafeEntry Check-Out",
-                CheckOut
-            ));
+            DisplayManager.RegisterScreen(new LegacyScreenBuilder(DisplayManager)
+                .OfName("checkOut")
+                .WithHeader("SafeEntry Check-Out")
+                .WithRunner(CheckOut)
+                .Build()
+            );
         }
         
         private void AssignToken()

@@ -65,7 +65,7 @@ namespace COVIDMonitoringSystem.ConsoleApp.Display
                     inputElement.Text += key.KeyChar;
                 }
 
-                CurrentScreen.DisplaySelected(inputElement);
+                inputElement.Display();
                 inputElement.UpdateWidth();
                 Console.SetCursorPosition(inputElement.BoundingBox.Left, inputElement.BoundingBox.Top);
             }
@@ -111,6 +111,10 @@ namespace COVIDMonitoringSystem.ConsoleApp.Display
                 if (CHelper.DidChangeWindowSize())
                 {
                     CurrentScreen.Display();
+                }
+                else
+                {
+                    CurrentScreen.UpdateDisplay();
                 }
 
                 var keyPressed = Console.ReadKey(true);

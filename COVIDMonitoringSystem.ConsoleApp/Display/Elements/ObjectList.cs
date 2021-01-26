@@ -24,7 +24,7 @@ namespace COVIDMonitoringSystem.ConsoleApp.Display.Elements
             ListGetter = listGetter;
         }
 
-        public override void Display()
+        protected override void WriteToScreen()
         {
             var objList = ListGetter?.Invoke();
 

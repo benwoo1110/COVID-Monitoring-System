@@ -49,7 +49,15 @@ namespace COVIDMonitoringSystem.Core.TravelEntryMgr
             .WithQuarantineDays(14)
             .WithSwapTest()
             .WithTransport(tr => 100) //TODO: Do real calculation
-            .WithDedicatedFacility(tr => 2000)
+            .WithDedicatedFacility(tr =>
+            {
+                if ((tr.ShnEndDate - tr.EntryDate).Days != 0)
+                {
+                    return 10000;
+                }
+
+                return 0;
+            })
             .WithMatcher(new TravelEntryMatcher(typeof(Visitor), SHNTier.Dedicated))
             .Build();
 

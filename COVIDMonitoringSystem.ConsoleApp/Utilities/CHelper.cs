@@ -54,6 +54,7 @@ namespace COVIDMonitoringSystem.ConsoleApp.Utilities
         public static void PadRemainingHeight()
         {
             int paddingLinesToWrite = WindowHeight - LinesPrinted;
+            Console.SetCursorPosition(0, LinesPrinted);
             for (var i = 0; i < paddingLinesToWrite; i++)
             {
                 WriteEmpty();

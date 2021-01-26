@@ -26,12 +26,12 @@ namespace COVIDMonitoringSystem.ConsoleApp
                 .Build()
             );
 
-            DisplayManager.RegisterScreen(new LegacyScreen(
-                DisplayManager,
-                "globalStats",
-                "Explore Global Stats",
-                ExploreGlobalStats
-            ));
+            DisplayManager.RegisterScreen(new LegacyScreenBuilder(DisplayManager)
+                .OfName("globalStats")
+                .WithHeader("Explore Global Stats")
+                .WithRunner(ExploreGlobalStats)
+                .Build()
+            );
         }
 
         private void ExploreGlobalStats()

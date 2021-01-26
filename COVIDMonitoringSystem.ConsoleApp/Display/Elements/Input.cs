@@ -1,4 +1,5 @@
-﻿using COVIDMonitoringSystem.ConsoleApp.Utilities;
+﻿using System;
+using COVIDMonitoringSystem.ConsoleApp.Utilities;
 
 namespace COVIDMonitoringSystem.ConsoleApp.Display.Elements
 {
@@ -17,9 +18,9 @@ namespace COVIDMonitoringSystem.ConsoleApp.Display.Elements
             UpdateWidth();
         }
 
-        public override void Display()
+        protected override void WriteToScreen()
         {
-            CHelper.WriteLine($"{Prompt}: {Text}");
+            CHelper.WriteLine($"{Prompt}: {Text}", Align);
         }
 
         public void UpdateWidth()

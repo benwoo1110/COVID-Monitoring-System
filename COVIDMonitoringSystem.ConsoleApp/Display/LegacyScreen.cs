@@ -7,10 +7,15 @@ namespace COVIDMonitoringSystem.ConsoleApp.Display
     {
         public Action Runner { get; set; }
 
+        public LegacyScreen(ConsoleManager manager) : base(manager)
+        {
+        }
+
         public LegacyScreen(ConsoleManager manager, string name, string header, Action runner) : base(manager)
         {
             Name = name;
-            Header = header;
+            //TODO: header
+            // Header = header;
             Runner = runner;
         }
 
@@ -18,7 +23,7 @@ namespace COVIDMonitoringSystem.ConsoleApp.Display
         {
             ColourSelector.Element();
             Console.SetCursorPosition(0, 4);
-            Runner.Invoke();
+            Runner?.Invoke();
             CHelper.WriteEmpty();
             CHelper.Pause("Back to menu...");
             Manager.PopScreen();
