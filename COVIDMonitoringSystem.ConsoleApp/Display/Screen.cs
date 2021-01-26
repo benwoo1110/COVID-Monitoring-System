@@ -11,7 +11,6 @@ namespace COVIDMonitoringSystem.ConsoleApp.Display
     {
         public ConsoleManager Manager { get; set; }
         public string Name { get; set; }
-        public string Header { get; set; }
         public List<Element> ElementList { get; set; }
         public List<SelectableElement> CachedSelectableElement { get; set; }
         public int SelectedIndex { get; set; }
@@ -61,22 +60,10 @@ namespace COVIDMonitoringSystem.ConsoleApp.Display
         public virtual void Display()
         {
             CHelper.Clear();
-            DisplayHeader();
             DisplayElements();
             ColourSelector.Element();
             CHelper.PadRemainingHeight();
             ColourSelector.Default();
-        }
-
-        protected virtual void DisplayHeader()
-        {
-            ColourSelector.Header();
-            CHelper.WriteEmpty();
-            CHelper.WriteLine(Header, TextAlign.Center);
-            CHelper.WriteEmpty();
-
-            ColourSelector.Element();
-            CHelper.WriteEmpty();
         }
 
         protected virtual void DisplayElements()

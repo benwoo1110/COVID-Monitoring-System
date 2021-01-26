@@ -5,6 +5,7 @@ namespace COVIDMonitoringSystem.ConsoleApp.Display.Elements
     public abstract class TextElement : Element
     {
         public string Text { get; set; } = "";
+        public virtual TextAlign Align { get; set; } = TextAlign.Left;
 
         protected TextElement(string name) : base(name)
         {
@@ -17,7 +18,7 @@ namespace COVIDMonitoringSystem.ConsoleApp.Display.Elements
 
         public override void Display()
         {
-            CHelper.WriteLine(Text);
+            CHelper.WriteLine(Text, Align);
         }
 
         public bool HasText(bool allowWhiteSpace = false)
