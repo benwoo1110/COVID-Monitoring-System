@@ -124,21 +124,17 @@ namespace COVIDMonitoringSystem.ConsoleApp
                         var checkIn = new SafeEntry(DateTime.Now, inputLocation);
                         inputName.AddSafeEntry(checkIn);
                         inputLocation.VisitorsNow += 1;
-                        CHelper.WriteLine("You have been checked in to " + inputLocation.ToString());
+                        CHelper.WriteLine("You have been checked in to " + inputLocation);
                     }
                     return;
                 }
-                else
-                {
-                    CHelper.WriteLine("Store is not found, please try again.");
-                }
-                return;
+
+                CHelper.WriteLine("Store is not found, please try again.");
             }
             else
             {
                 CHelper.WriteLine("Name is not found, please try again.");
             }
-            return;
         }
 
         private void CheckOut()
@@ -171,7 +167,6 @@ namespace COVIDMonitoringSystem.ConsoleApp
             {
                 CHelper.WriteLine("Name not found.");
             }
-            return;
         }
     }
 

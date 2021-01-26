@@ -5,7 +5,7 @@ namespace COVIDMonitoringSystem.Core.SafeEntryMgr
     public class SafeEntry
     {
         public DateTime CheckIn { get; set; }
-        public DateTime CheckOut { get; set; }
+        public DateTime CheckOut { get; private set; }
         public BusinessLocation Location { get; set; }
 
         public SafeEntry() { }

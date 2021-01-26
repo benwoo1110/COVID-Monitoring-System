@@ -1,5 +1,4 @@
-﻿using System.Text;
-using COVIDMonitoringSystem.ConsoleApp.Display;
+﻿using COVIDMonitoringSystem.ConsoleApp.Display;
 using COVIDMonitoringSystem.ConsoleApp.Display.Builders;
 using COVIDMonitoringSystem.ConsoleApp.Display.Elements;
 using COVIDMonitoringSystem.ConsoleApp.Utilities;

@@ -1,5 +1,4 @@
 ﻿using System;
-using COVIDMonitoringSystem.Core.TravelEntryMgr;
 
 namespace COVIDMonitoringSystem.Core.PersonMgr
 {

@@ -1,8 +1,5 @@
 ﻿using System;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
 using COVIDMonitoringSystem.ConsoleApp.Utilities;
-using JetBrains.Annotations;
 
 namespace COVIDMonitoringSystem.ConsoleApp.Display.Elements
 {

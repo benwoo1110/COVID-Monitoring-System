@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace COVIDMonitoringSystem.Core.SafeEntryMgr
+﻿namespace COVIDMonitoringSystem.Core.SafeEntryMgr
 {
     public class BusinessLocation
     {
