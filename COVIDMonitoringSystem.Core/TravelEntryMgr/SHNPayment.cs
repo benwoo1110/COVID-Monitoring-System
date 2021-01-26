@@ -9,9 +9,7 @@ namespace COVIDMonitoringSystem.Core.TravelEntryMgr
     {
         public Person PaymentPerson { get; }
         public IReadOnlyList<TravelEntry> Entries { get; }
-
         public double SubTotalPrice { get; private set; }
-        
         public double TotalPrice { get; private set; }
 
         internal SHNPayment(Person paymentPerson)

@@ -15,6 +15,12 @@ namespace COVIDMonitoringSystem.Core.PersonMgr
             LastLeftCountry = lastLeftCountry;
         }
 
+        [Obsolete("Required by assignment.")]
+        public override double CalculateSHNCharges()
+        {
+            return GenerateSHNPaymentDetails().TotalPrice;
+        }
+
         public override string ToString()
         {
             return base.ToString();

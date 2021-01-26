@@ -47,6 +47,9 @@ namespace COVIDMonitoringSystem.Core.PersonMgr
             return new SHNPayment(this);
         }
 
+        [Obsolete("Required by assignment.")]
+        public abstract double CalculateSHNCharges();
+
         public override string ToString()
         {
             return "Name" + Name;

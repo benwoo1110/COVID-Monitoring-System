@@ -13,7 +13,13 @@ namespace COVIDMonitoringSystem.Core.PersonMgr
             PassportNo = passportNo;
             Nationality = nationality;
         }
-        
+
+        [Obsolete("Required by assignment.")]
+        public override double CalculateSHNCharges()
+        {
+            return GenerateSHNPaymentDetails().TotalPrice;
+        }
+
         public override string ToString()
         {
             return base.ToString();
