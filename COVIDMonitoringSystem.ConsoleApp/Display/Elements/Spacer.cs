@@ -1,4 +1,5 @@
-﻿using COVIDMonitoringSystem.ConsoleApp.Utilities;
+﻿using System;
+using COVIDMonitoringSystem.ConsoleApp.Utilities;
 
 namespace COVIDMonitoringSystem.ConsoleApp.Display.Elements
 {
@@ -11,6 +12,8 @@ namespace COVIDMonitoringSystem.ConsoleApp.Display.Elements
 
         public override void Display()
         {
+            ColourSelector.Element();
+            Console.SetCursorPosition(0, BoundingBox.Top);
             CHelper.WriteEmpty();
         }
     }

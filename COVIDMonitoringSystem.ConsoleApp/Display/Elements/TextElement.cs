@@ -1,11 +1,32 @@
-﻿using COVIDMonitoringSystem.ConsoleApp.Utilities;
+﻿using System;
+using COVIDMonitoringSystem.ConsoleApp.Utilities;
 
 namespace COVIDMonitoringSystem.ConsoleApp.Display.Elements
 {
     public abstract class TextElement : Element
     {
-        public string Text { get; set; } = "";
-        public virtual TextAlign Align { get; set; } = TextAlign.Left;
+        private string _text = "";
+        private TextAlign _align = TextAlign.Left;
+
+        public string Text
+        {
+            get => _text;
+            set
+            {
+                _text = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public virtual TextAlign Align
+        {
+            get => _align;
+            set
+            {
+                _align = value;
+                OnPropertyChanged();
+            }
+        }
 
         protected TextElement(string name) : base(name)
         {
@@ -18,6 +39,8 @@ namespace COVIDMonitoringSystem.ConsoleApp.Display.Elements
 
         public override void Display()
         {
+            ColourSelector.Element();
+            Console.SetCursorPosition(0, BoundingBox.Top);
             CHelper.WriteLine(Text, Align);
         }
 

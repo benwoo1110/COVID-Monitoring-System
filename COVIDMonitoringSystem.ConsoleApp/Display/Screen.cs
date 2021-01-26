@@ -15,6 +15,7 @@ namespace COVIDMonitoringSystem.ConsoleApp.Display
         public List<SelectableElement> CachedSelectableElement { get; set; }
         public int SelectedIndex { get; set; }
         public SelectableElement SelectedElement { get; set; }
+        public List<Element> UpdateQueue { get; set; }
         public bool Active { get; set; }
 
         public Screen(ConsoleManager manager)
@@ -22,6 +23,7 @@ namespace COVIDMonitoringSystem.ConsoleApp.Display
             Manager = manager;
             ElementList = new List<Element>();
             CachedSelectableElement = new List<SelectableElement>();
+            UpdateQueue = new List<Element>();
         }
 
         public void AddElement(Element element)
@@ -64,6 +66,14 @@ namespace COVIDMonitoringSystem.ConsoleApp.Display
             ColourSelector.Element();
             CHelper.PadRemainingHeight();
             ColourSelector.Default();
+            UpdateQueue.Clear();
+        }
+
+        public void UpdateDisplay()
+        {
+            UpdateQueue.ForEach(element => element.Display());
+            UpdateQueue.Clear();
+            ColourSelector.Default();
         }
 
         protected virtual void DisplayElements()
@@ -71,33 +81,10 @@ namespace COVIDMonitoringSystem.ConsoleApp.Display
             foreach (var element in ElementList.Where(element => !element.Hidden))
             {
                 element.UpdateBox();
-
-                if (element.Equals(SelectedElement) && SelectedElement.Enabled)
-                {
-                    DisplaySelected(element);
-                    continue;
-                }
-
-                DisplayNormal(element);
+                element.Display();
             }
         }
-
-        public virtual void DisplayNormal(Element element)
-        {
-            Console.SetCursorPosition(0, element.BoundingBox.Top);
-            ColourSelector.Element();
-            element.Display();
-            ColourSelector.Default();
-        }
-
-        public virtual void DisplaySelected(Element element)
-        {
-            Console.SetCursorPosition(0, element.BoundingBox.Top);
-            ColourSelector.Selected();
-            element.Display();
-            ColourSelector.Default();
-        }
-
+        
         public void SetSelection(int to)
         {
             if (CachedSelectableElement.Count == 0)
@@ -107,13 +94,12 @@ namespace COVIDMonitoringSystem.ConsoleApp.Display
 
             if (SelectedElement != null)
             {
-                DisplayNormal(SelectedElement);
+                SelectedElement.Selected = false;
             }
 
             SelectedIndex = CoreHelper.Mod(to, CachedSelectableElement.Count);
             SelectedElement = CachedSelectableElement[SelectedIndex];
-            DisplaySelected(SelectedElement);
-            Console.SetCursorPosition(SelectedElement.BoundingBox.Left, SelectedElement.BoundingBox.Top);
+            SelectedElement.Selected = true;
         }
 
         public void ChangeSelection(int by)
@@ -123,8 +109,14 @@ namespace COVIDMonitoringSystem.ConsoleApp.Display
 
         public void ClearSelection()
         {
-            SelectedIndex = -1;
+            if (!HasSelection())
+            {
+                return;
+            }
+
+            SelectedElement.Selected = false;
             SelectedElement = null;
+            SelectedIndex = -1;
         }
 
         public bool HasSelection()
@@ -140,6 +132,11 @@ namespace COVIDMonitoringSystem.ConsoleApp.Display
         public T FindElementOfType<T>(string name) where T : Element
         {
             return (T) ElementList.Find(e => e is T && e.Name.ToLower().Equals(name.ToLower()));
+        }
+
+        public void AddToUpdateQueue(Element element)
+        {
+            UpdateQueue.Add(element);
         }
     }
 }
