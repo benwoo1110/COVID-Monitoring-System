@@ -105,37 +105,73 @@ namespace COVIDMonitoringSystem.ConsoleApp
 
         private void CheckIn()
         {
-            /*var inputName = CHelper.GetInput("Enter your name: ", Manager.FindPerson);
+            var inputName = CHelper.GetInput("Enter your name: ", Manager.FindPerson);
             if (inputName != null)
             {
-                var inputLocation = CHelper.GetInput("Enter business location to check in to: ", Manager.FindBusinessLocation);
-                if (inputLocation.IsFull())
+                foreach (var i in Manager.BusinessLocationList)
                 {
-                    CHelper.WriteLine("This store is full, please try again later.");
+                    CHelper.WriteLine(i.BusinessName);
+                }
+                var inputLocation = CHelper.GetInput("Enter business location to check in to: ", Manager.FindBusinessLocation);
+                if (inputLocation != null)
+                {
+                    if (inputLocation.IsFull())
+                    {
+                        CHelper.WriteLine("This store is full, please try again later.");
+                    }
+                    else
+                    {
+                        var checkIn = new SafeEntry(DateTime.Now, inputLocation);
+                        inputName.AddSafeEntry(checkIn);
+                        inputLocation.VisitorsNow += 1;
+                        CHelper.WriteLine("You have been checked in to " + inputLocation.ToString());
+                    }
+                    return;
                 }
                 else
                 {
-                    var checkIn = new SafeEntry(DateTime.Now, inputLocation);
-                    var personEntry = new Person()
-                    inputLocation.VisitorsNow += 1;
+                    CHelper.WriteLine("Store is not found, please try again.");
                 }
                 return;
             }
             else
             {
                 CHelper.WriteLine("Name is not found, please try again.");
-            }*/
-            CHelper.WriteLine("Check In");
+            }
+            return;
         }
 
         private void CheckOut()
         {
-            /*var inputName = CHelper.GetInput("Enter your name: ", Manager.FindPerson);
+            var inputName = CHelper.GetInput("Enter your name: ", Manager.FindPerson);
             if (inputName != null)
             {
+                foreach(var i in inputName.SafeEntryList)
+                {
+                    if (i.CheckOut < i.CheckIn)
+                    {
+                        CHelper.WriteLine(i.ToString());
+                    }
+                }
+                var checkoutLocation = CHelper.GetInput("Enter store to check out from: ", Manager.FindBusinessLocation);
+                foreach (var i in inputName.SafeEntryList)
+                {
+                    if (i.Location == checkoutLocation)
+                    {
+                        i.PerformCheckOut();
+                        checkoutLocation.VisitorsNow -= 1;
+                        CHelper.WriteLine("You have been checked out from " + checkoutLocation);
+                        return;
+                    }
+                }
 
-            }*/
-            CHelper.WriteLine("Check out");
+                CHelper.WriteLine("You are not checked in to this store");
+            }
+            else
+            {
+                CHelper.WriteLine("Name not found.");
+            }
+            return;
         }
     }
 

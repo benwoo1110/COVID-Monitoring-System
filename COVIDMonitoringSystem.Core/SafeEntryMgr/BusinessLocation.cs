@@ -20,12 +20,12 @@ namespace COVIDMonitoringSystem.Core.SafeEntryMgr
         public bool IsFull()
         {
             int capacityCheck = MaximumCapacity - VisitorsNow;
-            return capacityCheck < 0;
+            return capacityCheck < 1;
         }
 
         public override string ToString()
         {
-            return base.ToString();
+            return BusinessName;
         }
     }
 }

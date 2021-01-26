@@ -8,6 +8,8 @@ namespace COVIDMonitoringSystem.Core.SafeEntryMgr
         public DateTime CheckOut { get; set; }
         public BusinessLocation Location { get; set; }
 
+        public SafeEntry() { }
+
         public SafeEntry(DateTime checkIn, BusinessLocation location)
         {
             CheckIn = checkIn;
@@ -16,12 +18,12 @@ namespace COVIDMonitoringSystem.Core.SafeEntryMgr
 
         public void PerformCheckOut()
         {
-            throw new NotImplementedException();
+            CheckOut = DateTime.Now;
         }
 
         public override string ToString()
         {
-            return base.ToString();
+            return "Check-in time: " + CheckIn + "\tLocation: " + Location;
         }
     }
 }

@@ -49,7 +49,7 @@ namespace COVIDMonitoringSystem.Core.PersonMgr
 
         public override string ToString()
         {
-            return base.ToString();
+            return "Name" + Name;
         }
     }
 }
