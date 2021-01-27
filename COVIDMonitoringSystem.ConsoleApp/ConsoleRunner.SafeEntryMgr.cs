@@ -4,6 +4,8 @@ using COVIDMonitoringSystem.ConsoleApp.Display.Builders;
 using COVIDMonitoringSystem.ConsoleApp.Utilities;
 using COVIDMonitoringSystem.Core.PersonMgr;
 using COVIDMonitoringSystem.Core.SafeEntryMgr;
+using System.Linq;
+using System.Collections.Generic;
 
 namespace COVIDMonitoringSystem.ConsoleApp
 {
@@ -140,11 +142,15 @@ namespace COVIDMonitoringSystem.ConsoleApp
         private void CheckOut()
         {
             var inputName = CHelper.GetInput("Enter your name: ", Manager.FindPerson);
+            List<DateTime> latestCheckinDate = new List<DateTime>();
+            List<DateTime> latestCheckoutDate = new List<DateTime>();
             if (inputName != null)
             {
                 foreach(var i in inputName.SafeEntryList)
                 {
-                    if (i.CheckOut < i.CheckIn)
+                    latestCheckinDate.Add(i.CheckIn);
+                    latestCheckoutDate.Add(i.CheckOut);
+                    if (latestCheckinDate.Max() > latestCheckoutDate.Max())
                     {
                         CHelper.WriteLine(i.ToString());
                     }
@@ -152,7 +158,7 @@ namespace COVIDMonitoringSystem.ConsoleApp
                 var checkoutLocation = CHelper.GetInput("Enter store to check out from: ", Manager.FindBusinessLocation);
                 foreach (var i in inputName.SafeEntryList)
                 {
-                    if (i.Location == checkoutLocation)
+                    if (i.Location == checkoutLocation && latestCheckinDate.Max() > latestCheckoutDate.Max())
                     {
                         i.PerformCheckOut();
                         checkoutLocation.VisitorsNow -= 1;
