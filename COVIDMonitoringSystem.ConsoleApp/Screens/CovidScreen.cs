@@ -3,11 +3,11 @@ using COVIDMonitoringSystem.Core;
 
 namespace COVIDMonitoringSystem.ConsoleApp.Screens
 {
-    public abstract class CovidAbstractScreen : AbstractScreen
+    public abstract class CovidScreen : AbstractScreen
     {
         protected COVIDMonitoringManager CovidManager { get; set; }
 
-        protected CovidAbstractScreen(ConsoleDisplayManager displayManager, COVIDMonitoringManager covidManager) : base(displayManager)
+        protected CovidScreen(ConsoleDisplayManager displayManager, COVIDMonitoringManager covidManager) : base(displayManager)
         {
             CovidManager = covidManager;
         }

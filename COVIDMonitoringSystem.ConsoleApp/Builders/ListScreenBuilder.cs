@@ -6,7 +6,7 @@ using COVIDMonitoringSystem.ConsoleApp.Screens;
 
 namespace COVIDMonitoringSystem.ConsoleApp.Builders
 {
-    public class ListScreenBuilder<T> : AbstractScreenBuilder<ListScreenBuilder<T>, BuilderAbstractScreen> where T : class
+    public class ListScreenBuilder<T> : AbstractScreenBuilder<ListScreenBuilder<T>, BuilderScreen> where T : class
     {
         public ObjectList<T> ListObject { get; set; }
         

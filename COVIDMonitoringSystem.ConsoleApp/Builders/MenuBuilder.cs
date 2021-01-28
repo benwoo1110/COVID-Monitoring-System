@@ -4,7 +4,7 @@ using COVIDMonitoringSystem.ConsoleApp.Screens;
 
 namespace COVIDMonitoringSystem.ConsoleApp.Builders
 {
-    public class MenuBuilder : AbstractScreenBuilder<MenuBuilder, BuilderAbstractScreen>
+    public class MenuBuilder : AbstractScreenBuilder<MenuBuilder, BuilderScreen>
     {
         protected int OptionCount { get; set; }
 

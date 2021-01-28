@@ -4,7 +4,7 @@ using COVIDMonitoringSystem.ConsoleApp.Screens;
 
 namespace COVIDMonitoringSystem.ConsoleApp.Builders
 {
-    public class LegacyScreenBuilder : AbstractScreenBuilder<LegacyScreenBuilder, LegacyAbstractScreen>
+    public class LegacyScreenBuilder : AbstractScreenBuilder<LegacyScreenBuilder, LegacyScreen>
     {
         public LegacyScreenBuilder(ConsoleDisplayManager displayManager) : base(displayManager)
         {

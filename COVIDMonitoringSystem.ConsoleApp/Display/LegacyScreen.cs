@@ -1,18 +1,17 @@
 ﻿using System;
-using COVIDMonitoringSystem.ConsoleApp.Display;
 using COVIDMonitoringSystem.ConsoleApp.Utilities;
 
-namespace COVIDMonitoringSystem.ConsoleApp.Screens
+namespace COVIDMonitoringSystem.ConsoleApp.Display
 {
-    public class LegacyAbstractScreen :  BuilderAbstractScreen
+    public class LegacyScreen :  BuilderScreen
     {
         public Action Runner { get; set; }
 
-        public LegacyAbstractScreen(ConsoleDisplayManager displayManager) : base(displayManager)
+        public LegacyScreen(ConsoleDisplayManager displayManager) : base(displayManager)
         {
         }
 
-        public LegacyAbstractScreen(ConsoleDisplayManager displayManager, string name, string header, Action runner) : base(displayManager) //TODO: Remove header
+        public LegacyScreen(ConsoleDisplayManager displayManager, string name, string header, Action runner) : base(displayManager) //TODO: Remove header
         {
             ScreenName = name;
             Runner = runner;

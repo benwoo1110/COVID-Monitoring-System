@@ -6,7 +6,7 @@ using COVIDMonitoringSystem.ConsoleApp.Screens;
 namespace COVIDMonitoringSystem.ConsoleApp.Builders
 {
     public abstract class AbstractScreenBuilder<TB, TS>
-        where TS : BuilderAbstractScreen
+        where TS : BuilderScreen
         where TB : AbstractScreenBuilder<TB, TS>
     {
         protected ConsoleDisplayManager DisplayManager { get; }
