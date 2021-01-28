@@ -13,14 +13,14 @@ namespace COVIDMonitoringSystem.ConsoleApp
     {
         private void SetUpSafeEntryScreens()
         {
-            DisplayDisplayManager.RegisterScreen(new LegacyScreenBuilder(DisplayDisplayManager)
+            DisplayManager.RegisterScreen(new LegacyScreenBuilder(DisplayManager)
                 .OfName("assignToken")
                 .WithHeader("Assign or replace TraceTogether Token")
                 .WithRunner(AssignToken)
                 .Build()
             );
 
-            DisplayDisplayManager.RegisterScreen(new ListScreenBuilder<BusinessLocation>(DisplayDisplayManager)
+            DisplayManager.RegisterScreen(new ListScreenBuilder<BusinessLocation>(DisplayManager)
                 .OfName("viewLocations")
                 .WithHeader("View All Visitors")
                 .WithProperties(new[] {"BusinessName", "BranchCode", "MaximumCapacity", "VisitorsNow"})
@@ -28,21 +28,21 @@ namespace COVIDMonitoringSystem.ConsoleApp
                 .Build()
             );
 
-            DisplayDisplayManager.RegisterScreen(new LegacyScreenBuilder(DisplayDisplayManager)
+            DisplayManager.RegisterScreen(new LegacyScreenBuilder(DisplayManager)
                 .OfName("changeCapacity")
                 .WithHeader("Change capacity of business location")
                 .WithRunner(ChangeCapacity)
                 .Build()
             );
 
-            DisplayDisplayManager.RegisterScreen(new LegacyScreenBuilder(DisplayDisplayManager)
+            DisplayManager.RegisterScreen(new LegacyScreenBuilder(DisplayManager)
                 .OfName("checkIn")
                 .WithHeader("SafeEntry Check-In")
                 .WithRunner(CheckIn)
                 .Build()
             );
 
-            DisplayDisplayManager.RegisterScreen(new LegacyScreenBuilder(DisplayDisplayManager)
+            DisplayManager.RegisterScreen(new LegacyScreenBuilder(DisplayManager)
                 .OfName("checkOut")
                 .WithHeader("SafeEntry Check-Out")
                 .WithRunner(CheckOut)

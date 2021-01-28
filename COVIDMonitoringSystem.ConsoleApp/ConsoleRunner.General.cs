@@ -10,7 +10,7 @@ namespace COVIDMonitoringSystem.ConsoleApp
     {
         private void SetUpGeneralScreens()
         {
-            DisplayDisplayManager.RegisterScreen(new ScreenBuilder(DisplayDisplayManager)
+            DisplayManager.RegisterScreen(new ScreenBuilder(DisplayManager)
                 .OfName("viewPersonDetails")
                 .WithHeader("View Details of a Person")
                 .AddElement(new Input("name", "Name"))
@@ -21,7 +21,7 @@ namespace COVIDMonitoringSystem.ConsoleApp
                 .Build()
             );
             
-            DisplayDisplayManager.RegisterScreen(new ListScreenBuilder<Visitor>(DisplayDisplayManager)
+            DisplayManager.RegisterScreen(new ListScreenBuilder<Visitor>(DisplayManager)
                 .OfName("viewAllVisitors")
                 .WithHeader("View All Visitors")
                 .WithProperties(new[] {"Name", "PassportNo", "Nationality", "SafeEntryList", "TravelEntryList"})
@@ -29,7 +29,7 @@ namespace COVIDMonitoringSystem.ConsoleApp
                 .Build()
             );
 
-            DisplayDisplayManager.RegisterScreen(new LegacyScreenBuilder(DisplayDisplayManager)
+            DisplayManager.RegisterScreen(new LegacyScreenBuilder(DisplayManager)
                 .OfName("globalStats")
                 .WithHeader("Explore Global Stats")
                 .WithRunner(ExploreGlobalStats)

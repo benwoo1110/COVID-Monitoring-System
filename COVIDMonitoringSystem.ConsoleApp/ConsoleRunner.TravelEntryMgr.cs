@@ -21,7 +21,7 @@ namespace COVIDMonitoringSystem.ConsoleApp
                 .Build()
             );*/
 
-            DisplayDisplayManager.RegisterScreen(new NewVisitorScreen(DisplayDisplayManager, Manager));
+            DisplayManager.RegisterScreen(new NewVisitorScreen(DisplayManager, Manager));
 
             /*DisplayDisplayManager.RegisterScreen(new LegacyScreen(
                 DisplayDisplayManager,

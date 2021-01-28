@@ -8,18 +8,18 @@ namespace COVIDMonitoringSystem.ConsoleApp
     {
         private COVIDMonitoringManager Manager { get; }
 
-        private ConsoleDisplayManager DisplayDisplayManager { get; }
+        private ConsoleDisplayManager DisplayManager { get; }
 
         public ConsoleRunner()
         {
-            DisplayDisplayManager = new ConsoleDisplayManager();
+            DisplayManager = new ConsoleDisplayManager();
             Manager = new COVIDMonitoringManager();
             SetUpMenus();
         }
 
         private void SetUpMenus()
         {
-            DisplayDisplayManager.RegisterScreen(new MainMenuBuilder(DisplayDisplayManager)
+            DisplayManager.RegisterScreen(new MainMenuBuilder(DisplayManager)
                 .OfName("mainMenu")
                 .WithHeader("COVID Management System")
                 .AddOption("View Details of a Person", "viewPersonDetails")
@@ -30,7 +30,7 @@ namespace COVIDMonitoringSystem.ConsoleApp
                 .Build()
             );
 
-            DisplayDisplayManager.RegisterScreen(new MenuBuilder(DisplayDisplayManager)
+            DisplayManager.RegisterScreen(new MenuBuilder(DisplayManager)
                 .OfName("safeEntryMenu")
                 .WithHeader("Travel Entry Management")
                 .AddOption("Assign or replace TraceTogether Token", "assignToken")
@@ -42,7 +42,7 @@ namespace COVIDMonitoringSystem.ConsoleApp
                 .Build()
             );
 
-            DisplayDisplayManager.RegisterScreen(new MenuBuilder(DisplayDisplayManager)
+            DisplayManager.RegisterScreen(new MenuBuilder(DisplayManager)
                 .OfName("travelEntryMenu")
                 .WithHeader("Travel Entry Management")
                 .AddOption("View All SHN Facilities", "viewFacilities")
@@ -60,7 +60,7 @@ namespace COVIDMonitoringSystem.ConsoleApp
 
         public void Run()
         {
-            DisplayDisplayManager.Run("mainMenu");
+            DisplayManager.Run("mainMenu");
         }
     }
 }
