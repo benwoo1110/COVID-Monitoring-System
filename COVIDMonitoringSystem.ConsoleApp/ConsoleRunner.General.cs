@@ -37,10 +37,10 @@ namespace COVIDMonitoringSystem.ConsoleApp
             );
         }
 
-        private void ShowPersonDetails(Screen screen)
+        private void ShowPersonDetails(AbstractScreen abstractScreen)
         {
-            var nameInput = screen.FindElementOfType<Input>("name");
-            var detailInfo = screen.FindElementOfType<Label>("details");
+            var nameInput = abstractScreen.FindElementOfType<Input>("name");
+            var detailInfo = abstractScreen.FindElementOfType<Label>("details");
 
             var targetPerson = Manager.FindPerson(nameInput.Text);
             if (targetPerson == null)

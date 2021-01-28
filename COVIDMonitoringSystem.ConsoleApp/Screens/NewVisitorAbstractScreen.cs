@@ -5,8 +5,10 @@ using COVIDMonitoringSystem.Core.PersonMgr;
 
 namespace COVIDMonitoringSystem.ConsoleApp.Screens
 {
-    public class NewVisitorScreen : CovidScreen
+    public class NewVisitorAbstractScreen : CovidAbstractScreen
     {
+        public override string Name => "newVisitor";
+
         private Header header = new Header("header")
         {
             Text = "New Visitor"
@@ -41,10 +43,8 @@ namespace COVIDMonitoringSystem.ConsoleApp.Screens
             BoundingBox = {Top = 12}
         };
 
-        public NewVisitorScreen(ConsoleDisplayManager displayDisplayManager, COVIDMonitoringManager covidManager) : base(displayDisplayManager, covidManager)
+        public NewVisitorAbstractScreen(ConsoleDisplayManager displayManager, COVIDMonitoringManager covidManager) : base(displayManager, covidManager)
         {
-            Name = "newVisitor";
-
             AddElement(header);
             AddElement(info);
             AddElement(name);

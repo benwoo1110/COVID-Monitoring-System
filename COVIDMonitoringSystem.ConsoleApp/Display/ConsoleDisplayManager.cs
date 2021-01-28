@@ -7,16 +7,16 @@ namespace COVIDMonitoringSystem.ConsoleApp.Display
 {
     public class ConsoleDisplayManager
     {
-        private Screen currentScreen;
-        private Dictionary<string, Screen> ScreenMap { get; }
-        public Stack<Screen> ScreenStack { get; set; }
+        private AbstractScreen currentAbstractScreen;
+        private Dictionary<string, AbstractScreen> ScreenMap { get; }
+        public Stack<AbstractScreen> ScreenStack { get; set; }
 
-        public Screen CurrentScreen
+        public AbstractScreen CurrentAbstractScreen
         {
-            get => currentScreen;
+            get => currentAbstractScreen;
             set
             {
-                currentScreen = value;
+                currentAbstractScreen = value;
                 ScreenUpdated = true;
             }
         }
@@ -27,7 +27,7 @@ namespace COVIDMonitoringSystem.ConsoleApp.Display
 
         public ConsoleDisplayManager()
         {
-            ScreenMap = new Dictionary<string, Screen>();
+            ScreenMap = new Dictionary<string, AbstractScreen>();
             KeyActionMap = new Dictionary<ConsoleKey, Action<ConsoleKeyInfo>>();
             SetDefaultKeyMap();
         }
@@ -43,17 +43,17 @@ namespace COVIDMonitoringSystem.ConsoleApp.Display
 
         private void NextSelection(ConsoleKeyInfo key)
         {
-            CurrentScreen.ChangeSelection(1);
+            CurrentAbstractScreen.ChangeSelection(1);
         }
 
         private void PreviousSelection(ConsoleKeyInfo key)
         {
-            CurrentScreen.ChangeSelection(-1);
+            CurrentAbstractScreen.ChangeSelection(-1);
         }
 
         private void DoSelection(ConsoleKeyInfo key)
         {
-            if (CurrentScreen.SelectedElement is Button buttonElement)
+            if (CurrentAbstractScreen.SelectedElement is Button buttonElement)
             {
                 buttonElement.RunAction();
             }
@@ -61,7 +61,7 @@ namespace COVIDMonitoringSystem.ConsoleApp.Display
 
         private void TypeInput(ConsoleKeyInfo key)
         {
-            if (CurrentScreen.SelectedElement is Input inputElement)
+            if (CurrentAbstractScreen.SelectedElement is Input inputElement)
             {
                 if (key.Key == ConsoleKey.Backspace)
                 {
@@ -81,24 +81,24 @@ namespace COVIDMonitoringSystem.ConsoleApp.Display
 
         private void EscapeBack(ConsoleKeyInfo key)
         {
-            if (CurrentScreen.HasSelection())
+            if (CurrentAbstractScreen.HasSelection())
             {
-                CurrentScreen.ClearSelection();
-                CurrentScreen.Render();
+                CurrentAbstractScreen.ClearSelection();
+                CurrentAbstractScreen.Render();
                 return;
             }
             
             PopScreen();
         }
         
-        public void RegisterScreen(Screen screen)
+        public void RegisterScreen(AbstractScreen abstractScreen)
         {
-            if (screen.DisplayDisplayManager != this)
+            if (abstractScreen.DisplayManager != this)
             {
                 throw new InvalidOperationException("Screen does not belong to this manager.");
             }
             
-            ScreenMap.Add(screen.Name, screen);
+            ScreenMap.Add(abstractScreen.Name, abstractScreen);
         }
         
         public void Run(string startingScreenName)
@@ -108,7 +108,7 @@ namespace COVIDMonitoringSystem.ConsoleApp.Display
                 throw new InvalidOperationException("Nested console running is not supported.");
             }
 
-            ScreenStack = new Stack<Screen>(ScreenMap.Count);
+            ScreenStack = new Stack<AbstractScreen>(ScreenMap.Count);
             PushScreen(startingScreenName);
             Running = true;
 
@@ -118,17 +118,17 @@ namespace COVIDMonitoringSystem.ConsoleApp.Display
                 if (ScreenUpdated)
                 {
                     ScreenUpdated = false;
-                    CurrentScreen.Load();
-                    CurrentScreen.OnView();
+                    CurrentAbstractScreen.Load();
+                    CurrentAbstractScreen.OnView();
                 }
                 
                 if (CHelper.DidChangeWindowSize())
                 {
-                    CurrentScreen.Render();
+                    CurrentAbstractScreen.Render();
                 }
                 else
                 {
-                    CurrentScreen.Update();
+                    CurrentAbstractScreen.Update();
                 }
 
                 var keyPressed = Console.ReadKey(true);
@@ -153,7 +153,7 @@ namespace COVIDMonitoringSystem.ConsoleApp.Display
 
             var targetScreen = ScreenMap[screenName];
             ScreenStack.Push(targetScreen);
-            CurrentScreen = targetScreen;
+            CurrentAbstractScreen = targetScreen;
         }
 
         public void PopScreen(bool doQuit = false)
@@ -173,7 +173,7 @@ namespace COVIDMonitoringSystem.ConsoleApp.Display
                 return;
             }
 
-            CurrentScreen = ScreenStack.Peek();
+            CurrentAbstractScreen = ScreenStack.Peek();
         }
 
         public void Stop()

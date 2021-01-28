@@ -1,11 +1,12 @@
 ﻿using System;
 using COVIDMonitoringSystem.ConsoleApp.Display;
 using COVIDMonitoringSystem.ConsoleApp.Display.Elements;
+using COVIDMonitoringSystem.ConsoleApp.Screens;
 
 namespace COVIDMonitoringSystem.ConsoleApp.Builders
 {
     public abstract class AbstractScreenBuilder<TB, TS>
-        where TS : Screen
+        where TS : BuilderAbstractScreen
         where TB : AbstractScreenBuilder<TB, TS>
     {
         protected ConsoleDisplayManager DisplayManager { get; }
@@ -19,7 +20,7 @@ namespace COVIDMonitoringSystem.ConsoleApp.Builders
 
         public TB OfName(string name)
         {
-            TargetScreen.Name = name;
+            TargetScreen.ScreenName = name;
             return (TB) this;
         }
 
@@ -35,7 +36,7 @@ namespace COVIDMonitoringSystem.ConsoleApp.Builders
             return (TB) this;
         }
 
-        public virtual Screen Build()
+        public virtual AbstractScreen Build()
         {
             return TargetScreen;
         }

@@ -1,9 +1,10 @@
 ﻿using COVIDMonitoringSystem.ConsoleApp.Display;
 using COVIDMonitoringSystem.ConsoleApp.Display.Elements;
+using COVIDMonitoringSystem.ConsoleApp.Screens;
 
 namespace COVIDMonitoringSystem.ConsoleApp.Builders
 {
-    public class MenuBuilder : AbstractScreenBuilder<MenuBuilder, Screen>
+    public class MenuBuilder : AbstractScreenBuilder<MenuBuilder, BuilderAbstractScreen>
     {
         protected int OptionCount { get; set; }
 
@@ -22,7 +23,7 @@ namespace COVIDMonitoringSystem.ConsoleApp.Builders
             return this;
         }
 
-        public override Screen Build()
+        public override AbstractScreen Build()
         {
             TargetScreen.AddElement(new Label("separator")
             {

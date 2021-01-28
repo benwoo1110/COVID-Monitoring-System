@@ -4,20 +4,20 @@ using COVIDMonitoringSystem.ConsoleApp.Utilities;
 
 namespace COVIDMonitoringSystem.ConsoleApp.Screens
 {
-    public class LegacyScreen : Screen
+    public class LegacyAbstractScreen :  BuilderAbstractScreen
     {
         public Action Runner { get; set; }
 
-        public LegacyScreen(ConsoleDisplayManager displayDisplayManager) : base(displayDisplayManager)
+        public LegacyAbstractScreen(ConsoleDisplayManager displayManager) : base(displayManager)
         {
         }
 
-        public LegacyScreen(ConsoleDisplayManager displayDisplayManager, string name, string header, Action runner) : base(displayDisplayManager) //TODO: Remove header
+        public LegacyAbstractScreen(ConsoleDisplayManager displayManager, string name, string header, Action runner) : base(displayManager) //TODO: Remove header
         {
-            Name = name;
+            ScreenName = name;
             Runner = runner;
         }
-
+        
         public override void OnView()
         {
             ColourSelector.Element();
@@ -25,7 +25,7 @@ namespace COVIDMonitoringSystem.ConsoleApp.Screens
             Runner?.Invoke();
             CHelper.WriteEmpty();
             CHelper.WriteLine("Back to menu...");
-            DisplayDisplayManager.PopScreen();
+            DisplayManager.PopScreen();
         }
     }
 }

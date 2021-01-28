@@ -7,10 +7,11 @@ using COVIDMonitoringSystem.Core.Utilities;
 
 namespace COVIDMonitoringSystem.ConsoleApp.Display
 {
-    public class Screen
+    public abstract class AbstractScreen
     {
-        public ConsoleDisplayManager DisplayDisplayManager { get; }
-        public string Name { get; set; }
+        public abstract string Name { get; }
+        
+        public ConsoleDisplayManager DisplayManager { get; }
         public List<Element> ElementList { get; }
         public List<SelectableElement> CachedSelectableElement { get; }
         public int SelectedIndex { get; set; }
@@ -18,9 +19,9 @@ namespace COVIDMonitoringSystem.ConsoleApp.Display
         public List<Element> UpdateQueue { get; }
         public bool Active { get; private set; }
 
-        public Screen(ConsoleDisplayManager displayDisplayManager)
+        public AbstractScreen(ConsoleDisplayManager displayManager)
         {
-            DisplayDisplayManager = displayDisplayManager;
+            DisplayManager = displayManager;
             ElementList = new List<Element>();
             CachedSelectableElement = new List<SelectableElement>();
             UpdateQueue = new List<Element>();
@@ -28,7 +29,7 @@ namespace COVIDMonitoringSystem.ConsoleApp.Display
 
         public void AddElement(Element element)
         {
-            element.TargetScreen = this;
+            element.TargetAbstractScreen = this;
             ElementList.Add(element);
 
             if (element is SelectableElement selectableElement)
