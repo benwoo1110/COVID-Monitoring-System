@@ -31,6 +31,7 @@ namespace COVIDMonitoringSystem.ConsoleApp.Display.Elements
         
         public Box BoundingBox { get; }
 
+        //TODO: Have screen input here so can register
         protected Element()
         {
             BoundingBox = new Box();
@@ -59,7 +60,12 @@ namespace COVIDMonitoringSystem.ConsoleApp.Display.Elements
 
         protected void OnPropertyChanged()
         {
-            TargetScreen?.AddToUpdateQueue(this);
+            if (TargetScreen == null || !TargetScreen.Active)
+            {
+                return;
+            }
+            
+            TargetScreen.AddToUpdateQueue(this);
         }
     }
 }

@@ -44,9 +44,9 @@ namespace COVIDMonitoringSystem.ConsoleApp.Display
                 throw new InvalidOperationException("Nested screen stacking not supported.");
             }
 
+            Active = true;
             Render();
             SetSelection(0);
-            Active = true;
         }
 
         public virtual void OnView()
@@ -59,8 +59,8 @@ namespace COVIDMonitoringSystem.ConsoleApp.Display
 
         public virtual void Unload()
         {
-            ClearSelection();
             Active = false;
+            ClearSelection();
         }
 
         public virtual void Render()

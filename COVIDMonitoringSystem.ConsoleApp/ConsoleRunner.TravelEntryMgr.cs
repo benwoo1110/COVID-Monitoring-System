@@ -2,6 +2,7 @@
 using COVIDMonitoringSystem.ConsoleApp.Display;
 using COVIDMonitoringSystem.ConsoleApp.Display.Builders;
 using COVIDMonitoringSystem.ConsoleApp.Display.Elements;
+using COVIDMonitoringSystem.ConsoleApp.Screens;
 using COVIDMonitoringSystem.ConsoleApp.Utilities;
 using COVIDMonitoringSystem.Core.PersonMgr;
 using COVIDMonitoringSystem.Core.TravelEntryMgr;
@@ -19,21 +20,8 @@ namespace COVIDMonitoringSystem.ConsoleApp
                 .WithGetter(() => Manager.SHNFacilitiesList)
                 .Build()
             );
-
-            DisplayManager.RegisterScreen(new ScreenBuilder(DisplayManager)
-                .OfName("newVisitor")
-                .WithHeader("Create New Visitor")
-                .AddElement(new Label("header", "Please Enter Details of the Visitor"))
-                .AddElement(new Spacer())
-                .AddElement(new Input("name", "Name"))
-                .AddElement(new Input("passportNo", "Passport Number"))
-                .AddElement(new Input("nationality", "Nationality"))
-                .AddElement(new Spacer())
-                .AddElement(new Button("create", "[Create]", CreateNewVisitor))
-                .AddElement(new Spacer())
-                .AddElement(new Label("result"))
-                .Build()
-            );
+            
+            DisplayManager.RegisterScreen(new NewVisitorScreen(DisplayManager));
 
             DisplayManager.RegisterScreen(new LegacyScreen(
                 DisplayManager,

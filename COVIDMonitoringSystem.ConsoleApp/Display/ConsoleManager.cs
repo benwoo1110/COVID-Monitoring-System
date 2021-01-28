@@ -64,10 +64,6 @@ namespace COVIDMonitoringSystem.ConsoleApp.Display
                 {
                     inputElement.Text += key.KeyChar;
                 }
-
-                inputElement.Render();
-                inputElement.UpdateCursor();
-                Console.SetCursorPosition(inputElement.BoundingBox.CursorLeft, inputElement.BoundingBox.Top);
             }
         }
 

@@ -15,7 +15,7 @@ namespace COVIDMonitoringSystem.ConsoleApp.Display.Builders
             TargetScreen.AddElement(new Button(optionName)
             {
                 Text = $"[{++OptionCount}] {optionName}",
-                Runner = (s) => Manager.PushScreen(targetScreen),
+                Runner = () => Manager.PushScreen(targetScreen),
                 BoundingBox = {Top = OptionCount + 3}
             });
             return this;
@@ -38,7 +38,7 @@ namespace COVIDMonitoringSystem.ConsoleApp.Display.Builders
             TargetScreen.AddElement(new Button("back")
             {
                 Text = "[0] Back",
-                Runner = s => Manager.PopScreen(),
+                Runner = () => Manager.PopScreen(),
                 BoundingBox = {Top = OptionCount + 5}
             });
         }

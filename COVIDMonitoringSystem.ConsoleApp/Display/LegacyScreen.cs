@@ -11,11 +11,9 @@ namespace COVIDMonitoringSystem.ConsoleApp.Display
         {
         }
 
-        public LegacyScreen(ConsoleManager manager, string name, string header, Action runner) : base(manager)
+        public LegacyScreen(ConsoleManager manager, string name, string header, Action runner) : base(manager) //TODO: Remove header
         {
             Name = name;
-            //TODO: header
-            // Header = header;
             Runner = runner;
         }
 

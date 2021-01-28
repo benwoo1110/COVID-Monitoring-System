@@ -15,7 +15,7 @@ namespace COVIDMonitoringSystem.ConsoleApp
                 .WithHeader("View Details of a Person")
                 .AddElement(new Input("name", "Name"))
                 .AddElement(new Spacer())
-                .AddElement(new Button("find", "[Find]", ShowPersonDetails))
+                .AddElement(new Button("find")) // , "[Find]", ShowPersonDetails))
                 .AddElement(new Spacer())
                 .AddElement(new Label("details"))
                 .Build()

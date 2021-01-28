@@ -6,7 +6,7 @@ namespace COVIDMonitoringSystem.ConsoleApp.Display.Elements
     {
         private string prompt;
 
-        private string Prompt
+        public string Prompt
         {
             get => prompt;
             set
@@ -26,6 +26,10 @@ namespace COVIDMonitoringSystem.ConsoleApp.Display.Elements
                 UpdateCursor();
                 OnPropertyChanged();
             }
+        }
+
+        public Input(string name) : base(name)
+        {
         }
 
         public Input(string name, string prompt) : base(name)
