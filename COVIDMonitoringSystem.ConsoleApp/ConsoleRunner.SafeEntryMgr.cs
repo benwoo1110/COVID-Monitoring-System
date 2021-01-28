@@ -1,11 +1,13 @@
 ﻿using System;
-using COVIDMonitoringSystem.ConsoleApp.Display;
-using COVIDMonitoringSystem.ConsoleApp.Utilities;
-using COVIDMonitoringSystem.Core.PersonMgr;
-using COVIDMonitoringSystem.Core.SafeEntryMgr;
 using System.Linq;
 using System.Collections.Generic;
+using COVIDMonitoringSystem.ConsoleApp.Display;
+using COVIDMonitoringSystem.ConsoleApp.Utilities;
 using COVIDMonitoringSystem.ConsoleApp.Builders;
+using COVIDMonitoringSystem.Core.PersonMgr;
+using COVIDMonitoringSystem.Core.SafeEntryMgr;
+using COVIDMonitoringSystem.ConsoleApp.Screens;
+
 
 namespace COVIDMonitoringSystem.ConsoleApp
 {
@@ -13,12 +15,13 @@ namespace COVIDMonitoringSystem.ConsoleApp
     {
         private void SetUpSafeEntryScreens()
         {
-            DisplayManager.RegisterScreen(new LegacyScreenBuilder(DisplayManager)
+            /*DisplayManager.RegisterScreen(new LegacyScreenBuilder(DisplayManager)
                 .OfName("assignToken")
                 .WithHeader("Assign or replace TraceTogether Token")
                 .WithRunner(AssignToken)
                 .Build()
-            );
+            );*/
+            DisplayManager.RegisterScreen(new TokenScreen(DisplayManager, Manager));
 
             DisplayManager.RegisterScreen(new ListScreenBuilder<BusinessLocation>(DisplayManager)
                 .OfName("viewLocations")
