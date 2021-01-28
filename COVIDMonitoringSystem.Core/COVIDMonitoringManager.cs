@@ -159,17 +159,13 @@ namespace COVIDMonitoringSystem.Core
 
         private Dictionary<string, string> GenerateSingleSafeEntryDetails(SafeEntry details, Person info)
         {
-            string checkIn = Convert.ToString(details.CheckIn);
-            string checkOut = Convert.ToString(details.CheckOut);
-            if (checkOut == "1/1/0001 12:00:00 am")
-            {
-                checkOut = "-";
-            }
             return new Dictionary<string, string>
             {
                 {"Name", info.Name},
-                {"Check In Date and Time", checkIn},
-                {"Check Out Date and Time", checkOut}
+                {"Check In Date and Time", Convert.ToString(details.CheckIn)},
+                {"Check Out Date and Time", (details.CheckOut.Equals(DateTime.MinValue)) 
+                    ? "-" 
+                    : Convert.ToString(details.CheckOut)}
             };
         }
 
