@@ -4,15 +4,26 @@ namespace COVIDMonitoringSystem.ConsoleApp.Display.Elements
 {
     public class Input : SelectableElement
     {
-        public string Prompt { get; set; }
+        private string prompt;
+
+        private string Prompt
+        {
+            get => prompt;
+            set
+            {
+                prompt = value;
+                UpdateCursor();
+                OnPropertyChanged();
+            }
+        }
 
         public override string Text
         {
-            get => _text;
+            get => text;
             set
             {
-                _text = value;
-                UpdateWidth();
+                text = value;
+                UpdateCursor();
                 OnPropertyChanged();
             }
         }
@@ -27,9 +38,10 @@ namespace COVIDMonitoringSystem.ConsoleApp.Display.Elements
             CHelper.WriteLine($"{Prompt}: {Text}", Align);
         }
 
-        public void UpdateWidth()
+        public void UpdateCursor()
         {
-            BoundingBox.Left = Prompt.Length + Text.Length + 6;
+            //TODO: Improve this
+            BoundingBox.CursorLeft = Prompt.Length + Text.Length + 6;
         }
     }
 }

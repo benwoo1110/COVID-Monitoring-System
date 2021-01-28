@@ -9,14 +9,14 @@ namespace COVIDMonitoringSystem.ConsoleApp.Display
 {
     public class Screen
     {
-        public ConsoleManager Manager { get; set; }
+        public ConsoleManager Manager { get; }
         public string Name { get; set; }
-        public List<Element> ElementList { get; set; }
-        public List<SelectableElement> CachedSelectableElement { get; set; }
+        public List<Element> ElementList { get; }
+        public List<SelectableElement> CachedSelectableElement { get; }
         public int SelectedIndex { get; set; }
-        public SelectableElement SelectedElement { get; set; }
-        public List<Element> UpdateQueue { get; set; }
-        public bool Active { get; set; }
+        public SelectableElement SelectedElement { get; private set; }
+        public List<Element> UpdateQueue { get; }
+        public bool Active { get; private set; }
 
         public Screen(ConsoleManager manager)
         {
@@ -44,9 +44,17 @@ namespace COVIDMonitoringSystem.ConsoleApp.Display
                 throw new InvalidOperationException("Nested screen stacking not supported.");
             }
 
-            Display();
+            Render();
             SetSelection(0);
             Active = true;
+        }
+
+        public virtual void OnView()
+        {
+        }
+
+        public virtual void OnClose()
+        {
         }
 
         public virtual void Unload()
@@ -55,36 +63,24 @@ namespace COVIDMonitoringSystem.ConsoleApp.Display
             Active = false;
         }
 
-        public virtual void OnView()
-        {
-        }
-
-        public virtual void Display()
+        public virtual void Render()
         {
             CHelper.Clear();
-            DisplayElements();
-            ColourSelector.Element();
-            CHelper.PadRemainingHeight();
-            ColourSelector.Default();
-            UpdateQueue.Clear();
-        }
-
-        public void UpdateDisplay()
-        {
-            UpdateQueue.ForEach(element => element.Display());
-            UpdateQueue.Clear();
-            ColourSelector.Default();
-        }
-
-        protected virtual void DisplayElements()
-        {
             foreach (var element in ElementList.Where(element => !element.Hidden))
             {
-                element.UpdateBox();
-                element.Display();
+                element.Render();
             }
+            ColourSelector.Element();
+            UpdateQueue.Clear();
         }
-        
+
+        public void Update()
+        {
+            UpdateQueue.ForEach(element => element.Render());
+            UpdateQueue.Clear();
+            ColourSelector.Element();
+        }
+
         public void SetSelection(int to)
         {
             if (CachedSelectableElement.Count == 0)

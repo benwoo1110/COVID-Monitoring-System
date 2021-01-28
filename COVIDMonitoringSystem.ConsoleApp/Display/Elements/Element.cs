@@ -5,26 +5,26 @@ namespace COVIDMonitoringSystem.ConsoleApp.Display.Elements
 {
     public abstract class Element
     {
-        private bool _hidden = false;
-        private string _name;
+        private bool hidden = false;
+        private string name;
         public Screen TargetScreen { get; set; }
 
         public string Name
         {
-            get => _name;
+            get => name;
             set
             {
-                _name = value;
+                name = value;
                 OnPropertyChanged();
             }
         }
         
         public bool Hidden
         {
-            get => _hidden;
+            get => hidden;
             set
             {
-                _hidden = value;
+                hidden = value;
                 OnPropertyChanged();
             }
         }
@@ -42,17 +42,12 @@ namespace COVIDMonitoringSystem.ConsoleApp.Display.Elements
             BoundingBox = new Box();
         }
 
-        public virtual void UpdateBox()
+        public virtual void Render()
         {
-            BoundingBox.Top = CHelper.LinesPrinted;
-        }
-
-        public virtual void Display()
-        {
-            Console.SetCursorPosition(0, BoundingBox.Top);
+            BoundingBox.SetDrawPosition();
             SelectColour();
             WriteToScreen();
-            Console.SetCursorPosition(BoundingBox.Left, BoundingBox.Top);
+            BoundingBox.SetCursorPosition();
         }
 
         protected virtual void SelectColour()

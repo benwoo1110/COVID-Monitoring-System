@@ -3,8 +3,8 @@
 namespace COVIDMonitoringSystem.ConsoleApp.Display.Builders
 {
     public class MenuBuilder : AbstractScreenBuilder<MenuBuilder, Screen>
-    { 
-        private int OptionCount { get; set; }
+    {
+        protected int OptionCount { get; set; }
 
         public MenuBuilder(ConsoleManager manager) : base(manager)
         {
@@ -15,7 +15,8 @@ namespace COVIDMonitoringSystem.ConsoleApp.Display.Builders
             TargetScreen.AddElement(new Button(optionName)
             {
                 Text = $"[{++OptionCount}] {optionName}",
-                Runner = (s) => Manager.PushScreen(targetScreen)
+                Runner = (s) => Manager.PushScreen(targetScreen),
+                BoundingBox = {Top = OptionCount + 3}
             });
             return this;
         }
@@ -24,7 +25,8 @@ namespace COVIDMonitoringSystem.ConsoleApp.Display.Builders
         {
             TargetScreen.AddElement(new Label("separator")
             {
-                Text = "----"
+                Text = "----",
+                BoundingBox = {Top = OptionCount + 4}
             });
             AddSpecialOption();
 
@@ -36,7 +38,8 @@ namespace COVIDMonitoringSystem.ConsoleApp.Display.Builders
             TargetScreen.AddElement(new Button("back")
             {
                 Text = "[0] Back",
-                Runner = s => Manager.PopScreen()
+                Runner = s => Manager.PopScreen(),
+                BoundingBox = {Top = OptionCount + 5}
             });
         }
     }

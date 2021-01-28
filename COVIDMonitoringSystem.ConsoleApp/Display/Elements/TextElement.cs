@@ -4,15 +4,15 @@ namespace COVIDMonitoringSystem.ConsoleApp.Display.Elements
 {
     public abstract class TextElement : Element
     {
-        protected string _text = "";
+        protected string text = "";
         private TextAlign _align = TextAlign.Left;
 
         public virtual string Text
         {
-            get => _text;
+            get => text;
             set
             {
-                _text = value;
+                text = value;
                 OnPropertyChanged();
             }
         }

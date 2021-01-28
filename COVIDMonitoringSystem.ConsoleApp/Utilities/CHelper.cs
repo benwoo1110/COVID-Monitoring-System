@@ -68,6 +68,7 @@ namespace COVIDMonitoringSystem.ConsoleApp.Utilities
 
         public static void Clear()
         {
+            Console.Clear();
             Console.SetCursorPosition(0, 0);
             LinesPrinted = 0;
         }

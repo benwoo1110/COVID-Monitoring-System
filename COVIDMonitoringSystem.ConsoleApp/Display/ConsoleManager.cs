@@ -65,9 +65,9 @@ namespace COVIDMonitoringSystem.ConsoleApp.Display
                     inputElement.Text += key.KeyChar;
                 }
 
-                inputElement.Display();
-                inputElement.UpdateWidth();
-                Console.SetCursorPosition(inputElement.BoundingBox.Left, inputElement.BoundingBox.Top);
+                inputElement.Render();
+                inputElement.UpdateCursor();
+                Console.SetCursorPosition(inputElement.BoundingBox.CursorLeft, inputElement.BoundingBox.Top);
             }
         }
 
@@ -76,7 +76,7 @@ namespace COVIDMonitoringSystem.ConsoleApp.Display
             if (CurrentScreen.HasSelection())
             {
                 CurrentScreen.ClearSelection();
-                CurrentScreen.Display();
+                CurrentScreen.Render();
                 return;
             }
             
@@ -110,11 +110,11 @@ namespace COVIDMonitoringSystem.ConsoleApp.Display
                 CurrentScreen.OnView();
                 if (CHelper.DidChangeWindowSize())
                 {
-                    CurrentScreen.Display();
+                    CurrentScreen.Render();
                 }
                 else
                 {
-                    CurrentScreen.UpdateDisplay();
+                    CurrentScreen.Update();
                 }
 
                 var keyPressed = Console.ReadKey(true);
@@ -151,7 +151,7 @@ namespace COVIDMonitoringSystem.ConsoleApp.Display
             }
 
             CurrentScreen = ScreenStack.Peek();
-            CurrentScreen.Display();
+            CurrentScreen.Render();
         }
 
         public void Stop()
