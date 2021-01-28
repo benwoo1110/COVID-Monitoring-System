@@ -1,11 +1,29 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Reflection;
 
 namespace COVIDMonitoringSystem.Core.Utilities
 {
     public static class ReflectHelper
     {
+        public static List<TF> GetFieldsOfType<TF>(object obj) where TF : class
+        {
+            var fieldValues = new List<TF>();
+            var fieldInfos = obj.GetType().GetFields(BindingFlags.Instance | BindingFlags.NonPublic);
+            
+            foreach (var fieldInfo in fieldInfos)
+            {
+                var value = fieldInfo.GetValue(obj);
+                if (value is TF targetValue)
+                {
+                    fieldValues.Add(targetValue);
+                }
+            }
+
+            return fieldValues;
+        }
+        
         public static Dictionary<string, string> GetAllPropertyValues<T>(T obj) where T : class
         {
             var propertyValues = new Dictionary<string, string>();

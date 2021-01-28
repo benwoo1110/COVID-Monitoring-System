@@ -31,11 +31,6 @@ namespace COVIDMonitoringSystem.ConsoleApp.Screens
 
         public GlobalStatsScreen(ConsoleDisplayManager displayManager, COVIDMonitoringManager covidManager) : base(displayManager, covidManager)
         {
-            AddElement(header);
-            AddElement(country);
-            AddElement(searchCountry);
-            AddElement(result);
-
             searchCountry.Runner = OnSearchCountry;
         }
 
