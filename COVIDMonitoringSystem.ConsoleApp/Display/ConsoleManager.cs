@@ -7,11 +7,23 @@ namespace COVIDMonitoringSystem.ConsoleApp.Display
 {
     public class ConsoleManager
     {
+        private Screen currentScreen;
         private Dictionary<string, Screen> ScreenMap { get; }
         public Stack<Screen> ScreenStack { get; set; }
-        public Screen CurrentScreen { get; set; }
+
+        public Screen CurrentScreen
+        {
+            get => currentScreen;
+            set
+            {
+                currentScreen = value;
+                ScreenUpdated = true;
+            }
+        }
+
         public Dictionary<ConsoleKey, Action<ConsoleKeyInfo>> KeyActionMap { get; set; }
         private bool Running { get; set; }
+        public bool ScreenUpdated { get; set; }
 
         public ConsoleManager()
         {
@@ -103,7 +115,13 @@ namespace COVIDMonitoringSystem.ConsoleApp.Display
 
             while (Running)
             {
-                CurrentScreen.OnView();
+                if (ScreenUpdated)
+                {
+                    CurrentScreen.Load();
+                    CurrentScreen.OnView();
+                    ScreenUpdated = false;
+                }
+                
                 if (CHelper.DidChangeWindowSize())
                 {
                     CurrentScreen.Render();
@@ -126,9 +144,15 @@ namespace COVIDMonitoringSystem.ConsoleApp.Display
 
         public void PushScreen(string screenName)
         {
+            if (ScreenStack.Count > 0)
+            {
+                var closingScreen = ScreenStack.Peek();
+                closingScreen.OnClose();
+                closingScreen.Unload();
+            }
+
             var targetScreen = ScreenMap[screenName];
             ScreenStack.Push(targetScreen);
-            targetScreen.Load();
             CurrentScreen = targetScreen;
         }
 
@@ -139,7 +163,10 @@ namespace COVIDMonitoringSystem.ConsoleApp.Display
                 return;
             }
             
-            ScreenStack.Pop().Unload();
+            var closingScreen = ScreenStack.Pop();
+            closingScreen.OnClose();
+            closingScreen.Unload();
+            
             if (ScreenStack.Count == 0)
             {
                 Running = false;
@@ -147,7 +174,6 @@ namespace COVIDMonitoringSystem.ConsoleApp.Display
             }
 
             CurrentScreen = ScreenStack.Peek();
-            CurrentScreen.Render();
         }
 
         public void Stop()
