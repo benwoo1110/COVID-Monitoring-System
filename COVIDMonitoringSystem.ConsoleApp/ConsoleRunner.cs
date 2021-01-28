@@ -38,7 +38,7 @@ namespace COVIDMonitoringSystem.ConsoleApp
                 .AddOption("Change capacity of business location", "changeCapacity")
                 .AddOption("SafeEntry Check-In", "checkIn")
                 .AddOption("SafeEntry Check-Out", "checkOut")
-                .AddOption("SafeEntry Contact Tracing", "contactTrace")
+                .AddOption("Generate Contact Tracing Report", "contactTrace")
                 .Build()
             );
 
