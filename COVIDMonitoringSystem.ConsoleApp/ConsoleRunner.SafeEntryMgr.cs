@@ -48,6 +48,14 @@ namespace COVIDMonitoringSystem.ConsoleApp
                 .WithRunner(CheckOut)
                 .Build()
             );
+
+            DisplayManager.RegisterScreen(new LegacyScreenBuilder(DisplayManager)
+                .OfName("contactTrace")
+                .WithHeader("SafeEntry Contact Tracing")
+                .WithRunner(ContactTracing)
+                .Build()
+            );
+
         }
         
         private void AssignToken()
@@ -173,6 +181,11 @@ namespace COVIDMonitoringSystem.ConsoleApp
             {
                 CHelper.WriteLine("Name not found.");
             }
+        }
+
+        private void ContactTracing()
+        {
+            CHelper.WriteLine("Contact Tracing");
         }
     }
 
