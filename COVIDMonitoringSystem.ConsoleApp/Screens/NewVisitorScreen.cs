@@ -1,57 +1,59 @@
 ﻿using COVIDMonitoringSystem.ConsoleApp.Display;
 using COVIDMonitoringSystem.ConsoleApp.Display.Elements;
+using COVIDMonitoringSystem.Core;
+using COVIDMonitoringSystem.Core.PersonMgr;
 
 namespace COVIDMonitoringSystem.ConsoleApp.Screens
 {
-    public class NewVisitorScreen : Screen
+    public class NewVisitorScreen : CovidScreen
     {
+        private Header header = new Header("header")
+        {
+            Text = "New Visitor"
+        };
         private Label info = new Label("info")
         {
             Text = "Please Enter Details of the Visitor",
             BoundingBox = {Top = 4}
         };
-
         private Input name = new Input("name")
         {
             Prompt = "Name",
             BoundingBox = {Top = 6}
         };
-
         private Input passportNo = new Input("passportNo")
         {
             Prompt = "Passport Number",
             BoundingBox = {Top = 7}
         };
-
         private Input nationality = new Input("Nationality")
         {
             Prompt = "Nationality",
             BoundingBox = {Top = 8}
         };
-
         private Button create = new Button("create")
         {
             Text = "[Create]",
             BoundingBox = {Top = 10},
         };
-
         private Label result = new Label("result")
         {
             BoundingBox = {Top = 12}
         };
-        
-        public NewVisitorScreen(ConsoleManager manager) : base(manager)
+
+        public NewVisitorScreen(ConsoleDisplayManager displayDisplayManager, COVIDMonitoringManager covidManager) : base(displayDisplayManager, covidManager)
         {
             Name = "newVisitor";
-            create.Runner = CreateNewVisitor;
 
-            AddElement(new Header("header", "New Visitor"));
+            AddElement(header);
             AddElement(info);
             AddElement(name);
             AddElement(passportNo);
             AddElement(nationality);
             AddElement(create);
             AddElement(result);
+
+            create.Runner = CreateNewVisitor;
         }
 
         private void CreateNewVisitor()
@@ -62,7 +64,7 @@ namespace COVIDMonitoringSystem.ConsoleApp.Screens
                 return;
             }
 
-            // Manager.AddPerson(new Visitor(name.Text, passportNo.Text, nationality.Text));
+            CovidManager.AddPerson(new Visitor(name.Text, passportNo.Text, nationality.Text));
             result.Text = $"New visitor {name.Text} has been added to the system.";
 
             name.ClearText();

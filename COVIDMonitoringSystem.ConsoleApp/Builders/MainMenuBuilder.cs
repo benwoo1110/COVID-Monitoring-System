@@ -1,10 +1,11 @@
-﻿using COVIDMonitoringSystem.ConsoleApp.Display.Elements;
+﻿using COVIDMonitoringSystem.ConsoleApp.Display;
+using COVIDMonitoringSystem.ConsoleApp.Display.Elements;
 
-namespace COVIDMonitoringSystem.ConsoleApp.Display.Builders
+namespace COVIDMonitoringSystem.ConsoleApp.Builders
 {
     public class MainMenuBuilder : MenuBuilder
     {
-        public MainMenuBuilder(ConsoleManager manager) : base(manager)
+        public MainMenuBuilder(ConsoleDisplayManager displayManager) : base(displayManager)
         {
         }
 
@@ -13,7 +14,7 @@ namespace COVIDMonitoringSystem.ConsoleApp.Display.Builders
             TargetScreen.AddElement(new Button("exit")
             {
                 Text = "[0] Exit",
-                Runner = () => Manager.Stop(),
+                Runner = () => DisplayManager.Stop(),
                 BoundingBox = {Top = OptionCount + 5}
             });
         }

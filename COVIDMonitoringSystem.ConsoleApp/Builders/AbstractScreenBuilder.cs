@@ -1,19 +1,20 @@
 ﻿using System;
+using COVIDMonitoringSystem.ConsoleApp.Display;
 using COVIDMonitoringSystem.ConsoleApp.Display.Elements;
 
-namespace COVIDMonitoringSystem.ConsoleApp.Display.Builders
+namespace COVIDMonitoringSystem.ConsoleApp.Builders
 {
     public abstract class AbstractScreenBuilder<TB, TS>
         where TS : Screen
         where TB : AbstractScreenBuilder<TB, TS>
     {
-        protected ConsoleManager Manager { get; }
+        protected ConsoleDisplayManager DisplayManager { get; }
         protected TS TargetScreen { get; }
 
-        protected AbstractScreenBuilder(ConsoleManager manager)
+        protected AbstractScreenBuilder(ConsoleDisplayManager displayManager)
         {
-            Manager = manager;
-            TargetScreen = (TS) Activator.CreateInstance(typeof(TS), manager);
+            DisplayManager = displayManager;
+            TargetScreen = (TS) Activator.CreateInstance(typeof(TS), displayManager);
         }
 
         public TB OfName(string name)

@@ -1,11 +1,11 @@
 ﻿using System;
 using COVIDMonitoringSystem.ConsoleApp.Display;
-using COVIDMonitoringSystem.ConsoleApp.Display.Builders;
 using COVIDMonitoringSystem.ConsoleApp.Utilities;
 using COVIDMonitoringSystem.Core.PersonMgr;
 using COVIDMonitoringSystem.Core.SafeEntryMgr;
 using System.Linq;
 using System.Collections.Generic;
+using COVIDMonitoringSystem.ConsoleApp.Builders;
 
 namespace COVIDMonitoringSystem.ConsoleApp
 {
@@ -13,14 +13,14 @@ namespace COVIDMonitoringSystem.ConsoleApp
     {
         private void SetUpSafeEntryScreens()
         {
-            DisplayManager.RegisterScreen(new LegacyScreenBuilder(DisplayManager)
+            DisplayDisplayManager.RegisterScreen(new LegacyScreenBuilder(DisplayDisplayManager)
                 .OfName("assignToken")
                 .WithHeader("Assign or replace TraceTogether Token")
                 .WithRunner(AssignToken)
                 .Build()
             );
 
-            DisplayManager.RegisterScreen(new ListScreenBuilder<BusinessLocation>(DisplayManager)
+            DisplayDisplayManager.RegisterScreen(new ListScreenBuilder<BusinessLocation>(DisplayDisplayManager)
                 .OfName("viewLocations")
                 .WithHeader("View All Visitors")
                 .WithProperties(new[] {"BusinessName", "BranchCode", "MaximumCapacity", "VisitorsNow"})
@@ -28,21 +28,21 @@ namespace COVIDMonitoringSystem.ConsoleApp
                 .Build()
             );
 
-            DisplayManager.RegisterScreen(new LegacyScreenBuilder(DisplayManager)
+            DisplayDisplayManager.RegisterScreen(new LegacyScreenBuilder(DisplayDisplayManager)
                 .OfName("changeCapacity")
                 .WithHeader("Change capacity of business location")
                 .WithRunner(ChangeCapacity)
                 .Build()
             );
 
-            DisplayManager.RegisterScreen(new LegacyScreenBuilder(DisplayManager)
+            DisplayDisplayManager.RegisterScreen(new LegacyScreenBuilder(DisplayDisplayManager)
                 .OfName("checkIn")
                 .WithHeader("SafeEntry Check-In")
                 .WithRunner(CheckIn)
                 .Build()
             );
 
-            DisplayManager.RegisterScreen(new LegacyScreenBuilder(DisplayManager)
+            DisplayDisplayManager.RegisterScreen(new LegacyScreenBuilder(DisplayDisplayManager)
                 .OfName("checkOut")
                 .WithHeader("SafeEntry Check-Out")
                 .WithRunner(CheckOut)

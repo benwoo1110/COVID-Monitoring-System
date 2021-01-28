@@ -1,5 +1,5 @@
-﻿using COVIDMonitoringSystem.ConsoleApp.Display;
-using COVIDMonitoringSystem.ConsoleApp.Display.Builders;
+﻿using COVIDMonitoringSystem.ConsoleApp.Builders;
+using COVIDMonitoringSystem.ConsoleApp.Display;
 using COVIDMonitoringSystem.ConsoleApp.Display.Elements;
 using COVIDMonitoringSystem.ConsoleApp.Utilities;
 using COVIDMonitoringSystem.Core.PersonMgr;
@@ -10,7 +10,7 @@ namespace COVIDMonitoringSystem.ConsoleApp
     {
         private void SetUpGeneralScreens()
         {
-            DisplayManager.RegisterScreen(new ScreenBuilder(DisplayManager)
+            DisplayDisplayManager.RegisterScreen(new ScreenBuilder(DisplayDisplayManager)
                 .OfName("viewPersonDetails")
                 .WithHeader("View Details of a Person")
                 .AddElement(new Input("name", "Name"))
@@ -21,7 +21,7 @@ namespace COVIDMonitoringSystem.ConsoleApp
                 .Build()
             );
             
-            DisplayManager.RegisterScreen(new ListScreenBuilder<Visitor>(DisplayManager)
+            DisplayDisplayManager.RegisterScreen(new ListScreenBuilder<Visitor>(DisplayDisplayManager)
                 .OfName("viewAllVisitors")
                 .WithHeader("View All Visitors")
                 .WithProperties(new[] {"Name", "PassportNo", "Nationality", "SafeEntryList", "TravelEntryList"})
@@ -29,7 +29,7 @@ namespace COVIDMonitoringSystem.ConsoleApp
                 .Build()
             );
 
-            DisplayManager.RegisterScreen(new LegacyScreenBuilder(DisplayManager)
+            DisplayDisplayManager.RegisterScreen(new LegacyScreenBuilder(DisplayDisplayManager)
                 .OfName("globalStats")
                 .WithHeader("Explore Global Stats")
                 .WithRunner(ExploreGlobalStats)

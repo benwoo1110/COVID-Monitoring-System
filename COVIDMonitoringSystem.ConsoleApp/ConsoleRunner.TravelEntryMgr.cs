@@ -1,6 +1,6 @@
 ﻿using System;
+using COVIDMonitoringSystem.ConsoleApp.Builders;
 using COVIDMonitoringSystem.ConsoleApp.Display;
-using COVIDMonitoringSystem.ConsoleApp.Display.Builders;
 using COVIDMonitoringSystem.ConsoleApp.Display.Elements;
 using COVIDMonitoringSystem.ConsoleApp.Screens;
 using COVIDMonitoringSystem.ConsoleApp.Utilities;
@@ -13,57 +13,36 @@ namespace COVIDMonitoringSystem.ConsoleApp
     {
         private void SetUpTravelEntryScreens()
         {
-            DisplayManager.RegisterScreen(new ListScreenBuilder<SHNFacility>(DisplayManager)
+            /*DisplayDisplayManager.RegisterScreen(new ListScreenBuilder<SHNFacility>(DisplayDisplayManager)
                 .OfName("viewFacilities")
                 .WithHeader("View All SHN Facilities")
                 .WithProperties(new[] {"FacilityName", "FacilityCapacity", "FacilityVacancy", "FromLand", "FromSea", "FromAir"})
                 .WithGetter(() => Manager.SHNFacilitiesList)
                 .Build()
-            );
-            
-            DisplayManager.RegisterScreen(new NewVisitorScreen(DisplayManager));
+            );*/
 
-            DisplayManager.RegisterScreen(new LegacyScreen(
-                DisplayManager,
+            DisplayDisplayManager.RegisterScreen(new NewVisitorScreen(DisplayDisplayManager, Manager));
+
+            /*DisplayDisplayManager.RegisterScreen(new LegacyScreen(
+                DisplayDisplayManager,
                 "travelRecord",
                 "New Travel Record",
                 NewTravelRecord
             ));
 
-            DisplayManager.RegisterScreen(new LegacyScreen(
-                DisplayManager,
+            DisplayDisplayManager.RegisterScreen(new LegacyScreen(
+                DisplayDisplayManager,
                 "paySHNCharges",
                 "Pay SHN Charges",
                 PaySHNCharges
             ));
 
-            DisplayManager.RegisterScreen(new LegacyScreen(
-                DisplayManager,
+            DisplayDisplayManager.RegisterScreen(new LegacyScreen(
+                DisplayDisplayManager,
                 "shnReport",
                 "Generate SHN Status Report",
                 GenerateSHNReport
-            ));
-        }
-
-        private void CreateNewVisitor(Screen screen)
-        {
-            var name = screen.FindElementOfType<Input>("name");
-            var passportNo = screen.FindElementOfType<Input>("passportNo");
-            var nationality = screen.FindElementOfType<Input>("nationality");
-            var result = screen.FindElementOfType<TextElement>("result");
-
-            if (!name.HasText() || !passportNo.HasText() || !nationality.HasText())
-            {
-                result.Text = "Incomplete details. No visitor has been added to the system.";
-                return;
-            }
-            
-            Manager.AddPerson(new Visitor(name.Text, passportNo.Text, nationality.Text));
-            result.Text = $"New visitor {name.Text} has been added to the system.";
-
-            name.ClearText();
-            passportNo.ClearText();
-            nationality.ClearText();
+            ));*/
         }
 
         private void NewTravelRecord()

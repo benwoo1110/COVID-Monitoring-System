@@ -1,14 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using COVIDMonitoringSystem.ConsoleApp.Display;
 using COVIDMonitoringSystem.ConsoleApp.Display.Elements;
 
-namespace COVIDMonitoringSystem.ConsoleApp.Display.Builders
+namespace COVIDMonitoringSystem.ConsoleApp.Builders
 {
     public class ListScreenBuilder<T> : AbstractScreenBuilder<ListScreenBuilder<T>, Screen> where T : class
     {
         public ObjectList<T> ListObject { get; set; }
         
-        public ListScreenBuilder(ConsoleManager manager) : base(manager)
+        public ListScreenBuilder(ConsoleDisplayManager displayManager) : base(displayManager)
         {
             ListObject = new ObjectList<T>(typeof(T).Name);
         }

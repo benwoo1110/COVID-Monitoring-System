@@ -1,5 +1,5 @@
-﻿using COVIDMonitoringSystem.ConsoleApp.Display;
-using COVIDMonitoringSystem.ConsoleApp.Display.Builders;
+﻿using COVIDMonitoringSystem.ConsoleApp.Builders;
+using COVIDMonitoringSystem.ConsoleApp.Display;
 using COVIDMonitoringSystem.Core;
 
 namespace COVIDMonitoringSystem.ConsoleApp
@@ -8,18 +8,18 @@ namespace COVIDMonitoringSystem.ConsoleApp
     {
         private COVIDMonitoringManager Manager { get; }
 
-        private ConsoleManager DisplayManager { get; }
+        private ConsoleDisplayManager DisplayDisplayManager { get; }
 
         public ConsoleRunner()
         {
-            DisplayManager = new ConsoleManager();
+            DisplayDisplayManager = new ConsoleDisplayManager();
             Manager = new COVIDMonitoringManager();
             SetUpMenus();
         }
 
         private void SetUpMenus()
         {
-            DisplayManager.RegisterScreen(new MainMenuBuilder(DisplayManager)
+            DisplayDisplayManager.RegisterScreen(new MainMenuBuilder(DisplayDisplayManager)
                 .OfName("mainMenu")
                 .WithHeader("COVID Management System")
                 .AddOption("View Details of a Person", "viewPersonDetails")
@@ -30,7 +30,7 @@ namespace COVIDMonitoringSystem.ConsoleApp
                 .Build()
             );
 
-            DisplayManager.RegisterScreen(new MenuBuilder(DisplayManager)
+            DisplayDisplayManager.RegisterScreen(new MenuBuilder(DisplayDisplayManager)
                 .OfName("safeEntryMenu")
                 .WithHeader("Travel Entry Management")
                 .AddOption("Assign or replace TraceTogether Token", "assignToken")
@@ -41,7 +41,7 @@ namespace COVIDMonitoringSystem.ConsoleApp
                 .Build()
             );
 
-            DisplayManager.RegisterScreen(new MenuBuilder(DisplayManager)
+            DisplayDisplayManager.RegisterScreen(new MenuBuilder(DisplayDisplayManager)
                 .OfName("travelEntryMenu")
                 .WithHeader("Travel Entry Management")
                 .AddOption("View All SHN Facilities", "viewFacilities")
@@ -59,7 +59,7 @@ namespace COVIDMonitoringSystem.ConsoleApp
 
         public void Run()
         {
-            DisplayManager.Run("mainMenu");
+            DisplayDisplayManager.Run("mainMenu");
         }
     }
 }

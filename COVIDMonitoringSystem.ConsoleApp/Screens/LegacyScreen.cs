@@ -1,17 +1,18 @@
 ﻿using System;
+using COVIDMonitoringSystem.ConsoleApp.Display;
 using COVIDMonitoringSystem.ConsoleApp.Utilities;
 
-namespace COVIDMonitoringSystem.ConsoleApp.Display
+namespace COVIDMonitoringSystem.ConsoleApp.Screens
 {
     public class LegacyScreen : Screen
     {
         public Action Runner { get; set; }
 
-        public LegacyScreen(ConsoleManager manager) : base(manager)
+        public LegacyScreen(ConsoleDisplayManager displayDisplayManager) : base(displayDisplayManager)
         {
         }
 
-        public LegacyScreen(ConsoleManager manager, string name, string header, Action runner) : base(manager) //TODO: Remove header
+        public LegacyScreen(ConsoleDisplayManager displayDisplayManager, string name, string header, Action runner) : base(displayDisplayManager) //TODO: Remove header
         {
             Name = name;
             Runner = runner;
@@ -23,8 +24,8 @@ namespace COVIDMonitoringSystem.ConsoleApp.Display
             Console.SetCursorPosition(0, 4);
             Runner?.Invoke();
             CHelper.WriteEmpty();
-            CHelper.Pause("Back to menu...");
-            Manager.PopScreen();
+            CHelper.WriteLine("Back to menu...");
+            DisplayDisplayManager.PopScreen();
         }
     }
 }

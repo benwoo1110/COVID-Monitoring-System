@@ -9,7 +9,7 @@ namespace COVIDMonitoringSystem.ConsoleApp.Display
 {
     public class Screen
     {
-        public ConsoleManager Manager { get; }
+        public ConsoleDisplayManager DisplayDisplayManager { get; }
         public string Name { get; set; }
         public List<Element> ElementList { get; }
         public List<SelectableElement> CachedSelectableElement { get; }
@@ -18,9 +18,9 @@ namespace COVIDMonitoringSystem.ConsoleApp.Display
         public List<Element> UpdateQueue { get; }
         public bool Active { get; private set; }
 
-        public Screen(ConsoleManager manager)
+        public Screen(ConsoleDisplayManager displayDisplayManager)
         {
-            Manager = manager;
+            DisplayDisplayManager = displayDisplayManager;
             ElementList = new List<Element>();
             CachedSelectableElement = new List<SelectableElement>();
             UpdateQueue = new List<Element>();

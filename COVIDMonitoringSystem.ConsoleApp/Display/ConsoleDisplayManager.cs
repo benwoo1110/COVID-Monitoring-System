@@ -5,7 +5,7 @@ using COVIDMonitoringSystem.ConsoleApp.Utilities;
 
 namespace COVIDMonitoringSystem.ConsoleApp.Display
 {
-    public class ConsoleManager
+    public class ConsoleDisplayManager
     {
         private Screen currentScreen;
         private Dictionary<string, Screen> ScreenMap { get; }
@@ -25,7 +25,7 @@ namespace COVIDMonitoringSystem.ConsoleApp.Display
         private bool Running { get; set; }
         public bool ScreenUpdated { get; set; }
 
-        public ConsoleManager()
+        public ConsoleDisplayManager()
         {
             ScreenMap = new Dictionary<string, Screen>();
             KeyActionMap = new Dictionary<ConsoleKey, Action<ConsoleKeyInfo>>();
@@ -93,7 +93,7 @@ namespace COVIDMonitoringSystem.ConsoleApp.Display
         
         public void RegisterScreen(Screen screen)
         {
-            if (screen.Manager != this)
+            if (screen.DisplayDisplayManager != this)
             {
                 throw new InvalidOperationException("Screen does not belong to this manager.");
             }
@@ -117,9 +117,9 @@ namespace COVIDMonitoringSystem.ConsoleApp.Display
             {
                 if (ScreenUpdated)
                 {
+                    ScreenUpdated = false;
                     CurrentScreen.Load();
                     CurrentScreen.OnView();
-                    ScreenUpdated = false;
                 }
                 
                 if (CHelper.DidChangeWindowSize())
