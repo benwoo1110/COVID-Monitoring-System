@@ -25,8 +25,15 @@ namespace COVIDMonitoringSystem.ConsoleApp.Display
             ElementList = new List<Element>();
             CachedSelectableElement = new List<SelectableElement>();
             UpdateQueue = new List<Element>();
+            AddElementFields();
         }
 
+        private void AddElementFields()
+        {
+            var elementList = ReflectHelper.GetFieldsOfType<Element>(this);
+            elementList.ForEach(AddElement);
+        }
+        
         public void AddElement(Element element)
         {
             element.TargetAbstractScreen = this;

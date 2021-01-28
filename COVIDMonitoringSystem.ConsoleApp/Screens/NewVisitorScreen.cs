@@ -45,14 +45,6 @@ namespace COVIDMonitoringSystem.ConsoleApp.Screens
 
         public NewVisitorScreen(ConsoleDisplayManager displayManager, COVIDMonitoringManager covidManager) : base(displayManager, covidManager)
         {
-            AddElement(header);
-            AddElement(info);
-            AddElement(name);
-            AddElement(passportNo);
-            AddElement(nationality);
-            AddElement(create);
-            AddElement(result);
-
             create.Runner = CreateNewVisitor;
         }
 
