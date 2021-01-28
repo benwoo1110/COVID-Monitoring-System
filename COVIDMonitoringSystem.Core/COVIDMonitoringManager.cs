@@ -125,6 +125,27 @@ namespace COVIDMonitoringSystem.Core
             );
         }
 
+        public bool GenerateContactTracingReportFile(BusinessLocation location, DateTime start, DateTime end)
+        {
+            var csvData = new List<Dictionary<string, string>>();
+
+            foreach (var p in PersonList)
+            {
+                foreach (var i in p.SafeEntryList)
+                {
+                    if (i.Location == location && i.CheckIn >= start && i.CheckIn <= end)
+                    {
+                        csvData.Add(GenerateSingleSafeEntryDetails(i, p));
+                    }
+                }
+            }
+            return CoreHelper.WriteCsv(
+                $"ContactTracingReport.csv",
+                new[] { "Name", "Check In Date and Time", "Check Out Date and Time" },
+                csvData
+            );
+        }
+
         private Dictionary<string, string> GenerateSingleTravelEntryReport(TravelEntry entry)
         {
             return new Dictionary<string, string>
@@ -133,6 +154,22 @@ namespace COVIDMonitoringSystem.Core
                 {"Name", entry.TravelPerson.Name},
                 {"End Date", entry.ShnEndDate.ToString(CultureInfo.InvariantCulture)},
                 {"Facility Name", entry.GetFacilityName()},
+            };
+        }
+
+        private Dictionary<string, string> GenerateSingleSafeEntryDetails(SafeEntry details, Person info)
+        {
+            string checkIn = Convert.ToString(details.CheckIn);
+            string checkOut = Convert.ToString(details.CheckOut);
+            if (checkOut == "1/1/0001 12:00:00 am")
+            {
+                checkOut = "-";
+            }
+            return new Dictionary<string, string>
+            {
+                {"Name", info.Name},
+                {"Check In Date and Time", checkIn},
+                {"Check Out Date and Time", checkOut}
             };
         }
 

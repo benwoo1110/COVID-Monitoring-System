@@ -185,7 +185,6 @@ namespace COVIDMonitoringSystem.ConsoleApp
 
         private void ContactTracing()
         {
-            List<Person> checkedIn = new List<Person>();
             CHelper.WriteLine("Contact Tracing");
             var targetDate1 = Convert.ToDateTime(CHelper.GetInput("Enter the beginning of the time period you want to check (dd/mm/yyyy hh:mm): "));
             var targetDate2 = Convert.ToDateTime(CHelper.GetInput("Enter the end of the time period you want to check (dd/mm/yyyy hh:mm): "));
@@ -203,9 +202,12 @@ namespace COVIDMonitoringSystem.ConsoleApp
                         if (n.Location == targetLocation && n.CheckIn >= targetDate1 && n.CheckIn <= targetDate2)
                         {
                             CHelper.WriteLine(i.Name);
-                        }
+                        }   
                     }
                 }
+                CHelper.WriteLine(Manager.GenerateContactTracingReportFile(targetLocation, targetDate1, targetDate2)
+                    ? "Successfully generated report file."
+                    : "There was an error generating report file.");
             }
         }
     }
