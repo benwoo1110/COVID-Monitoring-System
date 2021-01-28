@@ -15,13 +15,16 @@ namespace COVIDMonitoringSystem.ConsoleApp
     {
         private void SetUpSafeEntryScreens()
         {
-            /*DisplayManager.RegisterScreen(new LegacyScreenBuilder(DisplayManager)
+            DisplayManager.RegisterScreen(new LegacyScreenBuilder(DisplayManager)
                 .OfName("assignToken")
                 .WithHeader("Assign or replace TraceTogether Token")
                 .WithRunner(AssignToken)
                 .Build()
-            );*/
-            DisplayManager.RegisterScreen(new TokenScreen(DisplayManager, Manager));
+            );
+
+            // Assign token
+            // Errors: how to remove input fields entirely and replace with output? as well as how to exit process automatically (if we want to)
+            // DisplayManager.RegisterScreen(new TokenScreen(DisplayManager, Manager));
 
             DisplayManager.RegisterScreen(new ListScreenBuilder<BusinessLocation>(DisplayManager)
                 .OfName("viewLocations")
@@ -31,6 +34,9 @@ namespace COVIDMonitoringSystem.ConsoleApp
                 .Build()
             );
 
+            // View all business locations
+            // How can I use the above chunk of code inside Screens?
+
             DisplayManager.RegisterScreen(new LegacyScreenBuilder(DisplayManager)
                 .OfName("changeCapacity")
                 .WithHeader("Change capacity of business location")
@@ -38,12 +44,20 @@ namespace COVIDMonitoringSystem.ConsoleApp
                 .Build()
             );
 
+            // Change capacity
+            // Errors: how to convert input to int? (convert.to() doesn't seem to work)
+            // DisplayManager.RegisterScreen(new EditCapacityScreen(DisplayManager, Manager));
+
             DisplayManager.RegisterScreen(new LegacyScreenBuilder(DisplayManager)
                 .OfName("checkIn")
                 .WithHeader("SafeEntry Check-In")
                 .WithRunner(CheckIn)
                 .Build()
             );
+            
+            // Check In
+            // Errors: either input name or input location is always null even though it shouldn't be
+            // DisplayManager.RegisterScreen(new CheckInScreen(DisplayManager, Manager));
 
             DisplayManager.RegisterScreen(new LegacyScreenBuilder(DisplayManager)
                 .OfName("checkOut")
@@ -51,6 +65,9 @@ namespace COVIDMonitoringSystem.ConsoleApp
                 .WithRunner(CheckOut)
                 .Build()
             );
+
+            // Check Out
+            // Probably same problems as check in i wanna sleep alr xd
 
             DisplayManager.RegisterScreen(new LegacyScreenBuilder(DisplayManager)
                 .OfName("contactTrace")

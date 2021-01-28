@@ -15,7 +15,7 @@ namespace COVIDMonitoringSystem.ConsoleApp.Screens
 {
     public class TokenScreen : CovidScreen
     {
-        public override string Name => "tokenScreen";
+        public override string Name => "assignToken";
 
         private Header header = new Header("header")
         {
@@ -78,6 +78,10 @@ namespace COVIDMonitoringSystem.ConsoleApp.Screens
         [OnEnterInput("name")] private void OnToken()
         {
             AssignToken();
+            name.ClearText();
+
+            // remove input field and replace with the function?
+            // exit the process and go back to menu automatically?
         }
     }
 }
