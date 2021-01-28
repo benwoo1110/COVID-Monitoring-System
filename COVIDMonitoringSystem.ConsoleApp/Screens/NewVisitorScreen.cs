@@ -48,8 +48,7 @@ namespace COVIDMonitoringSystem.ConsoleApp.Screens
         {
         }
 
-        [OnClick("create")] 
-        private void OnCreate()
+        [OnClick("create")] private void OnCreate()
         {
             if (!name.HasText() || !passportNo.HasText() || !nationality.HasText())
             {

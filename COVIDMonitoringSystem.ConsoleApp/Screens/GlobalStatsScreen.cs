@@ -34,8 +34,7 @@ namespace COVIDMonitoringSystem.ConsoleApp.Screens
         {
         }
 
-        [OnClick("searchCountry")] 
-        private void OnSearchCountry()
+        [OnClick("searchCountry")] private void OnSearchCountry()
         {
             var targetCountry = country.Text;
             result.Text = $"Search for {targetCountry}!";
