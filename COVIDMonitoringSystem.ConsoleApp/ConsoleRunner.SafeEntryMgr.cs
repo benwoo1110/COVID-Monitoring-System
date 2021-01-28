@@ -185,7 +185,28 @@ namespace COVIDMonitoringSystem.ConsoleApp
 
         private void ContactTracing()
         {
+            List<Person> checkedIn = new List<Person>();
             CHelper.WriteLine("Contact Tracing");
+            var targetDate1 = Convert.ToDateTime(CHelper.GetInput("Enter the beginning of the time period you want to check (dd/mm/yyyy hh:mm): "));
+            var targetDate2 = Convert.ToDateTime(CHelper.GetInput("Enter the end of the time period you want to check (dd/mm/yyyy hh:mm): "));
+            foreach (var i in Manager.BusinessLocationList)
+            {
+                CHelper.WriteLine(i.BusinessName);
+            }
+            var targetLocation = CHelper.GetInput("Enter the name of the store you want to check: ", Manager.FindBusinessLocation);
+            if (targetLocation != null)
+            {
+                foreach (var i in Manager.PersonList)
+                {
+                    foreach (var n in i.SafeEntryList)
+                    {
+                        if (n.Location == targetLocation && n.CheckIn >= targetDate1 && n.CheckIn <= targetDate2)
+                        {
+                            CHelper.WriteLine(i.Name);
+                        }
+                    }
+                }
+            }
         }
     }
 
