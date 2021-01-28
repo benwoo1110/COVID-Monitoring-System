@@ -1,4 +1,5 @@
-﻿using COVIDMonitoringSystem.ConsoleApp.Utilities;
+﻿using System;
+using COVIDMonitoringSystem.ConsoleApp.Utilities;
 
 namespace COVIDMonitoringSystem.ConsoleApp.Display.Elements
 {
@@ -27,6 +28,8 @@ namespace COVIDMonitoringSystem.ConsoleApp.Display.Elements
                 OnPropertyChanged();
             }
         }
+
+        public Action OnEnterRunner { get; set; }
 
         public Input(string name) : base(name)
         {

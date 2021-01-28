@@ -15,10 +15,5 @@ namespace COVIDMonitoringSystem.ConsoleApp.Display.Elements
             Text = text;
             Runner = runner;
         }
-
-        public void RunAction()
-        {
-            Runner?.Invoke();
-        }
     }
 }

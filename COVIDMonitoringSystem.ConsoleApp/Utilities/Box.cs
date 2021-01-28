@@ -8,8 +8,9 @@ namespace COVIDMonitoringSystem.ConsoleApp.Utilities
     {
         public int Top { get; set; }
         public int CursorLeft { get; set; }
-        public int Height { get; set; } = 0;
+        public int Height { get; set; } = 1;
         public Box RelativeBox { get; private set; }
+        public bool AutoHeight { get; set; } = true;
 
         public void SetRelativeBox(Element element)
         {

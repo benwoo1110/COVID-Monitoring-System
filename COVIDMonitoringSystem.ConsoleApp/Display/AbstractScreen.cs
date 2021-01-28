@@ -39,12 +39,6 @@ namespace COVIDMonitoringSystem.ConsoleApp.Display
         private void AddButtonMethods()
         {
             var methodsMap = ReflectHelper.GetMethodWithAttribute<Action, OnClick>(this);
-
-            if (Name == "globalStats")
-            {
-                
-            }
-            
             foreach (var (action, clickAttr) in methodsMap)
             {
                 var button = FindElementOfType<Button>(clickAttr.ButtonName);
@@ -54,6 +48,19 @@ namespace COVIDMonitoringSystem.ConsoleApp.Display
                 }
 
                 button.Runner = action;
+            }
+
+            //TODO: Make this better
+            var methodsMap2 = ReflectHelper.GetMethodWithAttribute<Action, OnEnterInput>(this);
+            foreach (var (action, clickAttr) in methodsMap2)
+            {
+                var input = FindElementOfType<Input>(clickAttr.InputName);
+                if (input == null)
+                {
+                    throw new InvalidOperationException($"Button {clickAttr.InputName} not found.");
+                }
+
+                input.OnEnterRunner = action;
             }
         }
         
