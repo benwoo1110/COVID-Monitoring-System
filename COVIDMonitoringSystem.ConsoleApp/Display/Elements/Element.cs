@@ -5,32 +5,33 @@ namespace COVIDMonitoringSystem.ConsoleApp.Display.Elements
 {
     public abstract class Element
     {
-        private bool _hidden = false;
-        private string _name;
-        public Screen TargetScreen { get; set; }
+        private bool hidden = false;
+        private string name;
+        public AbstractScreen TargetAbstractScreen { get; set; }
 
         public string Name
         {
-            get => _name;
+            get => name;
             set
             {
-                _name = value;
+                name = value;
                 OnPropertyChanged();
             }
         }
         
         public bool Hidden
         {
-            get => _hidden;
+            get => hidden;
             set
             {
-                _hidden = value;
+                hidden = value;
                 OnPropertyChanged();
             }
         }
         
         public Box BoundingBox { get; }
 
+        //TODO: Have screen input here so can register
         protected Element()
         {
             BoundingBox = new Box();
@@ -42,17 +43,12 @@ namespace COVIDMonitoringSystem.ConsoleApp.Display.Elements
             BoundingBox = new Box();
         }
 
-        public virtual void UpdateBox()
+        public virtual void Render()
         {
-            BoundingBox.Top = CHelper.LinesPrinted;
-        }
-
-        public virtual void Display()
-        {
-            Console.SetCursorPosition(0, BoundingBox.Top);
+            BoundingBox.SetDrawPosition();
             SelectColour();
             WriteToScreen();
-            Console.SetCursorPosition(BoundingBox.Left, BoundingBox.Top);
+            BoundingBox.SetCursorPosition();
         }
 
         protected virtual void SelectColour()
@@ -64,7 +60,12 @@ namespace COVIDMonitoringSystem.ConsoleApp.Display.Elements
 
         protected void OnPropertyChanged()
         {
-            TargetScreen?.AddToUpdateQueue(this);
+            if (TargetAbstractScreen == null || !TargetAbstractScreen.Active)
+            {
+                return;
+            }
+            
+            TargetAbstractScreen.AddToUpdateQueue(this);
         }
     }
 }

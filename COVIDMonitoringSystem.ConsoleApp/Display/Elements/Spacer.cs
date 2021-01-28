@@ -10,7 +10,7 @@ namespace COVIDMonitoringSystem.ConsoleApp.Display.Elements
             Name = "spacer";
         }
 
-        public override void Display()
+        public override void Render()
         {
             ColourSelector.Element();
             Console.SetCursorPosition(0, BoundingBox.Top);

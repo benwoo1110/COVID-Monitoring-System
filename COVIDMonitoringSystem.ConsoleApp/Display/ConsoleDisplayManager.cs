@@ -5,17 +5,29 @@ using COVIDMonitoringSystem.ConsoleApp.Utilities;
 
 namespace COVIDMonitoringSystem.ConsoleApp.Display
 {
-    public class ConsoleManager
+    public class ConsoleDisplayManager
     {
-        private Dictionary<string, Screen> ScreenMap { get; }
-        public Stack<Screen> ScreenStack { get; set; }
-        public Screen CurrentScreen { get; set; }
+        private AbstractScreen currentAbstractScreen;
+        private Dictionary<string, AbstractScreen> ScreenMap { get; }
+        public Stack<AbstractScreen> ScreenStack { get; set; }
+
+        public AbstractScreen CurrentAbstractScreen
+        {
+            get => currentAbstractScreen;
+            set
+            {
+                currentAbstractScreen = value;
+                ScreenUpdated = true;
+            }
+        }
+
         public Dictionary<ConsoleKey, Action<ConsoleKeyInfo>> KeyActionMap { get; set; }
         private bool Running { get; set; }
+        public bool ScreenUpdated { get; set; }
 
-        public ConsoleManager()
+        public ConsoleDisplayManager()
         {
-            ScreenMap = new Dictionary<string, Screen>();
+            ScreenMap = new Dictionary<string, AbstractScreen>();
             KeyActionMap = new Dictionary<ConsoleKey, Action<ConsoleKeyInfo>>();
             SetDefaultKeyMap();
         }
@@ -31,17 +43,17 @@ namespace COVIDMonitoringSystem.ConsoleApp.Display
 
         private void NextSelection(ConsoleKeyInfo key)
         {
-            CurrentScreen.ChangeSelection(1);
+            CurrentAbstractScreen.ChangeSelection(1);
         }
 
         private void PreviousSelection(ConsoleKeyInfo key)
         {
-            CurrentScreen.ChangeSelection(-1);
+            CurrentAbstractScreen.ChangeSelection(-1);
         }
 
         private void DoSelection(ConsoleKeyInfo key)
         {
-            if (CurrentScreen.SelectedElement is Button buttonElement)
+            if (CurrentAbstractScreen.SelectedElement is Button buttonElement)
             {
                 buttonElement.RunAction();
             }
@@ -49,7 +61,7 @@ namespace COVIDMonitoringSystem.ConsoleApp.Display
 
         private void TypeInput(ConsoleKeyInfo key)
         {
-            if (CurrentScreen.SelectedElement is Input inputElement)
+            if (CurrentAbstractScreen.SelectedElement is Input inputElement)
             {
                 if (key.Key == ConsoleKey.Backspace)
                 {
@@ -64,33 +76,29 @@ namespace COVIDMonitoringSystem.ConsoleApp.Display
                 {
                     inputElement.Text += key.KeyChar;
                 }
-
-                inputElement.Display();
-                inputElement.UpdateWidth();
-                Console.SetCursorPosition(inputElement.BoundingBox.Left, inputElement.BoundingBox.Top);
             }
         }
 
         private void EscapeBack(ConsoleKeyInfo key)
         {
-            if (CurrentScreen.HasSelection())
+            if (CurrentAbstractScreen.HasSelection())
             {
-                CurrentScreen.ClearSelection();
-                CurrentScreen.Display();
+                CurrentAbstractScreen.ClearSelection();
+                CurrentAbstractScreen.Render();
                 return;
             }
             
             PopScreen();
         }
         
-        public void RegisterScreen(Screen screen)
+        public void RegisterScreen(AbstractScreen abstractScreen)
         {
-            if (screen.Manager != this)
+            if (abstractScreen.DisplayManager != this)
             {
                 throw new InvalidOperationException("Screen does not belong to this manager.");
             }
             
-            ScreenMap.Add(screen.Name, screen);
+            ScreenMap.Add(abstractScreen.Name, abstractScreen);
         }
         
         public void Run(string startingScreenName)
@@ -100,21 +108,27 @@ namespace COVIDMonitoringSystem.ConsoleApp.Display
                 throw new InvalidOperationException("Nested console running is not supported.");
             }
 
-            ScreenStack = new Stack<Screen>(ScreenMap.Count);
+            ScreenStack = new Stack<AbstractScreen>(ScreenMap.Count);
             PushScreen(startingScreenName);
             Running = true;
 
 
             while (Running)
             {
-                CurrentScreen.OnView();
+                if (ScreenUpdated)
+                {
+                    ScreenUpdated = false;
+                    CurrentAbstractScreen.Load();
+                    CurrentAbstractScreen.OnView();
+                }
+                
                 if (CHelper.DidChangeWindowSize())
                 {
-                    CurrentScreen.Display();
+                    CurrentAbstractScreen.Render();
                 }
                 else
                 {
-                    CurrentScreen.UpdateDisplay();
+                    CurrentAbstractScreen.Update();
                 }
 
                 var keyPressed = Console.ReadKey(true);
@@ -130,10 +144,16 @@ namespace COVIDMonitoringSystem.ConsoleApp.Display
 
         public void PushScreen(string screenName)
         {
+            if (ScreenStack.Count > 0)
+            {
+                var closingScreen = ScreenStack.Peek();
+                closingScreen.OnClose();
+                closingScreen.Unload();
+            }
+
             var targetScreen = ScreenMap[screenName];
             ScreenStack.Push(targetScreen);
-            targetScreen.Load();
-            CurrentScreen = targetScreen;
+            CurrentAbstractScreen = targetScreen;
         }
 
         public void PopScreen(bool doQuit = false)
@@ -143,15 +163,17 @@ namespace COVIDMonitoringSystem.ConsoleApp.Display
                 return;
             }
             
-            ScreenStack.Pop().Unload();
+            var closingScreen = ScreenStack.Pop();
+            closingScreen.OnClose();
+            closingScreen.Unload();
+            
             if (ScreenStack.Count == 0)
             {
                 Running = false;
                 return;
             }
 
-            CurrentScreen = ScreenStack.Peek();
-            CurrentScreen.Display();
+            CurrentAbstractScreen = ScreenStack.Peek();
         }
 
         public void Stop()

@@ -1,5 +1,5 @@
-﻿using COVIDMonitoringSystem.ConsoleApp.Display;
-using COVIDMonitoringSystem.ConsoleApp.Display.Builders;
+﻿using COVIDMonitoringSystem.ConsoleApp.Builders;
+using COVIDMonitoringSystem.ConsoleApp.Display;
 using COVIDMonitoringSystem.ConsoleApp.Display.Elements;
 using COVIDMonitoringSystem.ConsoleApp.Utilities;
 using COVIDMonitoringSystem.Core.PersonMgr;
@@ -15,7 +15,7 @@ namespace COVIDMonitoringSystem.ConsoleApp
                 .WithHeader("View Details of a Person")
                 .AddElement(new Input("name", "Name"))
                 .AddElement(new Spacer())
-                .AddElement(new Button("find", "[Find]", ShowPersonDetails))
+                .AddElement(new Button("find")) // , "[Find]", ShowPersonDetails))
                 .AddElement(new Spacer())
                 .AddElement(new Label("details"))
                 .Build()
@@ -37,10 +37,10 @@ namespace COVIDMonitoringSystem.ConsoleApp
             );
         }
 
-        private void ShowPersonDetails(Screen screen)
+        private void ShowPersonDetails(AbstractScreen abstractScreen)
         {
-            var nameInput = screen.FindElementOfType<Input>("name");
-            var detailInfo = screen.FindElementOfType<Label>("details");
+            var nameInput = abstractScreen.FindElementOfType<Input>("name");
+            var detailInfo = abstractScreen.FindElementOfType<Label>("details");
 
             var targetPerson = Manager.FindPerson(nameInput.Text);
             if (targetPerson == null)

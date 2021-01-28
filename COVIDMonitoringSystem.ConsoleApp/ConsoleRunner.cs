@@ -1,5 +1,5 @@
-﻿using COVIDMonitoringSystem.ConsoleApp.Display;
-using COVIDMonitoringSystem.ConsoleApp.Display.Builders;
+﻿using COVIDMonitoringSystem.ConsoleApp.Builders;
+using COVIDMonitoringSystem.ConsoleApp.Display;
 using COVIDMonitoringSystem.Core;
 
 namespace COVIDMonitoringSystem.ConsoleApp
@@ -8,11 +8,11 @@ namespace COVIDMonitoringSystem.ConsoleApp
     {
         private COVIDMonitoringManager Manager { get; }
 
-        private ConsoleManager DisplayManager { get; }
+        private ConsoleDisplayManager DisplayManager { get; }
 
         public ConsoleRunner()
         {
-            DisplayManager = new ConsoleManager();
+            DisplayManager = new ConsoleDisplayManager();
             Manager = new COVIDMonitoringManager();
             SetUpMenus();
         }

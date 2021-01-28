@@ -1,10 +1,12 @@
 ﻿using System;
+using COVIDMonitoringSystem.ConsoleApp.Display;
+using COVIDMonitoringSystem.ConsoleApp.Screens;
 
-namespace COVIDMonitoringSystem.ConsoleApp.Display.Builders
+namespace COVIDMonitoringSystem.ConsoleApp.Builders
 {
     public class LegacyScreenBuilder : AbstractScreenBuilder<LegacyScreenBuilder, LegacyScreen>
     {
-        public LegacyScreenBuilder(ConsoleManager manager) : base(manager)
+        public LegacyScreenBuilder(ConsoleDisplayManager displayManager) : base(displayManager)
         {
         }
 

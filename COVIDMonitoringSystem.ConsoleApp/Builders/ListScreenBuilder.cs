@@ -1,14 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
+using COVIDMonitoringSystem.ConsoleApp.Display;
 using COVIDMonitoringSystem.ConsoleApp.Display.Elements;
+using COVIDMonitoringSystem.ConsoleApp.Screens;
 
-namespace COVIDMonitoringSystem.ConsoleApp.Display.Builders
+namespace COVIDMonitoringSystem.ConsoleApp.Builders
 {
-    public class ListScreenBuilder<T> : AbstractScreenBuilder<ListScreenBuilder<T>, Screen> where T : class
+    public class ListScreenBuilder<T> : AbstractScreenBuilder<ListScreenBuilder<T>, BuilderScreen> where T : class
     {
         public ObjectList<T> ListObject { get; set; }
         
-        public ListScreenBuilder(ConsoleManager manager) : base(manager)
+        public ListScreenBuilder(ConsoleDisplayManager displayManager) : base(displayManager)
         {
             ListObject = new ObjectList<T>(typeof(T).Name);
         }
@@ -25,7 +27,7 @@ namespace COVIDMonitoringSystem.ConsoleApp.Display.Builders
             return this;
         }
         
-        public override Screen Build()
+        public override AbstractScreen Build()
         {
             TargetScreen.AddElement(ListObject);
             return TargetScreen;

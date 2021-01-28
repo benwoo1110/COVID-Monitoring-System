@@ -3,30 +3,28 @@ using COVIDMonitoringSystem.ConsoleApp.Utilities;
 
 namespace COVIDMonitoringSystem.ConsoleApp.Display
 {
-    public class LegacyScreen : Screen
+    public class LegacyScreen :  BuilderScreen
     {
         public Action Runner { get; set; }
 
-        public LegacyScreen(ConsoleManager manager) : base(manager)
+        public LegacyScreen(ConsoleDisplayManager displayManager) : base(displayManager)
         {
         }
 
-        public LegacyScreen(ConsoleManager manager, string name, string header, Action runner) : base(manager)
+        public LegacyScreen(ConsoleDisplayManager displayManager, string name, string header, Action runner) : base(displayManager) //TODO: Remove header
         {
-            Name = name;
-            //TODO: header
-            // Header = header;
+            ScreenName = name;
             Runner = runner;
         }
-
+        
         public override void OnView()
         {
             ColourSelector.Element();
             Console.SetCursorPosition(0, 4);
             Runner?.Invoke();
             CHelper.WriteEmpty();
-            CHelper.Pause("Back to menu...");
-            Manager.PopScreen();
+            CHelper.WriteLine("Back to menu...");
+            DisplayManager.PopScreen();
         }
     }
 }

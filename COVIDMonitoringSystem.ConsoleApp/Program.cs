@@ -12,7 +12,7 @@ namespace COVIDMonitoringSystem.ConsoleApp
     {
         static void Main(string[] args)
         {
-            Logging.SetLogLevel(LogLevel.Debug);
+            Logging.SetLogLevel(LogLevel.None);
             new ConsoleRunner().Run();
         }
     }
