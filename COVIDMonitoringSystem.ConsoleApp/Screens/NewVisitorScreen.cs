@@ -1,4 +1,5 @@
 ﻿using COVIDMonitoringSystem.ConsoleApp.Display;
+using COVIDMonitoringSystem.ConsoleApp.Display.Attributes;
 using COVIDMonitoringSystem.ConsoleApp.Display.Elements;
 using COVIDMonitoringSystem.Core;
 using COVIDMonitoringSystem.Core.PersonMgr;
@@ -45,10 +46,10 @@ namespace COVIDMonitoringSystem.ConsoleApp.Screens
 
         public NewVisitorScreen(ConsoleDisplayManager displayManager, COVIDMonitoringManager covidManager) : base(displayManager, covidManager)
         {
-            create.Runner = CreateNewVisitor;
         }
 
-        private void CreateNewVisitor()
+        [OnClick("create")] 
+        private void OnCreate()
         {
             if (!name.HasText() || !passportNo.HasText() || !nationality.HasText())
             {

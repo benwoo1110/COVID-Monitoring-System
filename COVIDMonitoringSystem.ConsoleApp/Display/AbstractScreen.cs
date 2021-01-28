@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using COVIDMonitoringSystem.ConsoleApp.Display.Attributes;
 using COVIDMonitoringSystem.ConsoleApp.Display.Elements;
 using COVIDMonitoringSystem.ConsoleApp.Utilities;
 using COVIDMonitoringSystem.Core.Utilities;
@@ -26,12 +27,34 @@ namespace COVIDMonitoringSystem.ConsoleApp.Display
             CachedSelectableElement = new List<SelectableElement>();
             UpdateQueue = new List<Element>();
             AddElementFields();
+            AddButtonMethods();
         }
 
         private void AddElementFields()
         {
             var elementList = ReflectHelper.GetFieldsOfType<Element>(this);
             elementList.ForEach(AddElement);
+        }
+
+        private void AddButtonMethods()
+        {
+            var methodsMap = ReflectHelper.GetMethodWithAttribute<Action, OnClick>(this);
+
+            if (Name == "globalStats")
+            {
+                
+            }
+            
+            foreach (var (action, clickAttr) in methodsMap)
+            {
+                var button = FindElementOfType<Button>(clickAttr.ButtonName);
+                if (button == null)
+                {
+                    throw new InvalidOperationException($"Button {clickAttr.ButtonName} not found.");
+                }
+
+                button.Runner = action;
+            }
         }
         
         public void AddElement(Element element)

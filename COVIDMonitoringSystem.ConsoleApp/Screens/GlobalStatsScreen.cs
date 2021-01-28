@@ -1,4 +1,5 @@
 ﻿using COVIDMonitoringSystem.ConsoleApp.Display;
+using COVIDMonitoringSystem.ConsoleApp.Display.Attributes;
 using COVIDMonitoringSystem.ConsoleApp.Display.Elements;
 using COVIDMonitoringSystem.Core;
 
@@ -31,9 +32,9 @@ namespace COVIDMonitoringSystem.ConsoleApp.Screens
 
         public GlobalStatsScreen(ConsoleDisplayManager displayManager, COVIDMonitoringManager covidManager) : base(displayManager, covidManager)
         {
-            searchCountry.Runner = OnSearchCountry;
         }
 
+        [OnClick("searchCountry")] 
         private void OnSearchCountry()
         {
             var targetCountry = country.Text;

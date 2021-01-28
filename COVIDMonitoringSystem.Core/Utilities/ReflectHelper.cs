@@ -23,6 +23,24 @@ namespace COVIDMonitoringSystem.Core.Utilities
 
             return fieldValues;
         }
+
+        public static Dictionary<TM, TA> GetMethodWithAttribute<TM, TA>(object obj) where TM : Delegate
+        {
+            var methodAttributeMap = new Dictionary<TM, TA>();
+            var methodInfos = obj.GetType().GetMethods(BindingFlags.Instance | BindingFlags.NonPublic);
+
+            foreach (var methodInfo in methodInfos)
+            {
+                var attribute = methodInfo.GetCustomAttribute(typeof(TA), true);
+                if (attribute is TA targetAttribute)
+                {
+                    var method = (TM) methodInfo.CreateDelegate(typeof(TM), obj);
+                    methodAttributeMap.Add(method, targetAttribute);
+                }   
+            }
+
+            return methodAttributeMap;
+        }
         
         public static Dictionary<string, string> GetAllPropertyValues<T>(T obj) where T : class
         {
