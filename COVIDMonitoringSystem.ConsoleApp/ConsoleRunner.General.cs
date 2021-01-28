@@ -1,6 +1,7 @@
 ﻿using COVIDMonitoringSystem.ConsoleApp.Builders;
 using COVIDMonitoringSystem.ConsoleApp.Display;
 using COVIDMonitoringSystem.ConsoleApp.Display.Elements;
+using COVIDMonitoringSystem.ConsoleApp.Screens;
 using COVIDMonitoringSystem.ConsoleApp.Utilities;
 using COVIDMonitoringSystem.Core.PersonMgr;
 
@@ -28,13 +29,8 @@ namespace COVIDMonitoringSystem.ConsoleApp
                 .WithGetter(() => Manager.GetAllPersonOfType<Visitor>())
                 .Build()
             );
-
-            DisplayManager.RegisterScreen(new LegacyScreenBuilder(DisplayManager)
-                .OfName("globalStats")
-                .WithHeader("Explore Global Stats")
-                .WithRunner(ExploreGlobalStats)
-                .Build()
-            );
+            
+            DisplayManager.RegisterScreen(new GlobalStatsScreen(DisplayManager, Manager));
         }
 
         private void ShowPersonDetails(AbstractScreen abstractScreen)
