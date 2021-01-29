@@ -17,10 +17,6 @@ namespace COVIDMonitoringSystem.Core.TravelEntryMgr
         [Obsolete("Required by assignment")]
         public double DistFromAirCheckpoint => Distance.FromAir;
 
-        public SHNFacility()
-        {
-        }
-
         public SHNFacility(string facilityName, int facilityCapacity, double distFromAirCheckpoint, double distFromSeaCheckpoint, double distFromLandCheckpoint)
         {
             FacilityName = facilityName;
