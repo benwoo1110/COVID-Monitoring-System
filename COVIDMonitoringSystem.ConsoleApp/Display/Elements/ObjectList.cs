@@ -10,7 +10,7 @@ namespace COVIDMonitoringSystem.ConsoleApp.Display.Elements
     public class ObjectList<T> : Element where T : class
     {
         private const int ColumnGap = 4;
-        
+
         public string[] PropertyToInclude { get; set; }
         public Func<List<T>> ListGetter { get; set; }
 
@@ -24,16 +24,16 @@ namespace COVIDMonitoringSystem.ConsoleApp.Display.Elements
             ListGetter = listGetter;
         }
 
-        protected override void WriteToScreen()
+        protected override int WriteToScreen()
         {
             var objList = ListGetter?.Invoke();
 
             if (objList == null)
             {
-                Console.WriteLine("NULL");
-                return;
+                CHelper.WriteLine("NULL");
+                return 1;
             }
-            
+
             var columnWidths = new int[PropertyToInclude.Length];
 
             var headerItems = new string[PropertyToInclude.Length];
@@ -79,11 +79,16 @@ namespace COVIDMonitoringSystem.ConsoleApp.Display.Elements
                 var contentBuilder = new StringBuilder();
                 for (var index = 0; index < columnWidths.Length; index++)
                 {
-                    contentBuilder.Append(string.Format($"{{0,-{columnWidths[index] + ColumnGap}}}", propertyValues[PropertyToInclude[index]]));
+                    contentBuilder.Append(string.Format($"{{0,-{columnWidths[index] + ColumnGap}}}",
+                        propertyValues[PropertyToInclude[index]]));
                 }
+
                 CHelper.WriteLine(contentBuilder.ToString());
                 CHelper.WriteEmpty();
             }
+
+            //TODO: Use builder and return correct lines written
+            return 1;
         }
 
         private static string SplitPascalCase(string text)

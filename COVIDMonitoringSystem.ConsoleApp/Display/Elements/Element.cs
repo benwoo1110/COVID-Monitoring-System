@@ -47,7 +47,7 @@ namespace COVIDMonitoringSystem.ConsoleApp.Display.Elements
         {
             BoundingBox.SetDrawPosition();
             SelectColour();
-            WriteToScreen();
+            BoundingBox.UpdateHeight(WriteToScreen());
             BoundingBox.SetCursorPosition();
         }
 
@@ -56,7 +56,7 @@ namespace COVIDMonitoringSystem.ConsoleApp.Display.Elements
             ColourSelector.Element();
         }
 
-        protected abstract void WriteToScreen();
+        protected abstract int WriteToScreen();
 
         protected void OnPropertyChanged()
         {

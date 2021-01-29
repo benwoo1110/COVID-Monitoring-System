@@ -40,9 +40,9 @@ namespace COVIDMonitoringSystem.ConsoleApp.Display.Elements
             Prompt = prompt;
         }
 
-        protected override void WriteToScreen()
+        protected override int WriteToScreen()
         {
-            CHelper.WriteLine($"{Prompt}: {Text}", Align);
+            return CHelper.WriteLine($"{Prompt}: {Text}", Align);
         }
 
         public void UpdateCursor()

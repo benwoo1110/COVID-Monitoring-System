@@ -36,9 +36,9 @@ namespace COVIDMonitoringSystem.ConsoleApp.Display.Elements
             Text = text;
         }
 
-        protected override void WriteToScreen()
+        protected override int WriteToScreen()
         {
-            CHelper.WriteLine(Text, Align);
+           return CHelper.WriteLine(Text, Align);
         }
 
         public bool HasText(bool allowWhiteSpace = false)

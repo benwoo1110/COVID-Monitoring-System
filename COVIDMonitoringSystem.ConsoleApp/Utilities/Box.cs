@@ -58,5 +58,15 @@ namespace COVIDMonitoringSystem.ConsoleApp.Utilities
         {
             Console.SetCursorPosition(CursorLeft, GetTop());
         }
+
+        public void UpdateHeight(int to)
+        {
+            if (!AutoHeight)
+            {
+                return;
+            }
+
+            Height = to;
+        }
     }
 }

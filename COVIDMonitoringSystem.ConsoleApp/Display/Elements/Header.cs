@@ -14,11 +14,9 @@ namespace COVIDMonitoringSystem.ConsoleApp.Display.Elements
         {
         }
 
-        protected override void WriteToScreen()
+        protected override int WriteToScreen()
         {
-            CHelper.WriteEmpty();
-            CHelper.WriteLine(Text, Align);
-            CHelper.WriteEmpty();
+            return CHelper.WriteLine($"\n{Text}\n", Align);
         }
 
         protected override void SelectColour()

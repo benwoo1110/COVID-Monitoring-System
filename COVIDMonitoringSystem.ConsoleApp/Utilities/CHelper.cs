@@ -57,8 +57,15 @@ namespace COVIDMonitoringSystem.ConsoleApp.Utilities
 
         private static IEnumerable<string> SplitByLength(string line)
         {
+            if (line.Length == 0)
+            {
+                yield return line;
+            }
+            
             for (var i = 0; i < line.Length; i += WritableWidth)
+            {
                 yield return line.Substring(i, Math.Min(WritableWidth, line.Length - i));
+            }
         }
 
         public static void FillLine(char c)
