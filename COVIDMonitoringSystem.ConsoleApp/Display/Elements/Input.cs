@@ -29,6 +29,8 @@ namespace COVIDMonitoringSystem.ConsoleApp.Display.Elements
             }
         }
 
+        public override bool ClearOnExit { get; set; } = true;
+
         public ButtonMethod MethodRunner { get; set; }
 
         public Action OnEnterRunner { get; set; }

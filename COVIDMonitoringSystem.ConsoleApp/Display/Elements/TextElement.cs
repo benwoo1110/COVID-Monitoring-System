@@ -27,6 +27,8 @@ namespace COVIDMonitoringSystem.ConsoleApp.Display.Elements
             }
         }
 
+        public virtual bool ClearOnExit { get; set; }
+
         protected TextElement(string name) : base(name)
         {
         }

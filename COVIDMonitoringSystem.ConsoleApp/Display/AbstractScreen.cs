@@ -105,6 +105,9 @@ namespace COVIDMonitoringSystem.ConsoleApp.Display
         {
             Active = false;
             ClearSelection();
+            FindAllElementOfType<TextElement>()
+                .FindAll(element => element.ClearOnExit)
+                .ForEach(element => element.ClearText());
         }
 
         public virtual void Closed()
@@ -176,7 +179,7 @@ namespace COVIDMonitoringSystem.ConsoleApp.Display
         {
             return SelectedIndex >= 0 && SelectedElement != null;
         }
-
+        
         public Element FindElement(string name)
         {
             return ElementList.Find(e => e.Name.ToLower().Equals(name.ToLower()));
@@ -185,6 +188,11 @@ namespace COVIDMonitoringSystem.ConsoleApp.Display
         public T FindElementOfType<T>(string name) where T : Element
         {
             return (T) ElementList.Find(e => e is T && e.Name.ToLower().Equals(name.ToLower()));
+        }
+
+        public List<T> FindAllElementOfType<T>() where T : Element
+        {
+            return ElementList.FindAll(element => element is T).ConvertAll(element => (T) element);
         }
 
         public void AddToUpdateQueue(Element element)

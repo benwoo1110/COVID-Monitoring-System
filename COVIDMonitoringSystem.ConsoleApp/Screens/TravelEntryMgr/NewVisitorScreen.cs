@@ -41,7 +41,8 @@ namespace COVIDMonitoringSystem.ConsoleApp.Screens.TravelEntryMgr
         };
         private Label result = new Label("result")
         {
-            BoundingBox = {Top = 12}
+            BoundingBox = {Top = 12},
+            ClearOnExit = true
         };
 
         public NewVisitorScreen(ConsoleDisplayManager displayManager, COVIDMonitoringManager covidManager) : base(displayManager, covidManager)
