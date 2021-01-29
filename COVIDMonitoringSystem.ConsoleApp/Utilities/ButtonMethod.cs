@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Reflection;
 using COVIDMonitoringSystem.ConsoleApp.Display;
 using COVIDMonitoringSystem.ConsoleApp.Display.Attributes;
+using COVIDMonitoringSystem.ConsoleApp.Display.Elements;
 using COVIDMonitoringSystem.Core.Utilities;
 
 namespace COVIDMonitoringSystem.ConsoleApp.Utilities
@@ -29,7 +30,12 @@ namespace COVIDMonitoringSystem.ConsoleApp.Utilities
                     arguments.Add(null);
                     continue;
                 }
-                arguments.Add(parser.InputName);
+
+                var input = screen.FindElementOfType<Input>(parser.InputName);
+                var errorText = screen.FindElementOfType<TextElement>(parser.TargetLabel);
+
+                var parseResult = screen.DisplayManager.ResolveManager.Parse(screen, input.Text, parameter.ParameterType);
+                arguments.Add(parseResult);
             }
             
             Method?.Invoke(screen, arguments.ToArray());

@@ -35,7 +35,7 @@ namespace COVIDMonitoringSystem.ConsoleApp.Screens
         }
 
         [OnClick("searchCountry")] private void OnSearchCountry(
-            [Parser("aa", "bb")] string countryStuff)
+            [Parser("country", "result")] string countryStuff)
         {
             var targetCountry = country.Text;
             result.Text = $"Search for {countryStuff}!";
