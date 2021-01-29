@@ -1,7 +1,9 @@
-﻿using COVIDMonitoringSystem.ConsoleApp.Display;
+﻿using System;
+using COVIDMonitoringSystem.ConsoleApp.Display;
 using COVIDMonitoringSystem.ConsoleApp.Display.Attributes;
 using COVIDMonitoringSystem.ConsoleApp.Display.Elements;
 using COVIDMonitoringSystem.Core;
+using COVIDMonitoringSystem.Core.PersonMgr;
 using COVIDMonitoringSystem.Core.TravelEntryMgr;
 
 namespace COVIDMonitoringSystem.ConsoleApp.Screens.TravelEntryMgr
@@ -82,6 +84,17 @@ namespace COVIDMonitoringSystem.ConsoleApp.Screens.TravelEntryMgr
 
             shnMessage.Hidden = true;
             shnFacility.Hidden = true;
+        }
+
+        [OnClick("create")]
+        private void OnCreateRecord(
+            [Parser("name", "result")] Person person,
+            [Parser("country", "result")] string countryName,
+            [Parser("entryMode", "result")] TravelEntryMode mode,
+            [Parser("entryDate", "result")] DateTime entryTime,
+            [Parser("shnFacility", "result")] SHNFacility facility)
+        {
+            
         }
     }
 }
