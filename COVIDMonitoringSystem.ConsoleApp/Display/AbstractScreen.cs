@@ -65,7 +65,7 @@ namespace COVIDMonitoringSystem.ConsoleApp.Display
         
         public void AddElement(Element element)
         {
-            element.TargetAbstractScreen = this;
+            element.TargetScreen = this;
             ElementList.Add(element);
 
             if (element is SelectableElement selectableElement)

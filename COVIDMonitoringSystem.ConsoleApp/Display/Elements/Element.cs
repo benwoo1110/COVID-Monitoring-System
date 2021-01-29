@@ -7,7 +7,7 @@ namespace COVIDMonitoringSystem.ConsoleApp.Display.Elements
     {
         private bool hidden;
         private string name;
-        public AbstractScreen TargetAbstractScreen { get; set; }
+        public AbstractScreen TargetScreen { get; set; }
 
         public string Name
         {
@@ -72,12 +72,12 @@ namespace COVIDMonitoringSystem.ConsoleApp.Display.Elements
 
         public void QueueToRerender()
         {
-            if (TargetAbstractScreen == null || !TargetAbstractScreen.Active)
+            if (TargetScreen == null || !TargetScreen.Active)
             {
                 return;
             }
             
-            TargetAbstractScreen.AddToUpdateQueue(this);
+            TargetScreen.AddToUpdateQueue(this);
         }
     }
 }
