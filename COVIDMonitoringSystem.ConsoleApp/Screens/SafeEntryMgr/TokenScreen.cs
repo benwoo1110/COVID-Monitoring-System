@@ -24,6 +24,11 @@ namespace COVIDMonitoringSystem.ConsoleApp.Screens.SafeEntryMgr
             BoundingBox = { Top = 4 }
         };
 
+        private Label output = new Label("output")
+        {
+            BoundingBox = { Top = 8 }
+        };
+
         private void AssignToken()
         {
             var targetResident = CovidManager.FindPersonOfType<Resident>(name.Text);
@@ -31,7 +36,7 @@ namespace COVIDMonitoringSystem.ConsoleApp.Screens.SafeEntryMgr
             {
                 if (targetResident.Token == null)
                 {
-                    CHelper.WriteLine("A new token will be issued to you.");
+                    output.Text = "A new token will be issued to you.";
                     var generator = new Random();
                     var serialNum = generator.Next(10000, 100000);
                     var finalSerial = "T" + Convert.ToString(serialNum);
@@ -73,7 +78,6 @@ namespace COVIDMonitoringSystem.ConsoleApp.Screens.SafeEntryMgr
         [OnEnterInput("name")] private void OnToken()
         {
             AssignToken();
-            name.ClearText();
 
             // remove input field and replace with the function?
             // exit the process and go back to menu automatically?

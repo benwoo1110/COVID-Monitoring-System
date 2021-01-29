@@ -64,7 +64,7 @@ namespace COVIDMonitoringSystem.ConsoleApp.Screens.SafeEntryMgr
             if (targetBusiness != null)
             {
                 var oldCapacity = targetBusiness.MaximumCapacity;
-                targetBusiness.MaximumCapacity = Convert.ToInt32(capacity.Text); // Need to get the text
+                targetBusiness.MaximumCapacity = Convert.ToInt32(capacity.Text);
                 result.Text = $"Maximum capacity for {targetBusiness} has been changed from {oldCapacity} to {targetBusiness.MaximumCapacity}";
             }
             else
