@@ -43,7 +43,11 @@ namespace COVIDMonitoringSystem.ConsoleApp.Screens.SafeEntryMgr
             locations.Text = locationNames;
         }
 
-        [OnClick("generate")]private void onGenerate()
+        [OnClick("generate")]
+        private void onGenerate(
+            [Parser("date1", "output")] DateTime startDate, 
+            [Parser("date2", "output")] DateTime endDate,
+            [Parser("targetStore", "output")] BusinessLocation location)
         {
             ContactTracing();
         }
