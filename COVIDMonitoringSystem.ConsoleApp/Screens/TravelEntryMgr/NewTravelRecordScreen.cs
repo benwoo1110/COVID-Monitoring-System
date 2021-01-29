@@ -38,7 +38,7 @@ namespace COVIDMonitoringSystem.ConsoleApp.Screens.TravelEntryMgr
         private Label shnMessage = new Label("shnMessage")
         {
             Text = "Some message",
-            BoundingBox = {Top = 9},
+            BoundingBox = {Top = 8},
         };
         private Input shnFacility = new Input("shnFacility")
         {
@@ -70,13 +70,13 @@ namespace COVIDMonitoringSystem.ConsoleApp.Screens.TravelEntryMgr
         }
 
         [OnEnterInput("country")]
-        private void OnUpdateCountry([Parser("country", "result")] SHNTier tier)
+        private void OnUpdateCountry([Parser("country")] SHNTier tier)
         {
             if (tier == SHNTier.Dedicated)
             {
                 shnMessage.Hidden = false;
                 shnFacility.Hidden = false;
-                shnMessage.Text = $"You are required to serve SHN in dedicated facility when coming from {country.Text}.";
+                shnMessage.Text = $"\nYou are required to serve SHN in dedicated facility when coming from {country.Text}.";
                 return;
             }
 

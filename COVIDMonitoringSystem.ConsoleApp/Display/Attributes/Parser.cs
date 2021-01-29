@@ -8,7 +8,7 @@ namespace COVIDMonitoringSystem.ConsoleApp.Display.Attributes
         public string InputName { get; }
         public string TargetLabel { get; }
 
-        public Parser(string inputName, string targetLabel)
+        public Parser(string inputName, string targetLabel = null)
         {
             InputName = inputName;
             TargetLabel = targetLabel;
