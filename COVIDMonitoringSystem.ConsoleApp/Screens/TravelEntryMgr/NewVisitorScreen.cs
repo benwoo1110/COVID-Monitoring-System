@@ -48,16 +48,14 @@ namespace COVIDMonitoringSystem.ConsoleApp.Screens.TravelEntryMgr
         {
         }
 
-        [OnClick("create")] private void OnCreate()
+        [OnClick("create")] 
+        private void OnCreate(
+            [Parser("name", "result")] string nameText,
+            [Parser("passportNo", "result")] string passportNoText,
+            [Parser("nationality", "result")] string nationalityText)
         {
-            if (!name.HasText() || !passportNo.HasText() || !nationality.HasText())
-            {
-                result.Text = "Incomplete details. No visitor has been added to the system. this is a very very long lineee hahahahahahahahhahahahahahahahahhahah hahahahahahahahhahahahahahahahahhahah";
-                return;
-            }
-
-            CovidManager.AddPerson(new Visitor(name.Text, passportNo.Text, nationality.Text));
-            result.Text = $"New visitor {name.Text} has been added to the system.";
+            CovidManager.AddPerson(new Visitor(nameText, passportNoText, nationalityText));
+            result.Text = $"New visitor {nameText} has been added to the system.";
 
             name.ClearText();
             passportNo.ClearText();
