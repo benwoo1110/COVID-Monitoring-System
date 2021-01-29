@@ -1,6 +1,7 @@
 ﻿using COVIDMonitoringSystem.ConsoleApp.Builders;
 using COVIDMonitoringSystem.ConsoleApp.Display;
 using COVIDMonitoringSystem.Core;
+using COVIDMonitoringSystem.Core.PersonMgr;
 
 namespace COVIDMonitoringSystem.ConsoleApp
 {
@@ -14,7 +15,35 @@ namespace COVIDMonitoringSystem.ConsoleApp
         {
             DisplayManager = new ConsoleDisplayManager();
             Manager = new COVIDMonitoringManager();
+            RegisterInputResolvers();
             SetUpMenus();
+            SetUpGeneralScreens();
+            SetUpSafeEntryScreens();
+            SetUpTravelEntryScreens();
+        }
+
+        private void RegisterInputResolvers()
+        {
+            DisplayManager.ResolveManager.RegisterQuickInputResolver(
+                Manager.FindPerson,
+                "No person with name {0} found."
+            );
+            DisplayManager.ResolveManager.RegisterQuickInputResolver(
+                Manager.FindPersonOfType<Resident>,
+                "No resident with name {0} found."
+            );
+            DisplayManager.ResolveManager.RegisterQuickInputResolver(
+                Manager.FindPersonOfType<Visitor>,
+                "No visitor with name {0} found."
+            );
+            DisplayManager.ResolveManager.RegisterQuickInputResolver(
+                Manager.FindBusinessLocation,
+                "No business with name {0} found."
+            );
+            DisplayManager.ResolveManager.RegisterQuickInputResolver(
+                Manager.FindSHNFacility,
+                "No SHN facility with name {0} found."
+            );
         }
 
         private void SetUpMenus()
@@ -52,10 +81,6 @@ namespace COVIDMonitoringSystem.ConsoleApp
                 .AddOption("Generate SHN Status Report", "shnReport")
                 .Build()
             );
-
-            SetUpGeneralScreens();
-            SetUpSafeEntryScreens();
-            SetUpTravelEntryScreens();
         }
 
         public void Run()
