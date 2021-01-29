@@ -68,6 +68,15 @@ namespace COVIDMonitoringSystem.ConsoleApp.Utilities
             }
         }
 
+        public static void ClearLines(int from, int to)
+        {
+            Console.SetCursorPosition(0, from);
+            for (var i = 0; i < to - from; i++)
+            {
+                WriteEmpty();
+            }
+        }
+
         public static void FillLine(char c)
         {
             Console.Write(new string(c, WindowWidth));

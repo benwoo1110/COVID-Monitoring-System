@@ -40,6 +40,11 @@ namespace COVIDMonitoringSystem.ConsoleApp.Utilities
                 {
                     parseResult = screen.DisplayManager.ResolveManager.Parse(screen, input.Text, parameter.ParameterType);
                 }
+                catch (ArgumentNullException e)
+                {
+                    errorText.Text = $"Incomplete details. Please enter an input for {input.Name}.";
+                    return;
+                } 
                 catch (InputParseFailedException e)
                 {
                     errorText.Text = e.Message;

@@ -131,7 +131,14 @@ namespace COVIDMonitoringSystem.ConsoleApp.Display
             }
 
             SelectedIndex = CoreHelper.Mod(to, CachedSelectableElement.Count);
-            SelectedElement = CachedSelectableElement[SelectedIndex];
+            var targetElement = CachedSelectableElement[SelectedIndex];
+
+            if (targetElement.Hidden || !targetElement.Enabled)
+            {
+                return;
+            }
+
+            SelectedElement = targetElement;
             SelectedElement.Selected = true;
         }
 

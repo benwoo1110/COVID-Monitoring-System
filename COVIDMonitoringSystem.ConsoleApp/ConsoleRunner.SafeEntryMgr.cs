@@ -22,7 +22,7 @@ namespace COVIDMonitoringSystem.ConsoleApp
             // View all business locations
             DisplayManager.RegisterScreen(new ListScreenBuilder<BusinessLocation>(DisplayManager)
                 .OfName("viewLocations")
-                .WithHeader("View All Visitors")
+                .WithHeader("View All Business Location")
                 .WithProperties(new[] {"BusinessName", "BranchCode", "MaximumCapacity", "VisitorsNow"})
                 .WithGetter(() => Manager.BusinessLocationList)
                 .Build()

@@ -47,7 +47,7 @@ namespace COVIDMonitoringSystem.ConsoleApp
                 .WithHeader("Travel Entry Management")
                 .AddOption("View All SHN Facilities", "viewFacilities")
                 .AddOption("New Visitor", "newVisitor")
-                .AddOption("New Travel Record", "travelRecord")
+                .AddOption("New Travel Record", "newTravelRecord")
                 .AddOption("Pay SHN Charges", "paySHNCharges")
                 .AddOption("Generate SHN Status Report", "shnReport")
                 .Build()

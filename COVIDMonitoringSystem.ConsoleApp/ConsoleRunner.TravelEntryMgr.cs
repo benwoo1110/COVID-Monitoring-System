@@ -1,11 +1,7 @@
 ﻿using System;
 using COVIDMonitoringSystem.ConsoleApp.Builders;
-using COVIDMonitoringSystem.ConsoleApp.Display;
-using COVIDMonitoringSystem.ConsoleApp.Display.Elements;
-using COVIDMonitoringSystem.ConsoleApp.Screens;
 using COVIDMonitoringSystem.ConsoleApp.Screens.TravelEntryMgr;
 using COVIDMonitoringSystem.ConsoleApp.Utilities;
-using COVIDMonitoringSystem.Core.PersonMgr;
 using COVIDMonitoringSystem.Core.TravelEntryMgr;
 
 namespace COVIDMonitoringSystem.ConsoleApp
@@ -14,36 +10,17 @@ namespace COVIDMonitoringSystem.ConsoleApp
     {
         private void SetUpTravelEntryScreens()
         {
-            /*DisplayDisplayManager.RegisterScreen(new ListScreenBuilder<SHNFacility>(DisplayDisplayManager)
+            DisplayManager.RegisterScreen(new ListScreenBuilder<SHNFacility>(DisplayManager)
                 .OfName("viewFacilities")
                 .WithHeader("View All SHN Facilities")
-                .WithProperties(new[] {"FacilityName", "FacilityCapacity", "FacilityVacancy", "FromLand", "FromSea", "FromAir"})
+                .WithProperties(new[]
+                    {"FacilityName", "FacilityCapacity", "FacilityVacancy", "FromLand", "FromSea", "FromAir"})
                 .WithGetter(() => Manager.SHNFacilitiesList)
                 .Build()
-            );*/
-
+            );
             DisplayManager.RegisterScreen(new NewVisitorScreen(DisplayManager, Manager));
-
-            /*DisplayDisplayManager.RegisterScreen(new LegacyScreen(
-                DisplayDisplayManager,
-                "travelRecord",
-                "New Travel Record",
-                NewTravelRecord
-            ));
-
-            DisplayDisplayManager.RegisterScreen(new LegacyScreen(
-                DisplayDisplayManager,
-                "paySHNCharges",
-                "Pay SHN Charges",
-                PaySHNCharges
-            ));
-
-            DisplayDisplayManager.RegisterScreen(new LegacyScreen(
-                DisplayDisplayManager,
-                "shnReport",
-                "Generate SHN Status Report",
-                GenerateSHNReport
-            ));*/
+            DisplayManager.RegisterScreen(new NewTravelRecordScreen(DisplayManager, Manager));
+            DisplayManager.RegisterScreen(new GenerateSHNReportScreen(DisplayManager, Manager));
         }
 
         private void NewTravelRecord()

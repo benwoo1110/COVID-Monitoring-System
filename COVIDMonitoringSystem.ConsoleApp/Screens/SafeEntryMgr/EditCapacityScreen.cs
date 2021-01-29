@@ -45,13 +45,12 @@ namespace COVIDMonitoringSystem.ConsoleApp.Screens.SafeEntryMgr
             BoundingBox = { Top = 9 }
         };
 
-        public EditCapacityScreen(ConsoleDisplayManager displayManager, COVIDMonitoringManager covidManager) : base(
-            displayManager, covidManager)
+        public EditCapacityScreen(ConsoleDisplayManager displayManager, COVIDMonitoringManager covidManager) : base(displayManager, covidManager)
         {
 
         }
 
-        [OnClick("confirm")]private void OnConfirm()
+        [OnClick("confirm")] private void OnConfirm()
         {
             ChangeCapacity();
             businessName.ClearText();

@@ -4,25 +4,25 @@ namespace COVIDMonitoringSystem.ConsoleApp.Display.Elements
 {
     public abstract class SelectableElement : TextElement
     {
-        private bool _selected = false;
-        private bool _enabled = true;
+        private bool selected;
+        private bool enabled = true;
 
         public bool Enabled
         {
-            get => _enabled;
+            get => enabled;
             set
             {
-                _enabled = value;
+                enabled = value;
                 OnPropertyChanged();
             }
         }
 
         public bool Selected
         {
-            get => _selected;
+            get => selected;
             set
             {
-                _selected = value;
+                selected = value;
                 OnPropertyChanged();
             }
         }

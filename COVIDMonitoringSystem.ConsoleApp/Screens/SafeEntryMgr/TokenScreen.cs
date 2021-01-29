@@ -17,18 +17,45 @@ namespace COVIDMonitoringSystem.ConsoleApp.Screens.SafeEntryMgr
             Text = "Assign or replace TraceTogether Token",
             BoundingBox = { Top = 0 }
         };
-
         private Input name = new Input("name")
         {
             Prompt = "Enter resident name",
             BoundingBox = { Top = 4 }
         };
-
+        private Button check = new Button("check")
+        {
+            Text = "[Check]",
+            BoundingBox = {Top = 6}
+        };
         private Label output = new Label("output")
         {
-            BoundingBox = { Top = 8 }
+            BoundingBox = {Top = 8},
+        };
+        private Input token = new Input("token")
+        {
+            Prompt = "Enter token",
+            BoundingBox = {Top = 10},
+            Hidden = true,
+            Enabled = false
         };
 
+        [OnClick("check")] private void OnCheck()
+        {
+            var r = CovidManager.FindPersonOfType<Resident>(name.Text);
+            if (r != null)
+            {
+                check.Hidden = true;
+                token.Hidden = false;
+                token.Enabled = true;
+                output.Text = "Assign Token.";
+            }
+            else
+            {
+                output.Text = "Resident not found";
+            }
+            
+        }
+        
         private void AssignToken()
         {
             var targetResident = CovidManager.FindPersonOfType<Resident>(name.Text);
@@ -72,7 +99,6 @@ namespace COVIDMonitoringSystem.ConsoleApp.Screens.SafeEntryMgr
 
         public TokenScreen(ConsoleDisplayManager displayManager, COVIDMonitoringManager covidManager) : base(displayManager, covidManager)
         {
-
         }
 
         [OnEnterInput("name")] private void OnToken()
