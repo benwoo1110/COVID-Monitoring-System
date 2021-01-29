@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using COVIDMonitoringSystem.ConsoleApp.Utilities;
 using JetBrains.Annotations;
 
 namespace COVIDMonitoringSystem.ConsoleApp.Display
@@ -8,14 +9,6 @@ namespace COVIDMonitoringSystem.ConsoleApp.Display
     {
         private Dictionary<Type, Func<AbstractScreen, string, object>> resolverMap;
 
-        public static Func<AbstractScreen, string, object> QuickCreateResolver()
-        {
-            return (screen, value) =>
-            {
-                return null;
-            };
-        }
-        
         public InputResolverManager()
         {
             resolverMap = new Dictionary<Type, Func<AbstractScreen, string, object>>();
@@ -42,6 +35,28 @@ namespace COVIDMonitoringSystem.ConsoleApp.Display
             {
                 //TODO: Result
                 return Convert.ToDateTime(value);
+            });
+        }
+
+        public void RegisterQuickInputResolver<T>(Func<string, T> converter, string errorMessage)
+        {
+            RegisterInputResolver<T>((screen, value) =>
+            {
+                T result;
+                try
+                {
+                    result = converter(value);
+                    if (result == null)
+                    {
+                        throw new Exception();
+                    }
+                }
+                catch (Exception)
+                {
+                    throw new InputParseFailedException(string.Format(errorMessage, value));
+                }
+
+                return result;
             });
         }
 

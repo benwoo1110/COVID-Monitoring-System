@@ -22,7 +22,7 @@ namespace COVIDMonitoringSystem.ConsoleApp.Display.Elements
         {
             if (MethodRunner != null)
             {
-                MethodRunner.Run(TargetAbstractScreen);
+                MethodRunner.Run(TargetScreen);
                 return;
             }
             

@@ -28,12 +28,17 @@ namespace COVIDMonitoringSystem.Core.TravelEntryMgr
                 Types.Add(country.ToLower(), requirement);
             }
         }
+
+        [NotNull] public static SHNTier FindAppropriateTier(string country)
+        {
+            return Types.GetValueOrDefault(country.ToLower()) ?? FallbackRequirement;
+        }
         
         [NotNull] public static SHNTier FindAppropriateTier([NotNull] TravelEntry entry)
         {
-            return Types.GetValueOrDefault(entry.LastCountryOfEmbarkation.ToLower()) ?? FallbackRequirement;
+            return FindAppropriateTier(entry.LastCountryOfEmbarkation);
         }
-        
+
         public string[] TargetCountries { [NotNull] get; }
 
         private SHNTier(

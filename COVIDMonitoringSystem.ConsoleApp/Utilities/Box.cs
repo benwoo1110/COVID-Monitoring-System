@@ -91,7 +91,11 @@ namespace COVIDMonitoringSystem.ConsoleApp.Utilities
 
         private void RerenderDependents()
         {
-            Dependents.ForEach(element => element.QueueToRerender());
+            //TODO: Shouldnt re-render everything, but works for now
+            if (Dependents.Count != 0)
+            {
+                TargetElement.TargetScreen.Render();
+            }
         }
     }
 }
