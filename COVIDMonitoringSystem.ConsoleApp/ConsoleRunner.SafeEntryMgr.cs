@@ -17,11 +17,9 @@ namespace COVIDMonitoringSystem.ConsoleApp
         private void SetUpSafeEntryScreens()
         {
             // Assign token
-            // Errors: how to remove input fields entirely and replace with output? as well as how to exit process automatically (if we want to)
             DisplayManager.RegisterScreen(new TokenScreen(DisplayManager, Manager));
 
             // View all business locations
-            // This one can keep, dont need to do have a a class for this screen.
             DisplayManager.RegisterScreen(new ListScreenBuilder<BusinessLocation>(DisplayManager)
                 .OfName("viewLocations")
                 .WithHeader("View All Visitors")
@@ -34,11 +32,9 @@ namespace COVIDMonitoringSystem.ConsoleApp
             DisplayManager.RegisterScreen(new EditCapacityScreen(DisplayManager, Manager));
 
             // Check In
-            // Errors: either input name or input location is always null even though it shouldn't be
             DisplayManager.RegisterScreen(new CheckInScreen(DisplayManager, Manager));
 
             // Check Out
-            // Probably same problems as check in i wanna sleep alr xd
             DisplayManager.RegisterScreen(new CheckOutScreen(DisplayManager, Manager));
             
             // Contact tracing report
