@@ -1,4 +1,5 @@
 ﻿using System;
+using COVIDMonitoringSystem.Core.Utilities;
 
 namespace COVIDMonitoringSystem.Core.TravelEntryMgr
 {
@@ -22,6 +23,35 @@ namespace COVIDMonitoringSystem.Core.TravelEntryMgr
             FacilityCapacity = facilityCapacity;
             FacilityVacancy = facilityCapacity;
             Distance = new CheckPointDistance(distFromAirCheckpoint, distFromSeaCheckpoint, distFromLandCheckpoint);
+        }
+
+        public double CalculateTravelCost(TravelEntryMode entryMode, DateTime entryDate)
+        {
+            var price = 50 + Distance.FromMode(entryMode) * 0.22;
+            if (entryDate.BetweenTimeOf("6:00", "9:00") || entryDate.BetweenTimeOf("18:00", "00:00"))
+            {
+                price *= 1.25;
+            }
+            else if (entryDate.BetweenTimeOf("00:00", "6:00"))
+            {
+                price *= 1.50;
+            }
+
+            return price;
+            
+        }
+
+        public double CalculateTravelCost(TravelEntry entry)
+        {
+            //TODO Check ShnStay matching
+            return CalculateTravelCost(entry.EntryMode, entry.EntryDate);
+        }
+
+        [Obsolete("Required by assignment.")]
+        public double CalculateTravelCost(string entryMode, DateTime entryDate)
+        {
+            var entryModeEnum = CoreHelper.ParseEnum<TravelEntryMode>(entryMode);
+            return CalculateTravelCost(entryModeEnum, entryDate);
         }
 
         public bool IsAvailable()

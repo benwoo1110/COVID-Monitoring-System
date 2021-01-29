@@ -48,16 +48,8 @@ namespace COVIDMonitoringSystem.Core.TravelEntryMgr
         public static readonly SHNConditions VisitorDedicated = new SHNConditionsBuilder()
             .WithQuarantineDays(14)
             .WithSwapTest()
-            .WithTransport(tr => 100) //TODO: Do real calculation
-            .WithDedicatedFacility(tr =>
-            {
-                if ((tr.ShnEndDate - tr.EntryDate).Days != 0)
-                {
-                    return 10000;
-                }
-
-                return 0;
-            })
+            .WithTransport(tr => tr.ShnFacility.CalculateTravelCost(tr))
+            .WithDedicatedFacility(tr => 2000)
             .WithMatcher(new TravelEntryMatcher(typeof(Visitor), SHNTier.Dedicated))
             .Build();
 
