@@ -24,11 +24,13 @@ namespace COVIDMonitoringSystem.ConsoleApp.Display
         public Dictionary<ConsoleKey, Action<ConsoleKeyInfo>> KeyActionMap { get; set; }
         private bool Running { get; set; }
         public bool ScreenUpdated { get; set; }
+        public ResolverManager ResolveManager { get; }
 
         public ConsoleDisplayManager()
         {
             ScreenMap = new Dictionary<string, AbstractScreen>();
             KeyActionMap = new Dictionary<ConsoleKey, Action<ConsoleKeyInfo>>();
+            ResolveManager = new ResolverManager();
             SetDefaultKeyMap();
         }
 
@@ -55,7 +57,7 @@ namespace COVIDMonitoringSystem.ConsoleApp.Display
         {
             if (CurrentAbstractScreen.SelectedElement is Button buttonElement)
             {
-                buttonElement.Runner?.Invoke();
+                buttonElement.Run();
                 return;
             }
             if (CurrentAbstractScreen.SelectedElement is Input inputElement)

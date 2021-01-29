@@ -34,10 +34,11 @@ namespace COVIDMonitoringSystem.ConsoleApp.Screens
         {
         }
 
-        [OnEnterInput("country")] private void OnSearchCountry()
+        [OnClick("searchCountry")] private void OnSearchCountry(
+            [Parser("country", "result")] string countryStuff)
         {
             var targetCountry = country.Text;
-            result.Text = $"Search for {targetCountry}!";
+            result.Text = $"Search for {countryStuff}!";
             country.ClearText();
         }
     }
