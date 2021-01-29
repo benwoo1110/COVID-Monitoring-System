@@ -30,7 +30,6 @@ namespace COVIDMonitoringSystem.ConsoleApp.Screens.SafeEntryMgr
         private Label output = new Label("output")
         {
             BoundingBox = {Top = 8},
-            Hidden = true
         };
         private Input token = new Input("token")
         {
@@ -45,6 +44,7 @@ namespace COVIDMonitoringSystem.ConsoleApp.Screens.SafeEntryMgr
             var r = CovidManager.FindPersonOfType<Resident>(name.Text);
             if (r != null)
             {
+                check.Hidden = true;
                 token.Hidden = false;
                 token.Enabled = true;
                 output.Text = "Assign Token.";

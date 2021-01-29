@@ -5,7 +5,7 @@ namespace COVIDMonitoringSystem.ConsoleApp.Display.Elements
 {
     public abstract class Element
     {
-        private bool hidden = false;
+        private bool hidden;
         private string name;
         public AbstractScreen TargetAbstractScreen { get; set; }
 
@@ -25,7 +25,7 @@ namespace COVIDMonitoringSystem.ConsoleApp.Display.Elements
             set
             {
                 hidden = value;
-                OnPropertyChanged();
+                OnHiding(value);
             }
         }
         
@@ -44,6 +44,11 @@ namespace COVIDMonitoringSystem.ConsoleApp.Display.Elements
 
         public virtual void Render()
         {
+            if (Hidden)
+            {
+                return;
+            }
+            
             BoundingBox.SetDrawPosition();
             SelectColour();
             BoundingBox.UpdateHeight(WriteToScreen());
@@ -56,6 +61,14 @@ namespace COVIDMonitoringSystem.ConsoleApp.Display.Elements
         }
 
         protected abstract int WriteToScreen();
+
+        protected virtual void OnHiding(bool doHiding)
+        {
+            if (doHiding)
+            {
+                CHelper.ClearLines(BoundingBox.GetTop(), BoundingBox.GetBottom());
+            }
+        }
 
         protected void OnPropertyChanged()
         {
