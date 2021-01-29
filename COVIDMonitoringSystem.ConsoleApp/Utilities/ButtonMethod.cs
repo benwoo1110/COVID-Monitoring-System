@@ -34,7 +34,23 @@ namespace COVIDMonitoringSystem.ConsoleApp.Utilities
                 var input = screen.FindElementOfType<Input>(parser.InputName);
                 var errorText = screen.FindElementOfType<TextElement>(parser.TargetLabel);
 
-                var parseResult = screen.DisplayManager.ResolveManager.Parse(screen, input.Text, parameter.ParameterType);
+                object parseResult;
+
+                try
+                {
+                    parseResult = screen.DisplayManager.ResolveManager.Parse(screen, input.Text, parameter.ParameterType);
+                }
+                catch (InputParseFailedException e)
+                {
+                    errorText.Text = e.Message;
+                    return;
+                }
+                catch (Exception)
+                {
+                    errorText.Text = $"There was an error getting input for {input.Name}. Is it in the correct format?";
+                    return;
+                }
+
                 arguments.Add(parseResult);
             }
             
