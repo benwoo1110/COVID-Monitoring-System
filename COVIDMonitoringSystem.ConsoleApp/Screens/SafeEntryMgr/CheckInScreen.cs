@@ -1,5 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿//============================================================
+// Student Number : S10203296, S10205301
+// Student Name   : Benedict Woo, Melvin Kee
+// Module Group   : T06
+//============================================================
+
+using System;
 using COVIDMonitoringSystem.ConsoleApp.Display;
 using COVIDMonitoringSystem.ConsoleApp.Display.Attributes;
 using COVIDMonitoringSystem.ConsoleApp.Display.Elements;
