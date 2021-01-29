@@ -1,5 +1,15 @@
+<<<<<<< HEAD:COVIDMonitoringSystem.ConsoleApp/Display/LegacyScreen.cs
+﻿//============================================================
+// Student Number : S10203296, S10205301
+// Student Name   : Benedict Woo, Melvin Kee
+// Module Group   : T06
+//============================================================
+
+using System;
+=======
 ﻿using System;
 using COVIDMonitoringSystem.ConsoleApp.Display;
+>>>>>>> 366ddc1a39b8c6cb1e1d60ba8cfb7b4cbeba95c5:COVIDMonitoringSystem.ConsoleApp/Screens/LegacyScreen.cs
 using COVIDMonitoringSystem.ConsoleApp.Utilities;
 
 namespace COVIDMonitoringSystem.ConsoleApp.Screens

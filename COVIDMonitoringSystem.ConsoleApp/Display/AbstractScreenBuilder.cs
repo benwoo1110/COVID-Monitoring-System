@@ -1,8 +1,15 @@
-﻿using System;
+﻿//============================================================
+// Student Number : S10203296, S10205301
+// Student Name   : Benedict Woo, Melvin Kee
+// Module Group   : T06
+//============================================================
+
+using System;
+using COVIDMonitoringSystem.ConsoleApp.Display;
 using COVIDMonitoringSystem.ConsoleApp.Display.Elements;
 using COVIDMonitoringSystem.ConsoleApp.Screens;
 
-namespace COVIDMonitoringSystem.ConsoleApp.Display
+namespace COVIDMonitoringSystem.ConsoleApp.Builders
 {
     public abstract class AbstractScreenBuilder<TB, TS>
         where TS : BuilderScreen

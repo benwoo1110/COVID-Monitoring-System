@@ -1,4 +1,10 @@
-﻿using COVIDMonitoringSystem.ConsoleApp.Display;
+﻿//============================================================
+// Student Number : S10203296, S10205301
+// Student Name   : Benedict Woo, Melvin Kee
+// Module Group   : T06
+//============================================================
+
+using COVIDMonitoringSystem.ConsoleApp.Display;
 using COVIDMonitoringSystem.Core;
 
 namespace COVIDMonitoringSystem.ConsoleApp.Screens.TravelEntryMgr

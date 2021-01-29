@@ -1,10 +1,15 @@
-﻿using System;
+﻿//============================================================
+// Student Number : S10203296, S10205301
+// Student Name   : Benedict Woo, Melvin Kee
+// Module Group   : T06
+//============================================================
+
+using System;
 using COVIDMonitoringSystem.ConsoleApp.Display;
 using COVIDMonitoringSystem.Core;
 using COVIDMonitoringSystem.ConsoleApp.Display.Attributes;
 using COVIDMonitoringSystem.ConsoleApp.Display.Elements;
 using COVIDMonitoringSystem.Core.SafeEntryMgr;
-
 
 namespace COVIDMonitoringSystem.ConsoleApp.Screens.SafeEntryMgr
 {
@@ -117,7 +122,8 @@ namespace COVIDMonitoringSystem.ConsoleApp.Screens.SafeEntryMgr
 
         private Label output = new Label("output")
         {
-            BoundingBox = { Top = 9 }
+            BoundingBox = { Top = 9 },
+            ClearOnExit = true
         };
     }
 }
