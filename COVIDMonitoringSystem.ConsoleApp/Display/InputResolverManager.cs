@@ -4,7 +4,7 @@ using JetBrains.Annotations;
 
 namespace COVIDMonitoringSystem.ConsoleApp.Display
 {
-    public class ResolverManager
+    public class InputResolverManager
     {
         private Dictionary<Type, Func<AbstractScreen, string, object>> resolverMap;
 
@@ -16,7 +16,7 @@ namespace COVIDMonitoringSystem.ConsoleApp.Display
             };
         }
         
-        public ResolverManager()
+        public InputResolverManager()
         {
             resolverMap = new Dictionary<Type, Func<AbstractScreen, string, object>>();
             

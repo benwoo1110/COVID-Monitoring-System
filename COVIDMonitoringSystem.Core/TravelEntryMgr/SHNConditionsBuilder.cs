@@ -4,7 +4,7 @@ namespace COVIDMonitoringSystem.Core.TravelEntryMgr
 {
     public class SHNConditionsBuilder
     {
-        private static readonly Func<TravelEntry, double> DefaultSwapCalculator = tr => 200;
+        private static readonly CostCalculator DefaultSwapCalculator = tr => 200;
         
         private SHNConditions Conditions { get; set; }
         private TravelEntryMatcher Matcher { get; set; }
@@ -25,21 +25,21 @@ namespace COVIDMonitoringSystem.Core.TravelEntryMgr
             return WithSwapTest(DefaultSwapCalculator);
         }
         
-        public SHNConditionsBuilder WithSwapTest(Func<TravelEntry, double> calculator)
+        public SHNConditionsBuilder WithSwapTest(CostCalculator calculator)
         {
             Conditions.RequireSwapTest = true;
             Conditions.SwapTestCost = calculator;
             return this;
         }
 
-        public SHNConditionsBuilder WithTransport(Func<TravelEntry, double> calculator)
+        public SHNConditionsBuilder WithTransport(CostCalculator calculator)
         {
             Conditions.RequireTransport = true;
             Conditions.TransportCost = calculator;
             return this;
         }
 
-        public SHNConditionsBuilder WithDedicatedFacility(Func<TravelEntry, double> calculator)
+        public SHNConditionsBuilder WithDedicatedFacility(CostCalculator calculator)
         {
             Conditions.RequireDedicatedFacility = true;
             Conditions.DedicatedFacilityCost = calculator;

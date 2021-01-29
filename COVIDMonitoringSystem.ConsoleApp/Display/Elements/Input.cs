@@ -14,7 +14,7 @@ namespace COVIDMonitoringSystem.ConsoleApp.Display.Elements
             {
                 prompt = value;
                 UpdateCursor();
-                OnPropertyChanged();
+                QueueToRerender();
             }
         }
 
@@ -25,7 +25,7 @@ namespace COVIDMonitoringSystem.ConsoleApp.Display.Elements
             {
                 text = value;
                 UpdateCursor();
-                OnPropertyChanged();
+                QueueToRerender();
             }
         }
 

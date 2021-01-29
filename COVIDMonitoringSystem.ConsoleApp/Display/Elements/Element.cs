@@ -15,7 +15,7 @@ namespace COVIDMonitoringSystem.ConsoleApp.Display.Elements
             set
             {
                 name = value;
-                OnPropertyChanged();
+                QueueToRerender();
             }
         }
         
@@ -33,13 +33,13 @@ namespace COVIDMonitoringSystem.ConsoleApp.Display.Elements
 
         protected Element()
         {
-            BoundingBox = new Box();
+            BoundingBox = new Box(this);
         }
 
         protected Element(string name)
         {
             Name = name;
-            BoundingBox = new Box();
+            BoundingBox = new Box(this);
         }
 
         public virtual void Render()
@@ -70,7 +70,7 @@ namespace COVIDMonitoringSystem.ConsoleApp.Display.Elements
             }
         }
 
-        protected void OnPropertyChanged()
+        public void QueueToRerender()
         {
             if (TargetAbstractScreen == null || !TargetAbstractScreen.Active)
             {

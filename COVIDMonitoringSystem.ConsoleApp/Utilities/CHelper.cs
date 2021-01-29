@@ -91,6 +91,7 @@ namespace COVIDMonitoringSystem.ConsoleApp.Utilities
         {
             Console.Clear();
             Console.SetCursorPosition(0, 0);
+            ColourSelector.Element();
         }
 
         public static TE EnumParser<TE>(string value) where TE : struct

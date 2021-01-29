@@ -13,7 +13,7 @@ namespace COVIDMonitoringSystem.ConsoleApp.Display.Elements
             set
             {
                 enabled = value;
-                OnPropertyChanged();
+                QueueToRerender();
             }
         }
 
@@ -23,7 +23,7 @@ namespace COVIDMonitoringSystem.ConsoleApp.Display.Elements
             set
             {
                 selected = value;
-                OnPropertyChanged();
+                QueueToRerender();
             }
         }
 

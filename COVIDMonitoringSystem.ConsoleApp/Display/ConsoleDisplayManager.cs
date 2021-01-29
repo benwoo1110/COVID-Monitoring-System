@@ -24,13 +24,13 @@ namespace COVIDMonitoringSystem.ConsoleApp.Display
         public Dictionary<ConsoleKey, Action<ConsoleKeyInfo>> KeyActionMap { get; set; }
         private bool Running { get; set; }
         public bool ScreenUpdated { get; set; }
-        public ResolverManager ResolveManager { get; }
+        public InputResolverManager ResolveManager { get; }
 
         public ConsoleDisplayManager()
         {
             ScreenMap = new Dictionary<string, AbstractScreen>();
             KeyActionMap = new Dictionary<ConsoleKey, Action<ConsoleKeyInfo>>();
-            ResolveManager = new ResolverManager();
+            ResolveManager = new InputResolverManager();
             SetDefaultKeyMap();
         }
 
@@ -90,8 +90,7 @@ namespace COVIDMonitoringSystem.ConsoleApp.Display
         {
             if (CurrentAbstractScreen.HasSelection())
             {
-                CurrentAbstractScreen.ClearSelection();
-                CurrentAbstractScreen.Render();
+                CurrentAbstractScreen.ClearSelection(); 
                 return;
             }
             
@@ -115,16 +114,17 @@ namespace COVIDMonitoringSystem.ConsoleApp.Display
                 throw new InvalidOperationException("Nested console running is not supported.");
             }
 
+            CHelper.DidChangeWindowSize();
             ScreenStack = new Stack<AbstractScreen>(ScreenMap.Count);
             PushScreen(startingScreenName);
             Running = true;
-
-
+            
             while (Running)
             {
                 if (ScreenUpdated)
                 {
                     ScreenUpdated = false;
+                    CurrentAbstractScreen.PreLoad();
                     CurrentAbstractScreen.Load();
                     CurrentAbstractScreen.OnView();
                 }
@@ -133,10 +133,8 @@ namespace COVIDMonitoringSystem.ConsoleApp.Display
                 {
                     CurrentAbstractScreen.Render();
                 }
-                else
-                {
-                    CurrentAbstractScreen.Update();
-                }
+
+                CurrentAbstractScreen.Update();
 
                 var keyPressed = Console.ReadKey(true);
                 RunKeyAction(keyPressed);
@@ -156,6 +154,7 @@ namespace COVIDMonitoringSystem.ConsoleApp.Display
                 var closingScreen = ScreenStack.Peek();
                 closingScreen.OnClose();
                 closingScreen.Unload();
+                closingScreen.Closed();
             }
 
             var targetScreen = ScreenMap[screenName];

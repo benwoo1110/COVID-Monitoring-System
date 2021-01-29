@@ -1,17 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using COVIDMonitoringSystem.Core.PersonMgr;
+using COVIDMonitoringSystem.Core.TravelEntryMgr;
 using JetBrains.Annotations;
+
+public delegate double CostCalculator(TravelEntry tr);
 
 namespace COVIDMonitoringSystem.Core.TravelEntryMgr
 {
     public class SHNConditions
     {
-        private static readonly Func<TravelEntry, double> FreeCalculator = tr => 0;
+        private static readonly CostCalculator FreeCalculator = tr => 0;
         private static readonly Dictionary<int, SHNConditions> Charges = new Dictionary<int, SHNConditions>();
 
         public static readonly SHNConditions ResidentNone = new SHNConditionsBuilder()
-            .WithQuarantineDays(0)
             .WithSwapTest()
             .WithMatcher(new TravelEntryMatcher(typeof(Resident), SHNTier.None))
             .Build();
@@ -48,16 +49,8 @@ namespace COVIDMonitoringSystem.Core.TravelEntryMgr
         public static readonly SHNConditions VisitorDedicated = new SHNConditionsBuilder()
             .WithQuarantineDays(14)
             .WithSwapTest()
-            .WithTransport(tr => 100) //TODO: Do real calculation
-            .WithDedicatedFacility(tr =>
-            {
-                if ((tr.ShnEndDate - tr.EntryDate).Days != 0)
-                {
-                    return 10000;
-                }
-
-                return 0;
-            })
+            .WithTransport(tr => tr.ShnFacility.CalculateTravelCost(tr))
+            .WithDedicatedFacility(tr => 2000)
             .WithMatcher(new TravelEntryMatcher(typeof(Visitor), SHNTier.Dedicated))
             .Build();
 
@@ -71,13 +64,13 @@ namespace COVIDMonitoringSystem.Core.TravelEntryMgr
             return Charges.GetValueOrDefault(TravelEntryMatcher.Of(entry).GenerateIdentifier());
         }
 
-        public int QuarantineDays { [NotNull] get; [NotNull] internal set; } = -1;
+        public int QuarantineDays { [NotNull] get; [NotNull] internal set; }
         public bool RequireSwapTest { [NotNull] get; [NotNull] internal set; }
         public bool RequireTransport { [NotNull] get; [NotNull] internal set; }
         public bool RequireDedicatedFacility { [NotNull] get; [NotNull] internal set; }
-        public Func<TravelEntry, double> SwapTestCost { [NotNull] get; [NotNull] internal set; } = FreeCalculator;
-        public Func<TravelEntry, double> TransportCost { [NotNull] get; [NotNull] internal set; } = FreeCalculator;
-        public Func<TravelEntry, double> DedicatedFacilityCost { [NotNull] get; [NotNull] internal set; } = FreeCalculator;
+        public CostCalculator SwapTestCost { [NotNull] get; [NotNull] internal set; } = FreeCalculator;
+        public CostCalculator TransportCost { [NotNull] get; [NotNull] internal set; } = FreeCalculator;
+        public CostCalculator DedicatedFacilityCost { [NotNull] get; [NotNull] internal set; } = FreeCalculator;
 
         internal SHNConditions()
         {
