@@ -67,6 +67,10 @@ namespace COVIDMonitoringSystem.ConsoleApp.Display.Elements
             if (doHiding)
             {
                 CHelper.ClearLines(BoundingBox.GetTop(), BoundingBox.GetBottom());
+                if (BoundingBox.AutoHeight)
+                {
+                    BoundingBox.Height = 0;
+                }
             }
         }
 

@@ -20,6 +20,7 @@ namespace COVIDMonitoringSystem.ConsoleApp
             );
             DisplayManager.RegisterScreen(new NewVisitorScreen(DisplayManager, Manager));
             DisplayManager.RegisterScreen(new NewTravelRecordScreen(DisplayManager, Manager));
+            DisplayManager.RegisterScreen(new PaySHNChargesScreen(DisplayManager, Manager));
             DisplayManager.RegisterScreen(new GenerateSHNReportScreen(DisplayManager, Manager));
         }
 
