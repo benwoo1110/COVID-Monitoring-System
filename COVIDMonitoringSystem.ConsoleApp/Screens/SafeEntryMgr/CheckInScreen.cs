@@ -55,9 +55,6 @@ namespace COVIDMonitoringSystem.ConsoleApp.Screens.SafeEntryMgr
         public CheckInScreen(ConsoleDisplayManager displayManager, COVIDMonitoringManager covidManager) : base(
             displayManager, covidManager)
         {
-            // ShowLocations();
-            // How to display all stores using .Text and Label?
-
             name.BoundingBox.SetRelativeBox(locations);
             targetStore.BoundingBox.SetRelativeBox(locations);
             divider.BoundingBox.SetRelativeBox(locations);
@@ -72,7 +69,7 @@ namespace COVIDMonitoringSystem.ConsoleApp.Screens.SafeEntryMgr
 
         private void ShowLocations()
         {
-            var locationNames = "Available Business Location:\n";
+            var locationNames = "Available Business Locations:\n";
             
             
             foreach (var i in CovidManager.BusinessLocationList)
@@ -94,8 +91,6 @@ namespace COVIDMonitoringSystem.ConsoleApp.Screens.SafeEntryMgr
         {
             var inputName = CovidManager.FindPerson(name.Text);
             var inputLocation = CovidManager.FindBusinessLocation(targetStore.Text);
-            Console.WriteLine(inputName);
-            Console.WriteLine(inputLocation);
             if (inputName != null && inputLocation != null)
             {
                 if (inputLocation.IsFull())
