@@ -1,12 +1,11 @@
 ﻿using System.Collections.Generic;
 using COVIDMonitoringSystem.Core.PersonMgr;
-using COVIDMonitoringSystem.Core.TravelEntryMgr;
 using JetBrains.Annotations;
-
-public delegate double CostCalculator(TravelEntry tr);
 
 namespace COVIDMonitoringSystem.Core.TravelEntryMgr
 {
+    public delegate double CostCalculator(TravelEntry tr);
+
     public class SHNConditions
     {
         private static readonly CostCalculator FreeCalculator = tr => 0;

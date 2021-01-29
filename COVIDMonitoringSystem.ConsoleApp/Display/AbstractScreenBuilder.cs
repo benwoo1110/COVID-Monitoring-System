@@ -1,9 +1,8 @@
 ﻿using System;
-using COVIDMonitoringSystem.ConsoleApp.Display;
 using COVIDMonitoringSystem.ConsoleApp.Display.Elements;
 using COVIDMonitoringSystem.ConsoleApp.Screens;
 
-namespace COVIDMonitoringSystem.ConsoleApp.Builders
+namespace COVIDMonitoringSystem.ConsoleApp.Display
 {
     public abstract class AbstractScreenBuilder<TB, TS>
         where TS : BuilderScreen

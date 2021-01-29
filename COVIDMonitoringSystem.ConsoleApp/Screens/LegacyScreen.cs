@@ -1,7 +1,8 @@
 ﻿using System;
+using COVIDMonitoringSystem.ConsoleApp.Display;
 using COVIDMonitoringSystem.ConsoleApp.Utilities;
 
-namespace COVIDMonitoringSystem.ConsoleApp.Display
+namespace COVIDMonitoringSystem.ConsoleApp.Screens
 {
     public class LegacyScreen :  BuilderScreen
     {

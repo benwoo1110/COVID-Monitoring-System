@@ -1,4 +1,6 @@
-﻿namespace COVIDMonitoringSystem.ConsoleApp.Display
+﻿using COVIDMonitoringSystem.ConsoleApp.Display;
+
+namespace COVIDMonitoringSystem.ConsoleApp.Screens
 {
     public class BuilderScreen : AbstractScreen
     {

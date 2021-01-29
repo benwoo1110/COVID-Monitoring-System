@@ -5,16 +5,15 @@ using COVIDMonitoringSystem.ConsoleApp.Display;
 using COVIDMonitoringSystem.ConsoleApp.Display.Attributes;
 using COVIDMonitoringSystem.ConsoleApp.Display.Elements;
 using COVIDMonitoringSystem.Core.Utilities;
-using Microsoft.VisualBasic.CompilerServices;
 
 namespace COVIDMonitoringSystem.ConsoleApp.Utilities
 {
-    public class ButtonMethod
+    public class ActionMethod
     {
         public MethodInfo Method { get; }
         public List<KeyValuePair<ParameterInfo, Parser>> Parameters { get; }
 
-        public ButtonMethod(MethodInfo method)
+        public ActionMethod(MethodInfo method)
         {
             Method = method;
             Parameters = ReflectHelper.GetParametersAttributeMap<Parser>(method);

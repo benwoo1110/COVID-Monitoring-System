@@ -6,7 +6,7 @@ namespace COVIDMonitoringSystem.ConsoleApp.Display.Elements
     public class Button : SelectableElement
     {
         public Action Runner { get; set; }
-        public ButtonMethod MethodRunner { get; set; }
+        public ActionMethod MethodRunner { get; set; }
 
         public Button(string name) : base(name)
         {
