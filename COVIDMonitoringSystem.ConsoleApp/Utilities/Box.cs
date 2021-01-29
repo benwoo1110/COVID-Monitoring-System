@@ -6,8 +6,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Resources;
-using COVIDMonitoringSystem.ConsoleApp.Display;
 using COVIDMonitoringSystem.ConsoleApp.Display.Elements;
 
 namespace COVIDMonitoringSystem.ConsoleApp.Utilities

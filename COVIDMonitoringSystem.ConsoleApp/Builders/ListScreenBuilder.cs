@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using COVIDMonitoringSystem.ConsoleApp.Display;
 using COVIDMonitoringSystem.ConsoleApp.Display.Elements;
+using COVIDMonitoringSystem.ConsoleApp.Screens;
 
 namespace COVIDMonitoringSystem.ConsoleApp.Builders
 {

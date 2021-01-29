@@ -7,7 +7,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
 using COVIDMonitoringSystem.ConsoleApp.Display.Attributes;
 using COVIDMonitoringSystem.ConsoleApp.Display.Elements;
 using COVIDMonitoringSystem.ConsoleApp.Utilities;
@@ -54,7 +53,7 @@ namespace COVIDMonitoringSystem.ConsoleApp.Display
                     throw new InvalidOperationException($"Button {clickAttr.ButtonName} not found.");
                 }
 
-                button.MethodRunner = new ButtonMethod(method);
+                button.MethodRunner = new ActionMethod(method);
             }
 
             //TODO: Make this better
@@ -67,7 +66,7 @@ namespace COVIDMonitoringSystem.ConsoleApp.Display
                     throw new InvalidOperationException($"Button {clickAttr.InputName} not found.");
                 }
 
-                input.MethodRunner = new ButtonMethod(method);
+                input.MethodRunner = new ActionMethod(method);
             }
         }
         
