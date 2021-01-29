@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using COVIDMonitoringSystem.ConsoleApp.Display.Attributes;
 using COVIDMonitoringSystem.ConsoleApp.Display.Elements;
 using COVIDMonitoringSystem.ConsoleApp.Utilities;
@@ -38,8 +39,8 @@ namespace COVIDMonitoringSystem.ConsoleApp.Display
 
         private void AddButtonMethods()
         {
-            var methodsMap = ReflectHelper.GetMethodWithAttribute<Action, OnClick>(this);
-            foreach (var (action, clickAttr) in methodsMap)
+            var methodsMap = ReflectHelper.GetMethodWithAttribute<OnClick>(this);
+            foreach (var (method, clickAttr) in methodsMap)
             {
                 var button = FindElementOfType<Button>(clickAttr.ButtonName);
                 if (button == null)
@@ -47,11 +48,11 @@ namespace COVIDMonitoringSystem.ConsoleApp.Display
                     throw new InvalidOperationException($"Button {clickAttr.ButtonName} not found.");
                 }
 
-                button.Runner = action;
+                button.MethodRunner = new ButtonMethod(method);
             }
 
             //TODO: Make this better
-            var methodsMap2 = ReflectHelper.GetMethodWithAttribute<Action, OnEnterInput>(this);
+            var methodsMap2 = ReflectHelper.GetMethodWithAttribute<OnEnterInput>(this);
             foreach (var (action, clickAttr) in methodsMap2)
             {
                 var input = FindElementOfType<Input>(clickAttr.InputName);
@@ -59,8 +60,6 @@ namespace COVIDMonitoringSystem.ConsoleApp.Display
                 {
                     throw new InvalidOperationException($"Button {clickAttr.InputName} not found.");
                 }
-
-                input.OnEnterRunner = action;
             }
         }
         

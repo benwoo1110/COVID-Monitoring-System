@@ -11,7 +11,7 @@ namespace COVIDMonitoringSystem.Core.Utilities
         {
             var fieldValues = new List<TF>();
             var fieldInfos = obj.GetType().GetFields(BindingFlags.Instance | BindingFlags.NonPublic);
-            
+
             foreach (var fieldInfo in fieldInfos)
             {
                 var value = fieldInfo.GetValue(obj);
@@ -24,9 +24,9 @@ namespace COVIDMonitoringSystem.Core.Utilities
             return fieldValues;
         }
 
-        public static Dictionary<TM, TA> GetMethodWithAttribute<TM, TA>(object obj) where TM : Delegate
+        public static Dictionary<MethodInfo, TA> GetMethodWithAttribute<TA>(object obj) where TA : Attribute
         {
-            var methodAttributeMap = new Dictionary<TM, TA>();
+            var methodAttributeMap = new Dictionary<MethodInfo, TA>();
             var methodInfos = obj.GetType().GetMethods(BindingFlags.Instance | BindingFlags.NonPublic);
 
             foreach (var methodInfo in methodInfos)
@@ -34,12 +34,31 @@ namespace COVIDMonitoringSystem.Core.Utilities
                 var attribute = methodInfo.GetCustomAttribute(typeof(TA), true);
                 if (attribute is TA targetAttribute)
                 {
-                    var method = (TM) methodInfo.CreateDelegate(typeof(TM), obj);
-                    methodAttributeMap.Add(method, targetAttribute);
+                    methodAttributeMap.Add(methodInfo, targetAttribute);
                 }   
             }
 
             return methodAttributeMap;
+        }
+
+        public static List<KeyValuePair<ParameterInfo, TA>> GetParametersAttributeMap<TA>(MethodInfo methodInfo) where TA : Attribute
+        {
+            var parameterAttributeMap = new List<KeyValuePair<ParameterInfo, TA>>();
+            var parameterInfos = methodInfo.GetParameters();
+
+            foreach (var parameter in parameterInfos)
+            {
+                var attribute = parameter.GetCustomAttribute(typeof(TA), true);
+                if (attribute is TA targetAttribute)
+                {
+                    parameterAttributeMap.Add(new KeyValuePair<ParameterInfo, TA>(parameter, targetAttribute));
+                    continue;
+                }
+
+                parameterAttributeMap.Add(new KeyValuePair<ParameterInfo, TA>(parameter, null));
+            }
+
+            return parameterAttributeMap;
         }
         
         public static Dictionary<string, string> GetAllPropertyValues<T>(T obj) where T : class

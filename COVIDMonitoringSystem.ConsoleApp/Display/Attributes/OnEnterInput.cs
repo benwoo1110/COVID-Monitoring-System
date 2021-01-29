@@ -3,7 +3,7 @@
 namespace COVIDMonitoringSystem.ConsoleApp.Display.Attributes
 {
     [AttributeUsage(AttributeTargets.Method)]
-    internal sealed class OnEnterInput: Attribute
+    public sealed class OnEnterInput : Attribute
     {
         public string InputName { get; }
 

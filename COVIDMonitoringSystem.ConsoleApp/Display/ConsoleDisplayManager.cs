@@ -55,7 +55,7 @@ namespace COVIDMonitoringSystem.ConsoleApp.Display
         {
             if (CurrentAbstractScreen.SelectedElement is Button buttonElement)
             {
-                buttonElement.Runner?.Invoke();
+                buttonElement.Run();
                 return;
             }
             if (CurrentAbstractScreen.SelectedElement is Input inputElement)
