@@ -20,15 +20,21 @@ namespace COVIDMonitoringSystem.ConsoleApp.Screens.SafeEntryMgr
             BoundingBox = { Top = 0 }
         };
 
-        private Label locations = new Label("locations")
-        {
-            BoundingBox = { Top = 4 }
-        };
-
         private Input name = new Input("name")
         {
             Prompt = "Enter your name",
-            BoundingBox = { Top = 8 }
+            BoundingBox = { Top = 4 }
+        };
+
+        private Button check = new Button("check")
+        {
+            Text = "[Check]",
+            BoundingBox = { Top = 5 }
+        };
+
+        private Label locations = new Label("locations")
+        {
+            BoundingBox = { Top = 6 }
         };
 
         private Input targetStore = new Input("targetStore")
@@ -54,12 +60,23 @@ namespace COVIDMonitoringSystem.ConsoleApp.Screens.SafeEntryMgr
             BoundingBox = { Top = 13 }
         };
 
+        [OnClick("check")]private void OnCheck()
+        {
+            ShowLocations();
 
-        private void CheckOut()
+        }
+
+        public CheckOutScreen(ConsoleDisplayManager displayManager, COVIDMonitoringManager covidManager) : base(displayManager, covidManager)
+        {
+            name.BoundingBox.SetRelativeBox(locations);
+            targetStore.BoundingBox.SetRelativeBox(locations);
+            divider.BoundingBox.SetRelativeBox(locations);
+            confirm.BoundingBox.SetRelativeBox(locations);
+            result.BoundingBox.SetRelativeBox(locations);
+        }
+        /*private void CheckOut()
         {
             var inputName = CovidManager.FindPerson(name.Text);
-            List<DateTime> latestCheckinDate = new List<DateTime>();
-            List<DateTime> latestCheckoutDate = new List<DateTime>();
             if (inputName != null)
             {
                 foreach (var i in inputName.SafeEntryList)
@@ -89,9 +106,31 @@ namespace COVIDMonitoringSystem.ConsoleApp.Screens.SafeEntryMgr
             {
                 CHelper.WriteLine("Name not found.");
             }
-        }
-        public CheckOutScreen(ConsoleDisplayManager displayManager, COVIDMonitoringManager covidManager) : base(displayManager, covidManager)
+        }*/
+
+        private void ShowLocations()
         {
+            var locationNames = "Available Business Locations:\n";
+            var inputName = CovidManager.FindPerson(name.Text);
+            List<DateTime> latestCheckinDate = new List<DateTime>();
+            List<DateTime> latestCheckoutDate = new List<DateTime>();
+            if (inputName != null)
+            {
+                foreach (var i in inputName.SafeEntryList)
+                {
+                    latestCheckinDate.Add(i.CheckIn);
+                    latestCheckoutDate.Add(i.CheckOut);
+                    if (latestCheckinDate.Max() > latestCheckoutDate.Max())
+                    {
+                        locationNames += $"{i.Location}\n";
+                    }
+                }
+                locations.Text = locationNames;
+            }
+            else
+            {
+                locations.Text = $"{inputName} is not a valid resident.";
+            }
         }
     }
 }
