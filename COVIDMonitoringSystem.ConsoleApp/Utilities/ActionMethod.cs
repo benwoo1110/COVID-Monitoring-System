@@ -10,8 +10,8 @@ namespace COVIDMonitoringSystem.ConsoleApp.Utilities
 {
     public class ActionMethod
     {
-        public MethodInfo Method { get; }
-        public List<KeyValuePair<ParameterInfo, Parser>> Parameters { get; }
+        private MethodInfo Method { get; }
+        private List<KeyValuePair<ParameterInfo, Parser>> Parameters { get; }
 
         public ActionMethod(MethodInfo method)
         {
@@ -32,6 +32,16 @@ namespace COVIDMonitoringSystem.ConsoleApp.Utilities
                 }
 
                 var input = screen.FindElementOfType<Input>(parser.InputName);
+                if (input == null)
+                {
+                    throw new InvalidOperationException($"No input of have {parser.InputName} in screen.");
+                }
+
+                if (input.Hidden)
+                {
+                    arguments.Add(null);
+                    continue;
+                }
 
                 var parseResult = (parser.TargetLabel == null)
                     ? SilentParsing(screen, input, parameter.ParameterType)
@@ -64,12 +74,11 @@ namespace COVIDMonitoringSystem.ConsoleApp.Utilities
 
         private object ResponsiveParsing(AbstractScreen screen, Input input, Type type, TextElement errorText)
         {
-            object parseResult;
             try
             {
                 return screen.DisplayManager.ResolveManager.Parse(screen, input.Text, type);
             }
-            catch (ArgumentNullException e)
+            catch (ArgumentNullException)
             {
                 errorText.Text = $"Incomplete details. Please enter an input for {input.Name}.";
             }
