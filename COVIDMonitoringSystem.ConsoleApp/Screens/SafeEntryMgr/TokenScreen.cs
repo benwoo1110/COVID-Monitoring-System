@@ -17,25 +17,21 @@ namespace COVIDMonitoringSystem.ConsoleApp.Screens.SafeEntryMgr
             Text = "Assign or replace TraceTogether Token",
             BoundingBox = { Top = 0 }
         };
-
         private Input name = new Input("name")
         {
             Prompt = "Enter resident name",
             BoundingBox = { Top = 4 }
         };
-
         private Button check = new Button("check")
         {
             Text = "[Check]",
             BoundingBox = {Top = 6}
         };
-
-        private Label result = new Label("result")
+        private Label output = new Label("output")
         {
             BoundingBox = {Top = 8},
             Hidden = true
         };
-
         private Input token = new Input("token")
         {
             Prompt = "Enter token",
@@ -51,15 +47,15 @@ namespace COVIDMonitoringSystem.ConsoleApp.Screens.SafeEntryMgr
             {
                 token.Hidden = false;
                 token.Enabled = true;
-                result.Text = "Assign Token.";
+                output.Text = "Assign Token.";
             }
             else
             {
-                result.Text = "Resident not found";
+                output.Text = "Resident not found";
             }
             
         }
-
+        
         private void AssignToken()
         {
             var targetResident = CovidManager.FindPersonOfType<Resident>(name.Text);
@@ -67,7 +63,7 @@ namespace COVIDMonitoringSystem.ConsoleApp.Screens.SafeEntryMgr
             {
                 if (targetResident.Token == null)
                 {
-                    CHelper.WriteLine("A new token will be issued to you.");
+                    output.Text = "A new token will be issued to you.";
                     var generator = new Random();
                     var serialNum = generator.Next(10000, 100000);
                     var finalSerial = "T" + Convert.ToString(serialNum);
@@ -108,7 +104,6 @@ namespace COVIDMonitoringSystem.ConsoleApp.Screens.SafeEntryMgr
         [OnEnterInput("name")] private void OnToken()
         {
             AssignToken();
-            name.ClearText();
 
             // remove input field and replace with the function?
             // exit the process and go back to menu automatically?
