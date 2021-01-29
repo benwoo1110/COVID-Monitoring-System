@@ -17,6 +17,10 @@ namespace COVIDMonitoringSystem.Core.TravelEntryMgr
         [Obsolete("Required by assignment")]
         public double DistFromAirCheckpoint => Distance.FromAir;
 
+        public SHNFacility()
+        {
+        }
+
         public SHNFacility(string facilityName, int facilityCapacity, double distFromAirCheckpoint, double distFromSeaCheckpoint, double distFromLandCheckpoint)
         {
             FacilityName = facilityName;
@@ -44,7 +48,7 @@ namespace COVIDMonitoringSystem.Core.TravelEntryMgr
         public double CalculateTravelCost(TravelEntry entry)
         {
             //TODO Check ShnStay matching
-            return CalculateTravelCost(entry.EntryMode, entry.EntryDate);
+            return CalculateTravelCost(entry.EntryModeType, entry.EntryDate);
         }
 
         [Obsolete("Required by assignment.")]

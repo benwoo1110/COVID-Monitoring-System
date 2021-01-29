@@ -9,7 +9,7 @@ namespace COVIDMonitoringSystem.Core.TravelEntryMgr
     {
         public Person TravelPerson { get; }
         public string LastCountryOfEmbarkation { get; }
-        public TravelEntryMode EntryMode { get; }
+        public TravelEntryMode EntryModeType { get; }
         public DateTime EntryDate { get; }
         public DateTime ShnEndDate { get; private set; }
         public SHNFacility ShnFacility { get; private set; }
@@ -18,15 +18,22 @@ namespace COVIDMonitoringSystem.Core.TravelEntryMgr
         public TravelEntryStatus Status { get; private set; } = TravelEntryStatus.Incomplete;
         public bool IsPaid { get; internal set; }
 
+        [Obsolete("Required by assignment.")]
+        public string EntryMode => Enum.GetName(typeof(TravelEntryMode), EntryModeType);
+        
+        public TravelEntry()
+        {
+        }
+
         public TravelEntry(
             [NotNull] Person travelPerson,
             [NotNull]  string lastCountryOfEmbarkation, 
-            TravelEntryMode entryMode, 
+            TravelEntryMode entryModeType, 
             DateTime entryDate)
         {
             TravelPerson = travelPerson;
             LastCountryOfEmbarkation = lastCountryOfEmbarkation;
-            EntryMode = entryMode;
+            EntryModeType = entryModeType;
             EntryDate = entryDate;
             CompleteEntryDetails();
         }
@@ -34,7 +41,7 @@ namespace COVIDMonitoringSystem.Core.TravelEntryMgr
         public TravelEntry(
             [NotNull] Person travelPerson,
             [NotNull] string lastCountryOfEmbarkation, 
-            TravelEntryMode entryMode, 
+            TravelEntryMode entryModeType, 
             DateTime entryDate, 
             DateTime shnEndDate,
             [CanBeNull] SHNFacility shnFacility, 
@@ -42,7 +49,7 @@ namespace COVIDMonitoringSystem.Core.TravelEntryMgr
         {
             TravelPerson = travelPerson;
             LastCountryOfEmbarkation = lastCountryOfEmbarkation;
-            EntryMode = entryMode;
+            EntryModeType = entryModeType;
             EntryDate = entryDate;
             ShnEndDate = shnEndDate;
             ShnFacility = shnFacility;
