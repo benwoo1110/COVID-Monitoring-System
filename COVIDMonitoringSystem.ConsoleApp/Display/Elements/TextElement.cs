@@ -13,7 +13,7 @@ namespace COVIDMonitoringSystem.ConsoleApp.Display.Elements
             set
             {
                 text = value;
-                OnPropertyChanged();
+                QueueToRerender();
             }
         }
 
@@ -23,7 +23,7 @@ namespace COVIDMonitoringSystem.ConsoleApp.Display.Elements
             set
             {
                 _align = value;
-                OnPropertyChanged();
+                QueueToRerender();
             }
         }
 

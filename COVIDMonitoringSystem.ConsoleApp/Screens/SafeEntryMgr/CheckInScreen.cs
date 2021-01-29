@@ -65,7 +65,7 @@ namespace COVIDMonitoringSystem.ConsoleApp.Screens.SafeEntryMgr
             result.BoundingBox.SetRelativeBox(locations);
         }
 
-        public override void OnView()
+        public override void PreLoad()
         {
             ShowLocations();
         }

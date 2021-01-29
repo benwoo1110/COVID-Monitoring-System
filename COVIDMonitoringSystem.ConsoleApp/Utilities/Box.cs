@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Resources;
 using COVIDMonitoringSystem.ConsoleApp.Display;
 using COVIDMonitoringSystem.ConsoleApp.Display.Elements;
 
@@ -6,25 +8,43 @@ namespace COVIDMonitoringSystem.ConsoleApp.Utilities
 {
     public class Box
     {
+        private int height = 1;
+        
+        public Element TargetElement { get; }
         public int Top { get; set; }
         public int CursorLeft { get; set; }
-        public int Height { get; set; } = 1;
+        public int Height
+        {
+            get => height;
+            set
+            {
+                if (height != value)
+                {
+                    height = value;
+                    RerenderDependents();
+                }
+            }
+        }
+
         public Box RelativeBox { get; private set; }
         public bool AutoHeight { get; set; } = true;
+        public List<Element> Dependents { get; }
+
+        public Box(Element targetElement)
+        {
+            TargetElement = targetElement;
+            Dependents = new List<Element>();
+        }
 
         public void SetRelativeBox(Element element)
         {
-            SetRelativeBox(element.BoundingBox);
-        }
-
-        public void SetRelativeBox(Box box)
-        {
-            if (box == this)
+            if (element.BoundingBox == this)
             {
                 throw new ArgumentException("You cant set relative bounding box itself.");
             }
-            
-            RelativeBox = box;
+
+            RelativeBox = element.BoundingBox;
+            element.BoundingBox.Dependents.Add(TargetElement);
         }
 
         public int GetBottom()
@@ -67,6 +87,11 @@ namespace COVIDMonitoringSystem.ConsoleApp.Utilities
             }
 
             Height = to;
+        }
+
+        private void RerenderDependents()
+        {
+            Dependents.ForEach(element => element.QueueToRerender());
         }
     }
 }

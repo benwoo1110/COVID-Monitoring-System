@@ -74,6 +74,11 @@ namespace COVIDMonitoringSystem.ConsoleApp.Display
             }
         }
 
+        public virtual void PreLoad()
+        {
+            
+        }
+
         public virtual void Load()
         {
             if (Active)
@@ -100,21 +105,27 @@ namespace COVIDMonitoringSystem.ConsoleApp.Display
             ClearSelection();
         }
 
+        public virtual void Closed()
+        {
+        }
+
         public virtual void Render()
         {
             CHelper.Clear();
+            UpdateQueue.Clear();
             foreach (var element in ElementList.Where(element => !element.Hidden))
             {
                 element.Render();
             }
             ColourSelector.Element();
-            UpdateQueue.Clear();
         }
 
         public void Update()
         {
-            UpdateQueue.ForEach(element => element.Render());
+            var queueSnapshot = new List<Element>(UpdateQueue);
             UpdateQueue.Clear();
+            
+            queueSnapshot.ForEach(element => element.Render());
             ColourSelector.Element();
         }
 
