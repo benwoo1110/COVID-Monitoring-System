@@ -2,17 +2,19 @@
 using System.Collections.Generic;
 using COVIDMonitoringSystem.ConsoleApp.Display;
 using COVIDMonitoringSystem.ConsoleApp.Display.Elements;
-using COVIDMonitoringSystem.ConsoleApp.Screens;
 
 namespace COVIDMonitoringSystem.ConsoleApp.Builders
 {
     public class ListScreenBuilder<T> : AbstractScreenBuilder<ListScreenBuilder<T>, BuilderScreen> where T : class
     {
-        public ObjectList<T> ListObject { get; set; }
+        private ObjectList<T> ListObject { get; }
         
         public ListScreenBuilder(ConsoleDisplayManager displayManager) : base(displayManager)
         {
-            ListObject = new ObjectList<T>(typeof(T).Name);
+            ListObject = new ObjectList<T>(typeof(T).Name)
+            {
+                BoundingBox = {Top = 3}
+            };
         }
 
         public ListScreenBuilder<T> WithProperties(string[] properties)

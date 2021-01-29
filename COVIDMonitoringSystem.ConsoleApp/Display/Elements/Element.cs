@@ -31,7 +31,6 @@ namespace COVIDMonitoringSystem.ConsoleApp.Display.Elements
         
         public Box BoundingBox { get; }
 
-        //TODO: Have screen input here so can register
         protected Element()
         {
             BoundingBox = new Box();

@@ -71,8 +71,11 @@ namespace COVIDMonitoringSystem.ConsoleApp.Display.Elements
                 headerBuilder.Append(string.Format(format, headerItems[index]));
             }
 
+            ColourSelector.Selected();
+            CHelper.WriteEmpty();
             CHelper.WriteLine(headerBuilder.ToString());
-            CHelper.FillLine('-');
+            ColourSelector.Element();
+            CHelper.WriteEmpty();
 
             foreach (var propertyValues in valuesArray)
             {
