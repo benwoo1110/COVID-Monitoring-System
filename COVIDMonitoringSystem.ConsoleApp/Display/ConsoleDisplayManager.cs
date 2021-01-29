@@ -24,13 +24,13 @@ namespace COVIDMonitoringSystem.ConsoleApp.Display
         public Dictionary<ConsoleKey, Action<ConsoleKeyInfo>> KeyActionMap { get; set; }
         private bool Running { get; set; }
         public bool ScreenUpdated { get; set; }
-        public ResolverManager ResolveManager { get; }
+        public InputResolverManager ResolveManager { get; }
 
         public ConsoleDisplayManager()
         {
             ScreenMap = new Dictionary<string, AbstractScreen>();
             KeyActionMap = new Dictionary<ConsoleKey, Action<ConsoleKeyInfo>>();
-            ResolveManager = new ResolverManager();
+            ResolveManager = new InputResolverManager();
             SetDefaultKeyMap();
         }
 
