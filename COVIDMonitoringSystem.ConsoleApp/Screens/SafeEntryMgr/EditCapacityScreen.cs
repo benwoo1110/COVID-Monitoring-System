@@ -45,13 +45,12 @@ namespace COVIDMonitoringSystem.ConsoleApp.Screens.SafeEntryMgr
             BoundingBox = { Top = 9 }
         };
 
-        public EditCapacityScreen(ConsoleDisplayManager displayManager, COVIDMonitoringManager covidManager) : base(
-            displayManager, covidManager)
+        public EditCapacityScreen(ConsoleDisplayManager displayManager, COVIDMonitoringManager covidManager) : base(displayManager, covidManager)
         {
 
         }
 
-        [OnClick("confirm")]private void OnConfirm()
+        [OnClick("confirm")] private void OnConfirm()
         {
             ChangeCapacity();
             businessName.ClearText();
@@ -64,7 +63,7 @@ namespace COVIDMonitoringSystem.ConsoleApp.Screens.SafeEntryMgr
             if (targetBusiness != null)
             {
                 var oldCapacity = targetBusiness.MaximumCapacity;
-                targetBusiness.MaximumCapacity = Convert.ToInt32(capacity.Text); // Need to get the text
+                targetBusiness.MaximumCapacity = Convert.ToInt32(capacity.Text);
                 result.Text = $"Maximum capacity for {targetBusiness} has been changed from {oldCapacity} to {targetBusiness.MaximumCapacity}";
             }
             else

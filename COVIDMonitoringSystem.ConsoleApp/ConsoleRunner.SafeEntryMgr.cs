@@ -24,7 +24,7 @@ namespace COVIDMonitoringSystem.ConsoleApp
             // This one can keep, dont need to do have a a class for this screen.
             DisplayManager.RegisterScreen(new ListScreenBuilder<BusinessLocation>(DisplayManager)
                 .OfName("viewLocations")
-                .WithHeader("View All Visitors")
+                .WithHeader("View All Business Location")
                 .WithProperties(new[] {"BusinessName", "BranchCode", "MaximumCapacity", "VisitorsNow"})
                 .WithGetter(() => Manager.BusinessLocationList)
                 .Build()

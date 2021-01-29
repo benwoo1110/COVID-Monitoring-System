@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using COVIDMonitoringSystem.ConsoleApp.Display;
 using COVIDMonitoringSystem.ConsoleApp.Display.Attributes;
 using COVIDMonitoringSystem.ConsoleApp.Display.Elements;
@@ -25,50 +26,74 @@ namespace COVIDMonitoringSystem.ConsoleApp.Screens.SafeEntryMgr
         private Input name = new Input("name")
         {
             Prompt = "Enter your name",
-            BoundingBox = { Top = 8 }
+            BoundingBox = { Top = 0 }
         };
 
         private Input targetStore = new Input("targetStore")
         {
             Prompt = "Enter business location to check in to",
-            BoundingBox = { Top = 9 }
+            BoundingBox = { Top = 1 }
         };
 
         private Label divider = new Label("divider")
         {
             Text = "----",
-            BoundingBox = { Top = 10 }
+            BoundingBox = { Top = 2 }
         };
 
         private Button confirm = new Button("confirm")
         {
             Text = "[Check In]",
-            BoundingBox = { Top = 11 }
+            BoundingBox = { Top = 3 }
         };
 
         private Label result = new Label("result")
         {
-            BoundingBox = { Top = 13 }
+            BoundingBox = { Top = 6 }
         };
 
-        
-        /*private void ShowLocations()
+        public CheckInScreen(ConsoleDisplayManager displayManager, COVIDMonitoringManager covidManager) : base(
+            displayManager, covidManager)
         {
-            List<string> locationNames = new List<string>();
+            // ShowLocations();
+            // How to display all stores using .Text and Label?
+
+            name.BoundingBox.SetRelativeBox(locations);
+            targetStore.BoundingBox.SetRelativeBox(locations);
+            divider.BoundingBox.SetRelativeBox(locations);
+            confirm.BoundingBox.SetRelativeBox(locations);
+            result.BoundingBox.SetRelativeBox(locations);
+        }
+
+        public override void OnView()
+        {
+            ShowLocations();
+        }
+
+        private void ShowLocations()
+        {
+            var locationNames = "Available Business Location:\n";
+            
+            
             foreach (var i in CovidManager.BusinessLocationList)
             {
-                locationNames.Add(i.BusinessName);
+                locationNames += $"{i.BusinessName}\n";
             }
-            foreach (var i in locationNames)
-            {
-                locations.Text =
-            }
-            
-        }*/
+
+            locations.Text = locationNames;
+        }
+
+        [OnClick("confirm")] private void OnConfirm()
+        {
+            CheckIn();
+            name.ClearText();
+            targetStore.ClearText();
+        }
+
         private void CheckIn()
         {
             var inputName = CovidManager.FindPerson(name.Text);
-            var inputLocation = CovidManager.FindBusinessLocation(locations.Text);
+            var inputLocation = CovidManager.FindBusinessLocation(targetStore.Text);
             Console.WriteLine(inputName);
             Console.WriteLine(inputLocation);
             if (inputName != null && inputLocation != null)
@@ -92,17 +117,6 @@ namespace COVIDMonitoringSystem.ConsoleApp.Screens.SafeEntryMgr
             }
             
 
-        }
-        [OnClick("confirm")]private void OnConfirm()
-        {
-            CheckIn();
-            name.ClearText();
-            targetStore.ClearText();
-        }
-        public CheckInScreen(ConsoleDisplayManager displayManager, COVIDMonitoringManager covidManager) : base(displayManager, covidManager)
-        {
-            // ShowLocations();
-            // How to display all stores using .Text and Label?
         }
     }
 }

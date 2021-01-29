@@ -24,6 +24,42 @@ namespace COVIDMonitoringSystem.ConsoleApp.Screens.SafeEntryMgr
             BoundingBox = { Top = 4 }
         };
 
+        private Button check = new Button("check")
+        {
+            Text = "[Check]",
+            BoundingBox = {Top = 6}
+        };
+
+        private Label result = new Label("result")
+        {
+            BoundingBox = {Top = 8},
+            Hidden = true
+        };
+
+        private Input token = new Input("token")
+        {
+            Prompt = "Enter token",
+            BoundingBox = {Top = 10},
+            Hidden = true,
+            Enabled = false
+        };
+
+        [OnClick("check")] private void OnCheck()
+        {
+            var r = CovidManager.FindPersonOfType<Resident>(name.Text);
+            if (r != null)
+            {
+                token.Hidden = false;
+                token.Enabled = true;
+                result.Text = "Assign Token.";
+            }
+            else
+            {
+                result.Text = "Resident not found";
+            }
+            
+        }
+
         private void AssignToken()
         {
             var targetResident = CovidManager.FindPersonOfType<Resident>(name.Text);
@@ -67,7 +103,6 @@ namespace COVIDMonitoringSystem.ConsoleApp.Screens.SafeEntryMgr
 
         public TokenScreen(ConsoleDisplayManager displayManager, COVIDMonitoringManager covidManager) : base(displayManager, covidManager)
         {
-
         }
 
         [OnEnterInput("name")] private void OnToken()
