@@ -4,7 +4,7 @@ using COVIDMonitoringSystem.ConsoleApp.Display.Elements;
 using COVIDMonitoringSystem.Core;
 using COVIDMonitoringSystem.Core.PersonMgr;
 
-namespace COVIDMonitoringSystem.ConsoleApp.Screens
+namespace COVIDMonitoringSystem.ConsoleApp.Screens.TravelEntryMgr
 {
     public class NewVisitorScreen : CovidScreen
     {

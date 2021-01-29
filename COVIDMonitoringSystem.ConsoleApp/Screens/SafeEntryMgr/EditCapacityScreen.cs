@@ -1,17 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Linq;
-using COVIDMonitoringSystem.ConsoleApp.Builders;
-using COVIDMonitoringSystem.ConsoleApp.Utilities;
 using COVIDMonitoringSystem.ConsoleApp.Display;
-using COVIDMonitoringSystem.ConsoleApp.Display.Elements;
 using COVIDMonitoringSystem.ConsoleApp.Display.Attributes;
+using COVIDMonitoringSystem.ConsoleApp.Display.Elements;
 using COVIDMonitoringSystem.Core;
-using COVIDMonitoringSystem.Core.PersonMgr;
-using COVIDMonitoringSystem.Core.SafeEntryMgr;
 
-namespace COVIDMonitoringSystem.ConsoleApp.Screens
+namespace COVIDMonitoringSystem.ConsoleApp.Screens.SafeEntryMgr
 {
     public class EditCapacityScreen : CovidScreen
     {
@@ -23,7 +16,7 @@ namespace COVIDMonitoringSystem.ConsoleApp.Screens
             BoundingBox = { Top = 0 }
         };
 
-        private Input name = new Input("name")
+        private Input businessName = new Input("name")
         {
             Prompt = "Enter business name to search for",
             BoundingBox = { Top = 4 }
@@ -52,30 +45,32 @@ namespace COVIDMonitoringSystem.ConsoleApp.Screens
             BoundingBox = { Top = 9 }
         };
 
+        public EditCapacityScreen(ConsoleDisplayManager displayManager, COVIDMonitoringManager covidManager) : base(
+            displayManager, covidManager)
+        {
+
+        }
+
+        [OnClick("confirm")]private void OnConfirm()
+        {
+            ChangeCapacity();
+            businessName.ClearText();
+            capacity.ClearText();
+        }
+
         private void ChangeCapacity()
         {
-            var targetBusiness = CovidManager.FindBusinessLocation(name.Text);
-            var oldCapacity = targetBusiness.MaximumCapacity;
+            var targetBusiness = CovidManager.FindBusinessLocation(businessName.Text);
             if (targetBusiness != null)
             {
-                targetBusiness.MaximumCapacity = Convert.ToInt32(capacity); // Unable to convert like this, how else can we convert user input?
+                var oldCapacity = targetBusiness.MaximumCapacity;
+                targetBusiness.MaximumCapacity = Convert.ToInt32(capacity.Text); // Need to get the text
                 result.Text = $"Maximum capacity for {targetBusiness} has been changed from {oldCapacity} to {targetBusiness.MaximumCapacity}";
             }
             else
             {
-                result.Text = $"{targetBusiness} not found. Maximum capacity has not been edited.";
+                result.Text = $"{businessName.Text} not found. Maximum capacity has not been edited.";
             }
-        }
-        [OnClick("confirm")]private void OnConfirm()
-        {
-            ChangeCapacity();
-            name.ClearText();
-            capacity.ClearText();
-        }
-
-        public EditCapacityScreen(ConsoleDisplayManager displayManager, COVIDMonitoringManager covidManager) : base(displayManager, covidManager)
-        {
-
         }
     }
 }

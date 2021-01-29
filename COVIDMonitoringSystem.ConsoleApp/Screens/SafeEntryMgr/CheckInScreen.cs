@@ -1,17 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Linq;
-using COVIDMonitoringSystem.ConsoleApp.Builders;
-using COVIDMonitoringSystem.ConsoleApp.Utilities;
 using COVIDMonitoringSystem.ConsoleApp.Display;
-using COVIDMonitoringSystem.ConsoleApp.Display.Elements;
 using COVIDMonitoringSystem.ConsoleApp.Display.Attributes;
+using COVIDMonitoringSystem.ConsoleApp.Display.Elements;
 using COVIDMonitoringSystem.Core;
-using COVIDMonitoringSystem.Core.PersonMgr;
 using COVIDMonitoringSystem.Core.SafeEntryMgr;
 
-namespace COVIDMonitoringSystem.ConsoleApp.Screens
+namespace COVIDMonitoringSystem.ConsoleApp.Screens.SafeEntryMgr
 {
     public class CheckInScreen : CovidScreen
     {

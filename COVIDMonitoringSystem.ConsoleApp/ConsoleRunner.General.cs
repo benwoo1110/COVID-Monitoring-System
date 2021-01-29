@@ -11,17 +11,6 @@ namespace COVIDMonitoringSystem.ConsoleApp
     {
         private void SetUpGeneralScreens()
         {
-            DisplayManager.RegisterScreen(new ScreenBuilder(DisplayManager)
-                .OfName("viewPersonDetails")
-                .WithHeader("View Details of a Person")
-                .AddElement(new Input("name", "Name"))
-                .AddElement(new Spacer())
-                .AddElement(new Button("find")) // , "[Find]", ShowPersonDetails))
-                .AddElement(new Spacer())
-                .AddElement(new Label("details"))
-                .Build()
-            );
-            
             DisplayManager.RegisterScreen(new ListScreenBuilder<Visitor>(DisplayManager)
                 .OfName("viewAllVisitors")
                 .WithHeader("View All Visitors")
