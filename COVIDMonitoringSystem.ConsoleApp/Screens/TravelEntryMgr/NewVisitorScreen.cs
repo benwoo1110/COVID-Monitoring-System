@@ -52,7 +52,7 @@ namespace COVIDMonitoringSystem.ConsoleApp.Screens.TravelEntryMgr
         {
             if (!name.HasText() || !passportNo.HasText() || !nationality.HasText())
             {
-                result.Text = "Incomplete details. No visitor has been added to the system.";
+                result.Text = "Incomplete details. No visitor has been added to the system. this is a very very long lineee hahahahahahahahhahahahahahahahahhahah hahahahahahahahhahahahahahahahahhahah";
                 return;
             }
 

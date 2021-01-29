@@ -1,16 +1,21 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using COVIDMonitoringSystem.Core.Utilities;
 
 namespace COVIDMonitoringSystem.ConsoleApp.Utilities
 {
     public static class CHelper
     {
-        public static int WindowWidth => Console.WindowWidth;
-        public static int WindowHeight => Console.WindowHeight - 1;
-        public static int LinesPrinted { get; private set; }
+        public const int LeftPadding = 4;
+        public const int RightPadding = 4;
 
         private static int cachedWidth;
         private static int cachedHeight;
+        
+        public static int WritableWidth => Console.WindowWidth - LeftPadding - RightPadding;
+        public static int WindowWidth => Console.WindowWidth;
+        public static int WindowHeight => Console.WindowHeight - 1;
         
         public static bool DidChangeWindowSize()
         {
@@ -33,22 +38,32 @@ namespace COVIDMonitoringSystem.ConsoleApp.Utilities
             WriteLine(text, TextAlign.Left);
         }
         
-        public static void WriteLine(string text, TextAlign textAlign)
+        public static int WriteLine(string text, TextAlign textAlign)
         {
+            var linesWritten = 0;
             var lines = text.Split("\n");
             
             foreach (var line in lines)
             {
-                Console.Write(textAlign.DoAlignment(line));
-                LinesPrinted++;
-                //TODO: What if its too long for one line?
+                foreach (var chunkLine in SplitByLength(line))
+                {
+                    Console.Write(textAlign.DoAlignment(chunkLine));
+                    linesWritten++;
+                }
             }
+
+            return linesWritten;
+        }
+
+        private static IEnumerable<string> SplitByLength(string line)
+        {
+            for (var i = 0; i < line.Length; i += WritableWidth)
+                yield return line.Substring(i, Math.Min(WritableWidth, line.Length - i));
         }
 
         public static void FillLine(char c)
         {
             Console.Write(new string(c, WindowWidth));
-            LinesPrinted++;
         }
 
         public static void WriteEmpty()
@@ -56,21 +71,10 @@ namespace COVIDMonitoringSystem.ConsoleApp.Utilities
             FillLine(' ');
         }
 
-        public static void PadRemainingHeight()
-        {
-            int paddingLinesToWrite = WindowHeight - LinesPrinted;
-            Console.SetCursorPosition(0, LinesPrinted);
-            for (var i = 0; i < paddingLinesToWrite; i++)
-            {
-                WriteEmpty();
-            }
-        }
-
         public static void Clear()
         {
             Console.Clear();
             Console.SetCursorPosition(0, 0);
-            LinesPrinted = 0;
         }
 
         public static TE EnumParser<TE>(string value) where TE : struct
