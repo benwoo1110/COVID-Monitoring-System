@@ -29,6 +29,8 @@ namespace COVIDMonitoringSystem.ConsoleApp.Display.Elements
             }
         }
 
+        public ButtonMethod MethodRunner { get; set; }
+
         public Action OnEnterRunner { get; set; }
 
         public Input(string name) : base(name)
@@ -49,6 +51,25 @@ namespace COVIDMonitoringSystem.ConsoleApp.Display.Elements
         {
             //TODO: Improve this
             BoundingBox.CursorLeft = Prompt.Length + Text.Length + 6;
+        }
+
+        public void Run()
+        {
+            if (MethodRunner != null)
+            {
+                MethodRunner.Run(TargetScreen);
+                return;
+            }
+
+            OnEnterRunner?.Invoke();
+        }
+
+        protected override void OnDeselect()
+        {
+            if (TargetScreen.Active)
+            {
+                Run();
+            }
         }
     }
 }

@@ -23,6 +23,10 @@ namespace COVIDMonitoringSystem.ConsoleApp.Display.Elements
             set
             {
                 selected = value;
+                if (value == false)
+                {
+                    OnDeselect();
+                }
                 QueueToRerender();
             }
         }
@@ -45,6 +49,10 @@ namespace COVIDMonitoringSystem.ConsoleApp.Display.Elements
             {
                 ColourSelector.Element();
             }
+        }
+
+        protected virtual void OnDeselect()
+        {
         }
     }
 }

@@ -1,6 +1,8 @@
 ﻿using COVIDMonitoringSystem.ConsoleApp.Display;
+using COVIDMonitoringSystem.ConsoleApp.Display.Attributes;
 using COVIDMonitoringSystem.ConsoleApp.Display.Elements;
 using COVIDMonitoringSystem.Core;
+using COVIDMonitoringSystem.Core.TravelEntryMgr;
 
 namespace COVIDMonitoringSystem.ConsoleApp.Screens.TravelEntryMgr
 {
@@ -37,18 +39,20 @@ namespace COVIDMonitoringSystem.ConsoleApp.Screens.TravelEntryMgr
         {
             Text = "Some message",
             BoundingBox = {Top = 9},
-            Hidden = true
         };
         private Input shnFacility = new Input("shnFacility")
         {
             Prompt = "SHN Facility Name",
             BoundingBox = {Top = 0},
-            Hidden = true
         };
-
         private Button create = new Button("create")
         {
             Text = "[Create Record]",
+            BoundingBox = {Top = 1}
+        };
+        private Label result = new Label("result")
+        {
+            Text = "Result here.",
             BoundingBox = {Top = 1}
         };
         
@@ -56,6 +60,28 @@ namespace COVIDMonitoringSystem.ConsoleApp.Screens.TravelEntryMgr
         {
             shnFacility.BoundingBox.SetRelativeBox(shnMessage);
             create.BoundingBox.SetRelativeBox(shnFacility);
+            result.BoundingBox.SetRelativeBox(create);
+        }
+
+        public override void PreLoad()
+        {
+            shnMessage.Hidden = true;
+            shnFacility.Hidden = true;
+        }
+
+        [OnEnterInput("country")]
+        private void OnUpdateCountry([Parser("country", "result")] SHNTier tier)
+        {
+            if (tier == SHNTier.Dedicated)
+            {
+                shnMessage.Hidden = false;
+                shnFacility.Hidden = false;
+                shnMessage.Text = $"You are required to serve SHN in dedicated facility when coming from {country.Text}.";
+                return;
+            }
+
+            shnMessage.Hidden = true;
+            shnFacility.Hidden = true;
         }
     }
 }

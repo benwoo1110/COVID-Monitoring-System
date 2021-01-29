@@ -53,13 +53,15 @@ namespace COVIDMonitoringSystem.ConsoleApp.Display
 
             //TODO: Make this better
             var methodsMap2 = ReflectHelper.GetMethodWithAttribute<OnEnterInput>(this);
-            foreach (var (action, clickAttr) in methodsMap2)
+            foreach (var (method, clickAttr) in methodsMap2)
             {
                 var input = FindElementOfType<Input>(clickAttr.InputName);
                 if (input == null)
                 {
                     throw new InvalidOperationException($"Button {clickAttr.InputName} not found.");
                 }
+
+                input.MethodRunner = new ButtonMethod(method);
             }
         }
         

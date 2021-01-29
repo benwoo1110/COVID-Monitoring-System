@@ -2,6 +2,7 @@
 using COVIDMonitoringSystem.ConsoleApp.Display;
 using COVIDMonitoringSystem.Core;
 using COVIDMonitoringSystem.Core.PersonMgr;
+using COVIDMonitoringSystem.Core.TravelEntryMgr;
 
 namespace COVIDMonitoringSystem.ConsoleApp
 {
@@ -43,6 +44,10 @@ namespace COVIDMonitoringSystem.ConsoleApp
             DisplayManager.ResolveManager.RegisterQuickInputResolver(
                 Manager.FindSHNFacility,
                 "No SHN facility with name {0} found."
+            );
+            DisplayManager.ResolveManager.RegisterQuickInputResolver(
+                SHNTier.FindAppropriateTier,
+                "This shouldn't happen. Input was: {0}"
             );
         }
 
