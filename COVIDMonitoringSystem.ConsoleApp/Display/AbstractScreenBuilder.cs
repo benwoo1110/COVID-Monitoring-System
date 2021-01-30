@@ -31,7 +31,10 @@ namespace COVIDMonitoringSystem.ConsoleApp.Display
 
         public TB WithHeader(string header)
         {
-            TargetScreen.AddElement(new Header("header", header));
+            TargetScreen.AddElement(new Header("header")
+            {
+                Text = header
+            });
             return (TB) this;
         }
 

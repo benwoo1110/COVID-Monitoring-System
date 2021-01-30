@@ -14,14 +14,8 @@ namespace COVIDMonitoringSystem.ConsoleApp.Display.Elements
         public Action Runner { get; set; }
         public ActionMethod MethodRunner { get; set; }
 
-        public Button(string name) : base(name)
+        public Button(string name = null) : base(name)
         {
-        }
-
-        public Button(string name, string text, Action runner) : base(name)
-        {
-            Text = text;
-            Runner = runner;
         }
 
         public void Run()

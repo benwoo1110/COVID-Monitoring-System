@@ -39,13 +39,20 @@ namespace COVIDMonitoringSystem.ConsoleApp.Display
         private void AddElementFields()
         {
             var elementList = ReflectHelper.GetFieldsOfType<Element>(this);
-            elementList.ForEach(AddElement);
+            foreach (var (name, element) in elementList)
+            {
+                if (string.IsNullOrEmpty(element.Name))
+                {
+                    element.Name = name;
+                }
+                AddElement(element);
+            }
         }
 
         private void AddButtonMethods()
         {
-            var methodsMap = ReflectHelper.GetMethodWithAttribute<OnClick>(this);
-            foreach (var (method, clickAttr) in methodsMap)
+            var buttonMethodsMap = ReflectHelper.GetMethodWithAttribute<OnClick>(this);
+            foreach (var (method, clickAttr) in buttonMethodsMap)
             {
                 var button = FindElementOfType<Button>(clickAttr.ButtonName);
                 if (button == null)
@@ -57,8 +64,8 @@ namespace COVIDMonitoringSystem.ConsoleApp.Display
             }
 
             //TODO: Make this better
-            var methodsMap2 = ReflectHelper.GetMethodWithAttribute<OnEnterInput>(this);
-            foreach (var (method, clickAttr) in methodsMap2)
+            var inputMethodMap = ReflectHelper.GetMethodWithAttribute<OnEnterInput>(this);
+            foreach (var (method, clickAttr) in inputMethodMap)
             {
                 var input = FindElementOfType<Input>(clickAttr.InputName);
                 if (input == null)

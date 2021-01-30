@@ -12,25 +12,25 @@ namespace COVIDMonitoringSystem.ConsoleApp.Screens.General
     {
         public override string Name => "viewPersonDetails";
 
-        private Header header = new Header("header")
+        private Header header = new Header
         {
             Text = "Details of a Person",
             BoundingBox = {Top = 0}
         };
 
-        private Input name = new Input("name")
+        private Input name = new Input
         {
             Prompt = "Person Name",
             BoundingBox = {Top = 4}
         };
 
-        private Button view = new Button("view")
+        private Button view = new Button
         {
             Text = "[View Details]",
             BoundingBox = {Top = 6}
         };
 
-        private Label details = new Label("details")
+        private Label details = new Label
         {
             BoundingBox = {Top = 8}
         };

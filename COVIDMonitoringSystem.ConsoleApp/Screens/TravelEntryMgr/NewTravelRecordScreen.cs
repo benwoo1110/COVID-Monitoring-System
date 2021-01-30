@@ -18,55 +18,55 @@ namespace COVIDMonitoringSystem.ConsoleApp.Screens.TravelEntryMgr
     {
         public override string Name => "newTravelRecord";
 
-        private Header header = new Header("header")
+        private Header header = new Header
         {
             Text = "New Travel Record",
             BoundingBox = {Top = 0}
         };
 
-        private Input name = new Input("name")
+        private Input name = new Input
         {
             Prompt = "Name",
             BoundingBox = {Top = 4}
         };
 
-        private Input country = new Input("country")
+        private Input country = new Input
         {
             Prompt = "Last Country of Embark",
             BoundingBox = {Top = 5}
         };
 
-        private Input entryMode = new Input("entryMode")
+        private Input entryMode = new Input
         {
             Prompt = "Entry Mode",
             BoundingBox = {Top = 6}
         };
 
-        private Input entryDate = new Input("entryDate")
+        private Input entryDate = new Input
         {
             Prompt = "Entry Date",
             BoundingBox = {Top = 7}
         };
 
-        private Label shnMessage = new Label("shnMessage")
+        private Label shnMessage = new Label
         {
             Text = "Some message",
             BoundingBox = {Top = 8},
         };
 
-        private Input shnFacility = new Input("shnFacility")
+        private Input shnFacility = new Input
         {
             Prompt = "SHN Facility Name",
             BoundingBox = {Top = 0},
         };
 
-        private Button create = new Button("create")
+        private Button create = new Button
         {
             Text = "[Create Record]",
             BoundingBox = {Top = 1}
         };
 
-        private Label result = new Label("result")
+        private Label result = new Label
         {
             Text = "Result here.",
             BoundingBox = {Top = 1}

@@ -13,9 +13,9 @@ namespace COVIDMonitoringSystem.Core.Utilities
 {
     public static class ReflectHelper
     {
-        public static List<TF> GetFieldsOfType<TF>(object obj) where TF : class
+        public static Dictionary<string, TF> GetFieldsOfType<TF>(object obj) where TF : class
         {
-            var fieldValues = new List<TF>();
+            var fieldValues = new Dictionary<string, TF>();
             var fieldInfos = obj.GetType().GetFields(BindingFlags.Instance | BindingFlags.NonPublic);
 
             foreach (var fieldInfo in fieldInfos)
@@ -23,7 +23,7 @@ namespace COVIDMonitoringSystem.Core.Utilities
                 var value = fieldInfo.GetValue(obj);
                 if (value is TF targetValue)
                 {
-                    fieldValues.Add(targetValue);
+                    fieldValues.Add(fieldInfo.Name, targetValue);
                 }
             }
 

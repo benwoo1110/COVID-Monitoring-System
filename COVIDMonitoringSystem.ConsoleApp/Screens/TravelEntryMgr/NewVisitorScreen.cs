@@ -16,42 +16,42 @@ namespace COVIDMonitoringSystem.ConsoleApp.Screens.TravelEntryMgr
     {
         public override string Name => "newVisitor";
 
-        private Header header = new Header("header")
+        private Header header = new Header
         {
             Text = "New Visitor"
         };
 
-        private Label info = new Label("info")
+        private Label info = new Label
         {
             Text = "Please Enter Details of the Visitor",
             BoundingBox = {Top = 4}
         };
 
-        private Input name = new Input("name")
+        private Input name = new Input
         {
             Prompt = "Name",
             BoundingBox = {Top = 6}
         };
 
-        private Input passportNo = new Input("passportNo")
+        private Input passportNo = new Input
         {
             Prompt = "Passport Number",
             BoundingBox = {Top = 7}
         };
 
-        private Input nationality = new Input("Nationality")
+        private Input nationality = new Input
         {
             Prompt = "Nationality",
             BoundingBox = {Top = 8}
         };
 
-        private Button create = new Button("create")
+        private Button create = new Button
         {
             Text = "[Create]",
             BoundingBox = {Top = 10},
         };
 
-        private Label result = new Label("result")
+        private Label result = new Label
         {
             BoundingBox = {Top = 12},
             ClearOnExit = true

@@ -18,38 +18,38 @@ namespace COVIDMonitoringSystem.ConsoleApp.Screens.SafeEntryMgr
     {
         public override string Name => "assignToken";
 
-        private Header header = new Header("header")
+        private Header header = new Header
         {
             Text = "Assign or replace TraceTogether Token",
             BoundingBox = { Top = 0 }
         };
-        private Input name = new Input("name")
+        private Input name = new Input
         {
             Prompt = "Enter resident name",
             BoundingBox = { Top = 4 }
         };
-        private Button check = new Button("check")
+        private Button check = new Button
         {
             Text = "[Check]",
             BoundingBox = {Top = 6}
         };
-        private Label result = new Label("result")
+        private Label result = new Label
         {
             BoundingBox = {Top = 8},
         };
-        private Input location = new Input("location")
+        private Input location = new Input
         {
             Prompt = "Enter your collection location",
             BoundingBox = {Top = 10},
             Hidden = true,
             Enabled = false
         };
-        private Button getToken = new Button("getToken")
+        private Button getToken = new Button
         {
             Text = "[Get Token]",
             BoundingBox = { Top = 11 }
         };
-        private Label output = new Label("output")
+        private Label output = new Label
         {
             BoundingBox = { Top = 13 }
         };

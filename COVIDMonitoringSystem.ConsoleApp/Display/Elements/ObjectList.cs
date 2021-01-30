@@ -20,14 +20,8 @@ namespace COVIDMonitoringSystem.ConsoleApp.Display.Elements
         public string[] PropertyToInclude { get; set; }
         public Func<List<T>> ListGetter { get; set; }
 
-        public ObjectList(string name) : base(name)
+        public ObjectList(string name = null) : base(name)
         {
-        }
-
-        public ObjectList(string name, string[] propertyToInclude, Func<List<T>> listGetter) : base(name)
-        {
-            PropertyToInclude = propertyToInclude;
-            ListGetter = listGetter;
         }
 
         protected override int WriteToScreen()

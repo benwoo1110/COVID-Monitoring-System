@@ -42,7 +42,7 @@ namespace COVIDMonitoringSystem.ConsoleApp.Display.Elements
 
         public Action OnEnterRunner { get; set; }
 
-        public Input(string name) : base(name)
+        public Input(string name = null) : base(name)
         {
         }
 

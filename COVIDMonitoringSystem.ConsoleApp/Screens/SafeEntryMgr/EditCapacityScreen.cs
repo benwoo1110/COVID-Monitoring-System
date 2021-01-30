@@ -17,37 +17,37 @@ namespace COVIDMonitoringSystem.ConsoleApp.Screens.SafeEntryMgr
     {
         public override string Name => "changeCapacity";
 
-        private Header header = new Header("header")
+        private Header header = new Header
         {
             Text = "Change capacity of business location",
             BoundingBox = {Top = 0}
         };
 
-        private Input businessName = new Input("name")
+        private Input businessName = new Input
         {
             Prompt = "Enter business name to search for",
             BoundingBox = {Top = 4}
         };
 
-        private Input capacity = new Input("capacity")
+        private Input capacity = new Input
         {
             Prompt = "Enter new maximum capacity",
             BoundingBox = {Top = 5}
         };
 
-        private Label divider = new Label("divider")
+        private Label divider = new Label
         {
             Text = "----",
             BoundingBox = {Top = 6}
         };
 
-        private Button confirm = new Button("confirm")
+        private Button confirm = new Button
         {
             Text = "[Confirm]",
             BoundingBox = {Top = 7}
         };
 
-        private Label result = new Label("result")
+        private Label result = new Label
         {
             BoundingBox = {Top = 9},
             ClearOnExit = true
@@ -60,7 +60,7 @@ namespace COVIDMonitoringSystem.ConsoleApp.Screens.SafeEntryMgr
         [OnClick("confirm")]
         private void OnChangeCapacity(
             [InputParam("businessName")] BusinessLocation targetBusiness,
-            [InputParam("businessName")] int capacityNumber)
+            [InputParam("capacity")] int capacityNumber)
         {
             var oldCapacity = targetBusiness.MaximumCapacity;
             targetBusiness.MaximumCapacity = capacityNumber;

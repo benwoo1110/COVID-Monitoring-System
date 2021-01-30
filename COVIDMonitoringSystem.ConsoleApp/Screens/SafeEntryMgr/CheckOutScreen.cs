@@ -20,46 +20,46 @@ namespace COVIDMonitoringSystem.ConsoleApp.Screens.SafeEntryMgr
     {
         public override string Name => "checkOut";
 
-        private Header header = new Header("header")
+        private Header header = new Header
         {
             Text = "SafeEntry Check Out",
             BoundingBox = { Top = 0 }
         };
-        private Input name = new Input("name")
+        private Input name = new Input
         {
             Prompt = "Enter your name",
             BoundingBox = { Top = 4 }
         };
-        private Button check = new Button("check")
+        private Button check = new Button
         {
             Text = "[Check]",
             BoundingBox = { Top = 5 }
         };
-        private Label locations = new Label("locations")
+        private Label locations = new Label
         {
             ClearOnExit = true,
             BoundingBox = { Top = 6 }
         };
-        private Label divider = new Label("divider")
+        private Label divider = new Label
         {
             Text = "----",
             BoundingBox = { Top = 1 }
         };
-        private Input targetStore = new Input("targetStore")
+        private Input targetStore = new Input
         {
             Prompt = "Enter business location to check out from",
             Hidden = true,
             Enabled = false,
             BoundingBox = { Top = 2 }
         };
-        private Button confirm = new Button("confirm")
+        private Button confirm = new Button
         {
             Text = "[Check Out]",
             Hidden = true,
             Enabled = false,
             BoundingBox = { Top = 3 }
         };
-        private Label result = new Label("result")
+        private Label result = new Label
         {
             ClearOnExit = true,
             BoundingBox = { Top = 4 }

@@ -18,31 +18,31 @@ namespace COVIDMonitoringSystem.ConsoleApp.Screens.TravelEntryMgr
     {
         public override string Name => "shnReport";
 
-        private Header header = new Header("header")
+        private Header header = new Header
         {
             Text = "Generate SHN Report CSV",
             BoundingBox = {Top = 0}
         };
 
-        private Input reportDate = new Input("reportDate")
+        private Input reportDate = new Input
         {
             Prompt = "Report Date",
             BoundingBox = {Top = 4}
         };
 
-        private Button generate = new Button("generate")
+        private Button generate = new Button
         {
             Text = "[Generate]",
             BoundingBox = {Top = 6}
         };
 
-        private Label result = new Label("result")
+        private Label result = new Label
         {
             BoundingBox = {Top = 8},
             ClearOnExit = true
         };
 
-        private Button openFile = new Button("openFile")
+        private Button openFile = new Button
         {
             Text = "[Open File]",
             BoundingBox = {Top = 0}

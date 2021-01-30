@@ -35,13 +35,8 @@ namespace COVIDMonitoringSystem.ConsoleApp.Display.Elements
 
         public virtual bool ClearOnExit { get; set; }
 
-        protected TextElement(string name) : base(name)
+        protected TextElement(string name = null) : base(name)
         {
-        }
-
-        protected TextElement(string name, string text) : base(name)
-        {
-            Text = text;
         }
 
         protected override int WriteToScreen()

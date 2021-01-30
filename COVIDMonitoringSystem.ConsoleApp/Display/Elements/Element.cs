@@ -36,14 +36,8 @@ namespace COVIDMonitoringSystem.ConsoleApp.Display.Elements
         
         public Box BoundingBox { get; }
 
-        protected Element()
+        protected Element(string name = null)
         {
-            BoundingBox = new Box(this);
-        }
-
-        protected Element(string name)
-        {
-            Name = name;
             BoundingBox = new Box(this);
         }
 

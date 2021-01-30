@@ -37,7 +37,7 @@ namespace COVIDMonitoringSystem.ConsoleApp.Display.Elements
             }
         }
 
-        protected SelectableElement(string name) : base(name)
+        protected SelectableElement(string name = null) : base(name)
         {
         }
 

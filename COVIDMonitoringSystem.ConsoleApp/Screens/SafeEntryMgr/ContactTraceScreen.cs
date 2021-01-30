@@ -17,53 +17,54 @@ namespace COVIDMonitoringSystem.ConsoleApp.Screens.SafeEntryMgr
     {
         public override string Name => "contactTrace";
 
-        private Header header = new Header("header")
+        private Header header = new Header
         {
             Text = "Generate Contact Tracing Report",
             BoundingBox = {Top = 0}
         };
 
-        private Label locations = new Label("locations")
+        private Label locations = new Label
         {
             BoundingBox = {Top = 6}
         };
 
-        private Input date1 = new Input("date1")
+        private Input date1 = new Input
         {
             Prompt = "Enter the beginning of the time period you want to check (dd/mm/yyyy hh:mm)",
             BoundingBox = {Top = 0}
         };
 
-        private Input date2 = new Input("date2")
+        private Input date2 = new Input
         {
             Prompt = "Enter the end of the time period you want to check (dd/mm/yyyy hh:mm)",
             BoundingBox = {Top = 1}
         };
 
-        private Input targetStore = new Input("targetStore")
+        private Input targetStore = new Input
         {
             Prompt = "Enter the name of the store you want to check",
             BoundingBox = {Top = 2}
         };
 
-        private Button generate = new Button("generate")
+        private Button generate = new Button
         {
             Text = "[Generate report]",
             BoundingBox = {Top = 3}
         };
 
-        private Label nameList = new Label("nameList")
+        private Label nameList = new Label
         {
             BoundingBox = {Top = 5}
         };
 
-        private Label output = new Label("output")
+        private Label output = new Label
         {
             BoundingBox = {Top = 9},
             ClearOnExit = true
         };
 
-        public ContactTraceScreen(ConsoleDisplayManager displayManager, COVIDMonitoringManager covidManager) : base(displayManager, covidManager)
+        public ContactTraceScreen(ConsoleDisplayManager displayManager, COVIDMonitoringManager covidManager) : base(
+            displayManager, covidManager)
         {
             date1.BoundingBox.SetRelativeElement(locations);
             date2.BoundingBox.SetRelativeElement(locations);

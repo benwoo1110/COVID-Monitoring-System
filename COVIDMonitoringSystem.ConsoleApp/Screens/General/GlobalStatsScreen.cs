@@ -15,25 +15,25 @@ namespace COVIDMonitoringSystem.ConsoleApp.Screens.General
     {
         public override string Name => "globalStats";
 
-        private Header header = new Header("header")
+        private Header header = new Header
         {
             Text = "Globel Stats",
             BoundingBox = {Top = 0}
         };
 
-        private Input country = new Input("country")
+        private Input country = new Input
         {
             Prompt = "Enter a Country",
             BoundingBox = {Top = 4}
         };
 
-        private Button searchCountry = new Button("searchCountry")
+        private Button searchCountry = new Button
         {
             Text = "[Search Country]",
             BoundingBox = {Top = 6}
         };
 
-        private Label result = new Label("result")
+        private Label result = new Label
         {
             Text = "Search for a country and see what happens!",
             BoundingBox = {Top = 8}
