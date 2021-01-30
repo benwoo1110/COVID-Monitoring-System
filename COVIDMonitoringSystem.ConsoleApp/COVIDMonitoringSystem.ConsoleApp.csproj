@@ -14,16 +14,4 @@
       <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
     </ItemGroup>
 
-    <ItemGroup>
-      <Compile Update="ConsoleRunner.TravelEntryMgr.cs">
-        <DependentUpon>ConsoleRunner.cs</DependentUpon>
-      </Compile>
-	  <Compile Update="ConsoleRunner.SafeEntryMgr.cs">
-		<DependentUpon>ConsoleRunner.cs</DependentUpon>
-	  </Compile>
-	  <Compile Update="ConsoleRunner.General.cs">
-	    <DependentUpon>ConsoleRunner.cs</DependentUpon>
-	  </Compile>
-    </ItemGroup>
-
 </Project>
