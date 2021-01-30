@@ -9,6 +9,7 @@ using COVIDMonitoringSystem.ConsoleApp.Display;
 using COVIDMonitoringSystem.ConsoleApp.Display.Attributes;
 using COVIDMonitoringSystem.ConsoleApp.Display.Elements;
 using COVIDMonitoringSystem.Core;
+using COVIDMonitoringSystem.Core.PersonMgr;
 using COVIDMonitoringSystem.Core.SafeEntryMgr;
 
 namespace COVIDMonitoringSystem.ConsoleApp.Screens.SafeEntryMgr
@@ -54,7 +55,8 @@ namespace COVIDMonitoringSystem.ConsoleApp.Screens.SafeEntryMgr
 
         private Label result = new Label("result")
         {
-            BoundingBox = { Top = 6 }
+            BoundingBox = { Top = 6 },
+            ClearOnExit = true
         };
 
         public CheckInScreen(ConsoleDisplayManager displayManager, COVIDMonitoringManager covidManager) : base(
@@ -85,14 +87,9 @@ namespace COVIDMonitoringSystem.ConsoleApp.Screens.SafeEntryMgr
             locations.Text = locationNames;
         }
 
-        [OnClick("confirm")] private void OnConfirm()
-        {
-            CheckIn();
-            name.ClearText();
-            targetStore.ClearText();
-        }
-
-        private void CheckIn()
+        [OnClick("confirm")] private void OnCheckIn(
+            [Parser("name", "result")] Resident person,
+            [Parser("targetStore", "result")] BusinessLocation location)
         {
             var inputName = CovidManager.FindPerson(name.Text);
             var inputLocation = CovidManager.FindBusinessLocation(targetStore.Text);
@@ -109,14 +106,11 @@ namespace COVIDMonitoringSystem.ConsoleApp.Screens.SafeEntryMgr
                     inputLocation.VisitorsNow += 1;
                     result.Text = $"You have been checked in to {inputLocation}";
                 }
-                
-            }
-            else
-            {
-                result.Text = $"Either name or location or both does not exist. You are not checked in.";
-            }
-            
 
+            }
+            name.ClearText();
+            targetStore.ClearText();
+            ClearAllInputs();
         }
     }
 }
