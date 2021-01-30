@@ -78,8 +78,8 @@ namespace COVIDMonitoringSystem.ConsoleApp.Display
                 throw new ArgumentNullException();
             }
             
-            var resolver = resolverMap.GetValueOrDefault(type);
-            var result = resolver?.Invoke(screen, value);
+            var resolver = resolverMap[type];
+            var result = resolver.Invoke(screen, value);
             if (result == null)
             {
                 throw new Exception();

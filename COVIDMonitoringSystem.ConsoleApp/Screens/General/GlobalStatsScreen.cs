@@ -9,7 +9,7 @@ using COVIDMonitoringSystem.ConsoleApp.Display.Attributes;
 using COVIDMonitoringSystem.ConsoleApp.Display.Elements;
 using COVIDMonitoringSystem.Core;
 
-namespace COVIDMonitoringSystem.ConsoleApp.Screens
+namespace COVIDMonitoringSystem.ConsoleApp.Screens.General
 {
     public class GlobalStatsScreen : CovidScreen
     {

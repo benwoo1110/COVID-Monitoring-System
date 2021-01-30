@@ -6,6 +6,7 @@
 
 using COVIDMonitoringSystem.ConsoleApp.Builders;
 using COVIDMonitoringSystem.ConsoleApp.Display;
+using COVIDMonitoringSystem.ConsoleApp.Utilities;
 using COVIDMonitoringSystem.Core;
 using COVIDMonitoringSystem.Core.PersonMgr;
 using COVIDMonitoringSystem.Core.TravelEntryMgr;
@@ -54,6 +55,9 @@ namespace COVIDMonitoringSystem.ConsoleApp
             DisplayManager.ResolveManager.RegisterQuickInputResolver(
                 SHNTier.FindAppropriateTier,
                 "This shouldn't happen. Input was: {0}"
+            );
+            DisplayManager.ResolveManager.RegisterInputResolver<TravelEntryMode>(
+                (screen, value) => CHelper.EnumParser<TravelEntryMode>(value)
             );
         }
 

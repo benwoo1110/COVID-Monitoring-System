@@ -61,7 +61,7 @@ namespace COVIDMonitoringSystem.ConsoleApp.Utilities
                 arguments.Add(parseResult);
             }
             
-            Method?.Invoke(screen, arguments.ToArray());
+            Method.Invoke(screen, arguments.ToArray());
         }
 
         private object SilentParsing(AbstractScreen screen, Input input, Type type)
