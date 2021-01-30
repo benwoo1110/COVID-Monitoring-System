@@ -112,6 +112,14 @@ namespace COVIDMonitoringSystem.Core
             );
         }
 
+        public Dictionary<string, object> LoadCountryCovidData(string country)
+        {
+            return CoreHelper.FetchFromWeb<Dictionary<string, object>>(
+                "https://disease.sh", 
+                $"/v3/covid-19/countries/{country}"
+            );
+        }
+
         public FileCreateResult GenerateSHNStatusReportFile(DateTime dateTime)
         {
             var csvData = new List<Dictionary<string, string>>();

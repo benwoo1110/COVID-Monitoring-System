@@ -132,9 +132,10 @@ namespace COVIDMonitoringSystem.Core.Utilities
             builder.Append("\n");
         }
 
-        [CanBeNull] public static object FetchFromWeb<T>(
+        [CanBeNull] public static T FetchFromWeb<T>(
             [NotNull] string uri, 
             [NotNull] string request)
+            where T : class
         {
             using var client = new HttpClient { BaseAddress = new Uri(uri)};
             var responseTask = client.GetAsync(request);

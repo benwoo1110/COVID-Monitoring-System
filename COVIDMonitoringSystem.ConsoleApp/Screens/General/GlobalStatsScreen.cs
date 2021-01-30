@@ -7,6 +7,7 @@
 using COVIDMonitoringSystem.ConsoleApp.Display;
 using COVIDMonitoringSystem.ConsoleApp.Display.Attributes;
 using COVIDMonitoringSystem.ConsoleApp.Display.Elements;
+using COVIDMonitoringSystem.ConsoleApp.Utilities;
 using COVIDMonitoringSystem.Core;
 
 namespace COVIDMonitoringSystem.ConsoleApp.Screens.General
@@ -45,10 +46,23 @@ namespace COVIDMonitoringSystem.ConsoleApp.Screens.General
 
         [OnClick("searchCountry")]
         private void OnSearchCountry(
-            [InputParam("country", "result")] string countryStuff)
+            [InputParam("country", "result")] string countryName)
         {
             var targetCountry = country.Text;
-            result.Text = $"Search for {countryStuff}!";
+            result.Text = $"Loading information on {countryName}...";
+
+            var countryCovidData = CovidManager.LoadCountryCovidData(countryName);
+
+            var detailsBuilder = new DetailsBuilder();
+            foreach (var (key, value) in countryCovidData)
+            {
+                detailsBuilder.AddInfo(
+                    key?.Replace("\r", ""), 
+                    value.ToString()?.Replace("\r", "")
+                );
+            }
+
+            result.Text = detailsBuilder.Build();
             country.ClearText();
         }
     }
