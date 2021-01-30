@@ -44,9 +44,14 @@ namespace COVIDMonitoringSystem.ConsoleApp.Screens.SafeEntryMgr
             Hidden = true,
             Enabled = false
         };
+        private Button getToken = new Button("getToken")
+        {
+            Text = "[Get Token]",
+            BoundingBox = { Top = 11 }
+        };
         private Label output = new Label("output")
         {
-            BoundingBox = { Top = 12 }
+            BoundingBox = { Top = 13 }
         };
 
         [OnClick("check")] private void OnCheck()
@@ -60,6 +65,12 @@ namespace COVIDMonitoringSystem.ConsoleApp.Screens.SafeEntryMgr
             {
                 result.Text = "Resident not found";
             }
+        }
+
+        [OnClick("getToken")] private void OnToken(string finalSerial, string location, DateTime expiry)
+        {
+            output.Text = $"A new token has been issued to you. Your serial number is {finalSerial}, " +
+                        $"your collection location is at {location} and the expiry date of your token is {expiry}.";
         }
         
         private void AssignToken(Resident person)
@@ -76,8 +87,7 @@ namespace COVIDMonitoringSystem.ConsoleApp.Screens.SafeEntryMgr
                 var expiry = inputCollectDate.AddMonths(6);
                 var newT = new TraceTogetherToken(finalSerial, location.Text, expiry);
                 person.Token = newT;
-                output.Text = $"A new token has been issued to you. Your serial number is {finalSerial}, " +
-                                    $"your collection location is at {location.Text} and the expiry date of your token is {expiry}.";
+                OnToken(finalSerial, location.Text, expiry);
             }
             else if (person.Token.IsEligibleForReplacement())
             {
@@ -88,9 +98,7 @@ namespace COVIDMonitoringSystem.ConsoleApp.Screens.SafeEntryMgr
                 location.Hidden = false;
                 location.Enabled = true;
                 person.Token.ReplaceToken(finalSerial, location.Text);
-                CHelper.WriteLine($"A new token has been issued to you. Your serial number is {finalSerial}, " +
-                                    $"your collection location is at {location.Text} and the expiry date of your token is " +
-                                    $"{person.Token.ExpiryDate}.");
+                OnToken(finalSerial, location.Text, person.Token.ExpiryDate);
             }
             else
             {
