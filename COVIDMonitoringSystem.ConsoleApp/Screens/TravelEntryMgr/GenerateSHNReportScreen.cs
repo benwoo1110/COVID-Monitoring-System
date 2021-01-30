@@ -5,11 +5,12 @@
 //============================================================
 
 using System;
-using System.Diagnostics;
+using System.IO;
 using COVIDMonitoringSystem.ConsoleApp.Display;
 using COVIDMonitoringSystem.ConsoleApp.Display.Attributes;
 using COVIDMonitoringSystem.ConsoleApp.Display.Elements;
 using COVIDMonitoringSystem.Core;
+using COVIDMonitoringSystem.Core.Utilities;
 
 namespace COVIDMonitoringSystem.ConsoleApp.Screens.TravelEntryMgr
 {
@@ -88,14 +89,7 @@ namespace COVIDMonitoringSystem.ConsoleApp.Screens.TravelEntryMgr
                 return;
             }
 
-            try
-            {
-                Process.Start(cachedFilePath);
-            }
-            catch (Exception e)
-            {
-                result.Text = cachedFilePath + "  " + e.Message;
-            }
+            CoreHelper.OpenFile(cachedFilePath);
         }
     }
 }

@@ -6,6 +6,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
@@ -26,6 +27,20 @@ namespace COVIDMonitoringSystem.Core.Utilities
         public static TE ParseEnum<TE>(string value) where TE : struct
         {
             return Enum.Parse<TE>(value, true);
+        }
+
+        public static bool OpenFile(string path)
+        {
+            try
+            {
+                Process.Start("cmd.exe", $"/C {path}");
+            }
+            catch
+            {
+                return false;
+            }
+
+            return true;
         }
         
         [NotNull] public static Dictionary<string, string>[] ReadCsv([NotNull] string filePath)
