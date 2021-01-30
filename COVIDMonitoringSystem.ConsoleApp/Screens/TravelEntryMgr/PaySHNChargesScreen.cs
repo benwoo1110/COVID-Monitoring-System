@@ -41,6 +41,12 @@ namespace COVIDMonitoringSystem.ConsoleApp.Screens.TravelEntryMgr
             ClearOnExit = true
         };
 
+        private Button payNow = new Button
+        {
+            BoundingBox = {Top = 10},
+            ClearOnExit = true
+        };
+
         public PaySHNChargesScreen(ConsoleDisplayManager displayManager, COVIDMonitoringManager covidManager) : base(displayManager, covidManager)
         {
         }
