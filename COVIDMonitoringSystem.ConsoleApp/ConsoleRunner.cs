@@ -32,33 +32,31 @@ namespace COVIDMonitoringSystem.ConsoleApp
 
         private void RegisterInputResolvers()
         {
-            DisplayManager.ResolveManager.RegisterQuickInputResolver(
+            DisplayManager.ResolveManager.RegisterQuickObjectResolver(
                 Manager.FindPerson,
                 "No person with name {0} found."
             );
-            DisplayManager.ResolveManager.RegisterQuickInputResolver(
+            DisplayManager.ResolveManager.RegisterQuickObjectResolver(
                 Manager.FindPersonOfType<Resident>,
                 "No resident with name {0} found."
             );
-            DisplayManager.ResolveManager.RegisterQuickInputResolver(
+            DisplayManager.ResolveManager.RegisterQuickObjectResolver(
                 Manager.FindPersonOfType<Visitor>,
                 "No visitor with name {0} found."
             );
-            DisplayManager.ResolveManager.RegisterQuickInputResolver(
+            DisplayManager.ResolveManager.RegisterQuickObjectResolver(
                 Manager.FindBusinessLocation,
                 "No business with name {0} found."
             );
-            DisplayManager.ResolveManager.RegisterQuickInputResolver(
+            DisplayManager.ResolveManager.RegisterQuickObjectResolver(
                 Manager.FindSHNFacility,
                 "No SHN facility with name {0} found."
             );
-            DisplayManager.ResolveManager.RegisterQuickInputResolver(
+            DisplayManager.ResolveManager.RegisterQuickObjectResolver(
                 SHNTier.FindAppropriateTier,
                 "This shouldn't happen. Input was: {0}"
             );
-            DisplayManager.ResolveManager.RegisterInputResolver<TravelEntryMode>(
-                (screen, value) => CHelper.EnumParser<TravelEntryMode>(value)
-            );
+            DisplayManager.ResolveManager.RegisterQuickEnumResolver<TravelEntryMode>("entry mode");
         }
 
         private void SetUpMenus()

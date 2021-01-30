@@ -7,6 +7,7 @@
 using System;
 using System.Collections.Generic;
 using COVIDMonitoringSystem.ConsoleApp.Utilities;
+using COVIDMonitoringSystem.Core.Utilities;
 using JetBrains.Annotations;
 
 namespace COVIDMonitoringSystem.ConsoleApp.Display
@@ -18,33 +19,30 @@ namespace COVIDMonitoringSystem.ConsoleApp.Display
         public InputResolverManager()
         {
             resolverMap = new Dictionary<Type, Func<AbstractScreen, string, object>>();
-            
-            RegisterInputResolver<string>((screen, value) =>
-            {
-                //TODO: better checking empty string.
-                return value;
-            });
 
-            RegisterInputResolver<int>((screen, value) =>
-            {
-                //TODO: Result
-                return Convert.ToInt32(value);
-            });
-
-            RegisterInputResolver<double>((screen, value) =>
-            {
-                //TODO: Result
-                return Convert.ToDouble(value);
-            });
-            
-            RegisterInputResolver<DateTime>((screen, value) =>
-            {
-                //TODO: Result
-                return Convert.ToDateTime(value);
-            });
+            RegisterQuickObjectResolver(
+                Convert.ToString, 
+                "Invalid input. {0} is not a string."
+            );
+            RegisterQuickObjectResolver(
+                Convert.ToInt32,
+                "Invalid input. {0} is not a number."
+            );
+            RegisterQuickObjectResolver(
+                Convert.ToDouble,
+                "Invalid input. {0} is not a number."
+            );
+            RegisterQuickObjectResolver(
+                TimeSpan.Parse,
+                "Invalid time format {0}. The correct format is 'HH:MM:SS'."
+            );
+            RegisterQuickObjectResolver(
+                Convert.ToDateTime,
+                "Invalid date format {0}. The correct format is 'DD/MM/YYYY HH:MM:SS'."
+            );
         }
 
-        public void RegisterQuickInputResolver<T>(Func<string, T> converter, string errorMessage)
+        public void RegisterQuickObjectResolver<T>(Func<string, T> converter, string errorMessage)
         {
             RegisterInputResolver<T>((screen, value) =>
             {
@@ -59,10 +57,31 @@ namespace COVIDMonitoringSystem.ConsoleApp.Display
                 }
                 catch (Exception)
                 {
-                    throw new InputParseFailedException(string.Format(errorMessage, value));
+                    throw new InputParseFailedException(string.Format(errorMessage, $"'{value}'"));
                 }
 
                 return result;
+            });
+        }
+
+        public void RegisterQuickEnumResolver<TE>(string enumName = null) where TE : struct
+        {
+            if (string.IsNullOrEmpty(enumName))
+            {
+                enumName = typeof(TE).Name;
+            }
+            
+            RegisterInputResolver<TE>((screen, value) =>
+            {
+                try
+                {
+                    return CoreHelper.ParseEnum<TE>(value);
+                }
+                catch (ArgumentException)
+                {
+                    throw new InputParseFailedException(
+                        $"No such {enumName}. Available values are: {string.Join(", ", Enum.GetNames(typeof(TE)))}.");
+                }
             });
         }
 
