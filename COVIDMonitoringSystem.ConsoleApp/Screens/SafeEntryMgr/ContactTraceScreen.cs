@@ -46,15 +46,10 @@ namespace COVIDMonitoringSystem.ConsoleApp.Screens.SafeEntryMgr
         }
 
         [OnClick("generate")]
-        private void onGenerate(
+        private void onContactTracing(
             [Parser("date1", "output")] DateTime startDate, 
             [Parser("date2", "output")] DateTime endDate,
             [Parser("targetStore", "output")] BusinessLocation location)
-        {
-            ContactTracing();
-        }
-
-        private void ContactTracing()
         {
             var targetDate1 = Convert.ToDateTime(date1.Text);
             var targetDate2 = Convert.ToDateTime(date2.Text);
