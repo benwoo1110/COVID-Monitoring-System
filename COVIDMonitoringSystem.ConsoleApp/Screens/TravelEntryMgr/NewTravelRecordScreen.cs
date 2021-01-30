@@ -68,8 +68,8 @@ namespace COVIDMonitoringSystem.ConsoleApp.Screens.TravelEntryMgr
 
         private Label result = new Label
         {
-            Text = "Result here.",
-            BoundingBox = {Top = 1}
+            BoundingBox = {Top = 1},
+            ClearOnExit = true
         };
 
         public NewTravelRecordScreen(ConsoleDisplayManager displayManager, COVIDMonitoringManager covidManager) : base(displayManager, covidManager)
@@ -121,7 +121,9 @@ namespace COVIDMonitoringSystem.ConsoleApp.Screens.TravelEntryMgr
 
                 travelEntry.AssignSHNFacility(facility);
             }
-
+            
+            person.AddTravelEntry(travelEntry);
+            
             result.Text = $"A new travel entry record has been successfully added for {person.Name}.";
             ClearAllInputs();
         }

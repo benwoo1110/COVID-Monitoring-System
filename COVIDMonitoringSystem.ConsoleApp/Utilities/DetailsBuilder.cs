@@ -18,6 +18,12 @@ namespace COVIDMonitoringSystem.ConsoleApp.Utilities
             Builder = new StringBuilder();
         }
 
+        public DetailsBuilder AddLine(string text)
+        {
+            Builder.Append($"{text}\n");
+            return this;
+        }
+
         public DetailsBuilder AddInfo<T>(string key, T value)
         {
             Builder.Append($"{key}: {value}\n");

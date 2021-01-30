@@ -4,9 +4,13 @@
 // Module Group   : T06
 //============================================================
 
+using System.Collections.Generic;
 using COVIDMonitoringSystem.ConsoleApp.Display;
+using COVIDMonitoringSystem.ConsoleApp.Display.Attributes;
 using COVIDMonitoringSystem.ConsoleApp.Display.Elements;
+using COVIDMonitoringSystem.ConsoleApp.Utilities;
 using COVIDMonitoringSystem.Core;
+using COVIDMonitoringSystem.Core.PersonMgr;
 
 namespace COVIDMonitoringSystem.ConsoleApp.Screens.TravelEntryMgr
 {
@@ -33,14 +37,40 @@ namespace COVIDMonitoringSystem.ConsoleApp.Screens.TravelEntryMgr
 
         private Button paymentInfo = new Button
         {
-            BoundingBox = {Top = 8}
+            BoundingBox = {Top = 8},
+            ClearOnExit = true
         };
 
         public PaySHNChargesScreen(ConsoleDisplayManager displayManager, COVIDMonitoringManager covidManager) : base(displayManager, covidManager)
         {
         }
 
+        [OnClick("viewPayment")]
+        private void OnPaymentView([InputParam("name", "paymentInfo")] Person targetPerson)
+        {
+            var payment = targetPerson.GenerateSHNPaymentDetails();
+            if (!payment.HasUnpaidEntries())
+            {
+                paymentInfo.Text = $"{targetPerson.Name} does not make any unpaid travel entries.";
+                return;
+            }
 
+            var paymentList = new List<string>();
+            foreach (var entry in payment.Entries)
+            {
+                paymentList.Add($"{entry.LastCountryOfEmbarkation,-20} | ${entry.CalculateCharges():0.00}");
+            }
+            
+            var detailsBuilder = new DetailsBuilder();
+            detailsBuilder.AddLine($"{targetPerson.Name} has {payment.NumberOfUnpaidEntries()} unpaid travel entries.")
+                .Separator()
+                .AddOrderedList("Payment List", paymentList)
+                .Separator()
+                .AddLine($"Subtotal: ${payment.SubTotalPrice:0.00}")
+                .AddLine($"Total: ${payment.TotalPrice:0.00} (include 7% GST)");
+
+            paymentInfo.Text = detailsBuilder.Build();
+        }
 
         /*private void PaySHNCharges()
         {
