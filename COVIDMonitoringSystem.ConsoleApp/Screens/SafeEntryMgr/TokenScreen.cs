@@ -10,6 +10,7 @@ using COVIDMonitoringSystem.ConsoleApp.Display.Attributes;
 using COVIDMonitoringSystem.ConsoleApp.Display.Elements;
 using COVIDMonitoringSystem.Core;
 using COVIDMonitoringSystem.Core.PersonMgr;
+using COVIDMonitoringSystem.Core.SafeEntryMgr;
 
 namespace COVIDMonitoringSystem.ConsoleApp.Screens.SafeEntryMgr
 {
@@ -52,6 +53,10 @@ namespace COVIDMonitoringSystem.ConsoleApp.Screens.SafeEntryMgr
         {
             BoundingBox = { Top = 13 }
         };
+
+        public TokenScreen(ConsoleDisplayManager displayManager, COVIDMonitoringManager covidManager) : base(displayManager, covidManager)
+        {
+        }
 
         [OnClick("check")] private void OnCheck()
         {
@@ -117,10 +122,5 @@ namespace COVIDMonitoringSystem.ConsoleApp.Screens.SafeEntryMgr
             output.Text = $"A new token has been issued to you. Your token's serial number is {serialno}, " +
                 $"your collection location is {location} and your token expires on {expiry}.";
         }
-
-        public TokenScreen(ConsoleDisplayManager displayManager, COVIDMonitoringManager covidManager) : base(displayManager, covidManager)
-        {
-        }
-
     }
 }

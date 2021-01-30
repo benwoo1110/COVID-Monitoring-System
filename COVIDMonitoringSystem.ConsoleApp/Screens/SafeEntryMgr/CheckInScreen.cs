@@ -5,6 +5,7 @@
 //============================================================
 
 using System;
+using System.Text;
 using COVIDMonitoringSystem.ConsoleApp.Display;
 using COVIDMonitoringSystem.ConsoleApp.Display.Attributes;
 using COVIDMonitoringSystem.ConsoleApp.Display.Elements;
@@ -21,41 +22,41 @@ namespace COVIDMonitoringSystem.ConsoleApp.Screens.SafeEntryMgr
         private Header header = new Header("header")
         {
             Text = "SafeEntry Check In",
-            BoundingBox = { Top = 0 }
+            BoundingBox = {Top = 0}
         };
 
         private Label locations = new Label("locations")
         {
-            BoundingBox = { Top = 4 }
+            BoundingBox = {Top = 4}
         };
 
         private Input name = new Input("name")
         {
             Prompt = "Enter your name",
-            BoundingBox = { Top = 0 }
+            BoundingBox = {Top = 0}
         };
 
         private Input targetStore = new Input("targetStore")
         {
             Prompt = "Enter business location to check in to",
-            BoundingBox = { Top = 1 }
+            BoundingBox = {Top = 1}
         };
 
         private Label divider = new Label("divider")
         {
             Text = "----",
-            BoundingBox = { Top = 2 }
+            BoundingBox = {Top = 2}
         };
 
         private Button confirm = new Button("confirm")
         {
             Text = "[Check In]",
-            BoundingBox = { Top = 3 }
+            BoundingBox = {Top = 3}
         };
 
         private Label result = new Label("result")
         {
-            BoundingBox = { Top = 6 },
+            BoundingBox = {Top = 6},
             ClearOnExit = true
         };
 
@@ -76,40 +77,31 @@ namespace COVIDMonitoringSystem.ConsoleApp.Screens.SafeEntryMgr
 
         private void ShowLocations()
         {
-            var locationNames = "Available Business Locations:\n";
-            
-            
+            var locationNames = new StringBuilder("Available Business Locations:\n");
+
             foreach (var i in CovidManager.BusinessLocationList)
             {
-                locationNames += $"{i.BusinessName}\n";
+                locationNames.Append($"{i.BusinessName}\n");
             }
 
-            locations.Text = locationNames;
+            locations.Text = locationNames.ToString();
         }
 
-        [OnClick("confirm")] private void OnCheckIn(
-            [InputParam("name", "result")] Resident person,
+        [OnClick("confirm")]
+        private void OnCheckIn(
+            [InputParam("name", "result")] Person person,
             [InputParam("targetStore", "result")] BusinessLocation location)
         {
-            var inputName = CovidManager.FindPerson(name.Text);
-            var inputLocation = CovidManager.FindBusinessLocation(targetStore.Text);
-            if (inputName != null && inputLocation != null)
+            if (location.IsFull())
             {
-                if (inputLocation.IsFull())
-                {
-                    result.Text = $"{inputLocation} is at full capacity, please try again later.";
-                }
-                else
-                {
-                    var checkIn = new SafeEntry(DateTime.Now, inputLocation);
-                    inputName.AddSafeEntry(checkIn);
-                    inputLocation.VisitorsNow += 1;
-                    result.Text = $"You have been checked in to {inputLocation}";
-                }
-
+                result.Text = $"{location} is at full capacity, please try again later.";
+                return;
             }
-            name.ClearText();
-            targetStore.ClearText();
+
+            var checkIn = new SafeEntry(DateTime.Now, location);
+            person.AddSafeEntry(checkIn);
+            location.VisitorsNow += 1;
+            result.Text = $"You have been checked in to {location}";
             ClearAllInputs();
         }
     }

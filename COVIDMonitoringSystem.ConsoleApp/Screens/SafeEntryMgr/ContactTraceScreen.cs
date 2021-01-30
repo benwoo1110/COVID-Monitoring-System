@@ -17,6 +17,52 @@ namespace COVIDMonitoringSystem.ConsoleApp.Screens.SafeEntryMgr
     {
         public override string Name => "contactTrace";
 
+        private Header header = new Header("header")
+        {
+            Text = "Generate Contact Tracing Report",
+            BoundingBox = {Top = 0}
+        };
+
+        private Label locations = new Label("locations")
+        {
+            BoundingBox = {Top = 6}
+        };
+
+        private Input date1 = new Input("date1")
+        {
+            Prompt = "Enter the beginning of the time period you want to check (dd/mm/yyyy hh:mm)",
+            BoundingBox = {Top = 0}
+        };
+
+        private Input date2 = new Input("date2")
+        {
+            Prompt = "Enter the end of the time period you want to check (dd/mm/yyyy hh:mm)",
+            BoundingBox = {Top = 1}
+        };
+
+        private Input targetStore = new Input("targetStore")
+        {
+            Prompt = "Enter the name of the store you want to check",
+            BoundingBox = {Top = 2}
+        };
+
+        private Button generate = new Button("generate")
+        {
+            Text = "[Generate report]",
+            BoundingBox = {Top = 3}
+        };
+
+        private Label nameList = new Label("nameList")
+        {
+            BoundingBox = {Top = 5}
+        };
+
+        private Label output = new Label("output")
+        {
+            BoundingBox = {Top = 9},
+            ClearOnExit = true
+        };
+
         public ContactTraceScreen(ConsoleDisplayManager displayManager, COVIDMonitoringManager covidManager) : base(displayManager, covidManager)
         {
             date1.BoundingBox.SetRelativeElement(locations);
@@ -46,79 +92,29 @@ namespace COVIDMonitoringSystem.ConsoleApp.Screens.SafeEntryMgr
         }
 
         [OnClick("generate")]
-        private void onContactTracing(
-            [InputParam("date1", "output")] DateTime startDate, 
-            [InputParam("date2", "output")] DateTime endDate,
-            [InputParam("targetStore", "output")] BusinessLocation location)
+        private void OnContactTracing(
+            [InputParam("date1", "output")] DateTime targetDate1,
+            [InputParam("date2", "output")] DateTime targetDate2,
+            [InputParam("targetStore", "output")] BusinessLocation targetLocation)
         {
-            var targetDate1 = Convert.ToDateTime(date1.Text);
-            var targetDate2 = Convert.ToDateTime(date2.Text);
-            var targetLocation = CovidManager.FindBusinessLocation(targetStore.Text);
             var contactNames = "";
 
-            if (targetLocation != null)
+            foreach (var i in CovidManager.PersonList)
             {
-                foreach (var i in CovidManager.PersonList)
+                foreach (var n in i.SafeEntryList)
                 {
-                    foreach (var n in i.SafeEntryList)
+                    if (n.Location == targetLocation && n.CheckIn >= targetDate1 && n.CheckIn <= targetDate2)
                     {
-                        if (n.Location == targetLocation && n.CheckIn >= targetDate1 && n.CheckIn <= targetDate2)
-                        {
-                            contactNames += i.Name + "\n";
-                        }
+                        contactNames += i.Name + "\n";
                     }
                 }
-                nameList.Text = contactNames;
-                var result = CovidManager.GenerateContactTracingReportFile(targetLocation, targetDate1, targetDate2)
-                    ? output.Text = "Successfully generated report file."
-                    : output.Text = "There was an error generating report file.";
-
             }
+
+            nameList.Text = contactNames;
+
+            output.Text = CovidManager.GenerateContactTracingReportFile(targetLocation, targetDate1, targetDate2)
+                ? "Successfully generated report file."
+                : "There was an error generating report file.";
         }
-        private Header header = new Header("header")
-        {
-            Text = "Generate Contact Tracing Report",
-            BoundingBox = { Top = 0 }
-        };
-
-        private Label locations = new Label("locations")
-        {
-            BoundingBox = { Top = 6 }
-        };
-
-        private Input date1 = new Input("date1")
-        {
-            Prompt = "Enter the beginning of the time period you want to check (dd/mm/yyyy hh:mm)",
-            BoundingBox = { Top = 0 }
-        };
-
-        private Input date2 = new Input("date2")
-        {
-            Prompt = "Enter the end of the time period you want to check (dd/mm/yyyy hh:mm)",
-            BoundingBox = { Top = 1 }
-        };
-
-        private Input targetStore = new Input("targetStore")
-        {
-            Prompt = "Enter the name of the store you want to check",
-            BoundingBox = { Top = 2 }
-        };
-
-        private Button generate = new Button("generate")
-        {
-            Text = "[Generate report]",
-            BoundingBox = { Top = 3 }
-        };
-
-        private Label nameList = new Label("nameList")
-        {
-            BoundingBox = { Top = 5 }
-        };
-
-        private Label output = new Label("output")
-        {
-            BoundingBox = { Top = 9 },
-            ClearOnExit = true
-        };
     }
 }

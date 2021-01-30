@@ -25,90 +25,96 @@ namespace COVIDMonitoringSystem.ConsoleApp.Screens.SafeEntryMgr
             Text = "SafeEntry Check Out",
             BoundingBox = { Top = 0 }
         };
-
         private Input name = new Input("name")
         {
             Prompt = "Enter your name",
             BoundingBox = { Top = 4 }
         };
-
         private Button check = new Button("check")
         {
             Text = "[Check]",
             BoundingBox = { Top = 5 }
         };
-
         private Label locations = new Label("locations")
         {
             ClearOnExit = true,
             BoundingBox = { Top = 6 }
         };
-
         private Label divider = new Label("divider")
         {
             Text = "----",
-            BoundingBox = { Top = 4 }
+            BoundingBox = { Top = 1 }
         };
-
         private Input targetStore = new Input("targetStore")
         {
             Prompt = "Enter business location to check out from",
             Hidden = true,
             Enabled = false,
-            BoundingBox = { Top = 5 }
+            BoundingBox = { Top = 2 }
         };
-
         private Button confirm = new Button("confirm")
         {
             Text = "[Check Out]",
             Hidden = true,
             Enabled = false,
-            BoundingBox = { Top = 6 }
+            BoundingBox = { Top = 3 }
         };
-
         private Label result = new Label("result")
         {
             ClearOnExit = true,
-            BoundingBox = { Top = 8 }
+            BoundingBox = { Top = 4 }
         };
 
-        [OnClick("check")]private void OnShowLocations(
-            [InputParam("name", "locations")] Resident person)
+        public CheckOutScreen(ConsoleDisplayManager displayManager, COVIDMonitoringManager covidManager) : base(
+            displayManager, covidManager)
         {
-            var locationNames = "Available Business Locations:\n";
-            var inputName = CovidManager.FindPerson(name.Text);
-            List<DateTime> latestCheckinDate = new List<DateTime>();
-            List<DateTime> latestCheckoutDate = new List<DateTime>();
-            if (inputName != null)
-            {
-                foreach (var i in inputName.SafeEntryList)
-                {
-                    latestCheckinDate.Add(i.CheckIn);
-                    latestCheckoutDate.Add(i.CheckOut);
-                    if (latestCheckinDate.Max() > latestCheckoutDate.Max())
-                    {
-                        locationNames += $"{i.Location}\n";
-                    }
-                }
-                locations.Text = locationNames;
-                targetStore.Hidden = false;
-                targetStore.Enabled = true;
-                confirm.Hidden = false;
-                confirm.Enabled = true;
-            }
-            else
-            {
-                locations.Text = $"{inputName} is not a valid resident.";
-            }
+            targetStore.BoundingBox.SetRelativeElement(locations);
+            divider.BoundingBox.SetRelativeElement(locations);
+            confirm.BoundingBox.SetRelativeElement(locations);
+            result.BoundingBox.SetRelativeElement(locations);
         }
 
-        [OnClick("confirm")] private void OnCheckOut(
+        public override void PreLoad()
+        {
+            targetStore.Hidden = true;
+            targetStore.Enabled = false;
+            confirm.Hidden = true;
+            confirm.Enabled = false;
+        }
+
+        [OnClick("check")]
+        private void OnShowLocations(
+            [InputParam("name", "locations")] Person targetPerson)
+        {
+            var locationNames = "Available Business Locations:\n";
+            var latestCheckinDate = new List<DateTime>();
+            var latestCheckoutDate = new List<DateTime>();
+
+            foreach (var i in targetPerson.SafeEntryList)
+            {
+                latestCheckinDate.Add(i.CheckIn);
+                latestCheckoutDate.Add(i.CheckOut);
+                if (latestCheckinDate.Max() > latestCheckoutDate.Max())
+                {
+                    locationNames += $"{i.Location}\n";
+                }
+            }
+
+            locations.Text = locationNames;
+            targetStore.Hidden = false;
+            targetStore.Enabled = true;
+            confirm.Hidden = false;
+            confirm.Enabled = true;
+        }
+
+        [OnClick("confirm")] 
+        private void OnCheckOut(
             [InputParam("targetStore", "result")] BusinessLocation location)
         {
             var inputName = CovidManager.FindPerson(name.Text);
             var checkoutLocation = CovidManager.FindBusinessLocation(targetStore.Text);
-            List<DateTime> latestCheckinDate = new List<DateTime>();
-            List<DateTime> latestCheckoutDate = new List<DateTime>();
+            var latestCheckinDate = new List<DateTime>();
+            var latestCheckoutDate = new List<DateTime>();
             foreach (var i in inputName.SafeEntryList)
             {
                 latestCheckinDate.Add(i.CheckIn);
@@ -123,21 +129,5 @@ namespace COVIDMonitoringSystem.ConsoleApp.Screens.SafeEntryMgr
                 }
             }
         }
-        public override void PreLoad()
-        {
-            targetStore.Hidden = true;
-            targetStore.Enabled = false;
-            confirm.Hidden = true;
-            confirm.Enabled = false;
-        }
-
-        public CheckOutScreen(ConsoleDisplayManager displayManager, COVIDMonitoringManager covidManager) : base(displayManager, covidManager)
-        {
-            targetStore.BoundingBox.SetRelativeElement(locations);
-            divider.BoundingBox.SetRelativeElement(locations);
-            confirm.BoundingBox.SetRelativeElement(locations);
-            result.BoundingBox.SetRelativeElement(locations);
-        }
-        
     }
 }
