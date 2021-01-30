@@ -9,6 +9,7 @@ using System.Linq;
 using System.Collections.Generic;
 using COVIDMonitoringSystem.ConsoleApp.Display;
 using COVIDMonitoringSystem.Core;
+using COVIDMonitoringSystem.Core.SafeEntryMgr;
 using COVIDMonitoringSystem.Core.PersonMgr;
 using COVIDMonitoringSystem.ConsoleApp.Display.Attributes;
 using COVIDMonitoringSystem.ConsoleApp.Display.Elements;
@@ -39,13 +40,14 @@ namespace COVIDMonitoringSystem.ConsoleApp.Screens.SafeEntryMgr
 
         private Label locations = new Label("locations")
         {
+            ClearOnExit = true,
             BoundingBox = { Top = 6 }
         };
 
         private Label divider = new Label("divider")
         {
             Text = "----",
-            BoundingBox = { Top = 9 }
+            BoundingBox = { Top = 4 }
         };
 
         private Input targetStore = new Input("targetStore")
@@ -53,7 +55,7 @@ namespace COVIDMonitoringSystem.ConsoleApp.Screens.SafeEntryMgr
             Prompt = "Enter business location to check out from",
             Hidden = true,
             Enabled = false,
-            BoundingBox = { Top = 10 }
+            BoundingBox = { Top = 5 }
         };
 
         private Button confirm = new Button("confirm")
@@ -61,12 +63,13 @@ namespace COVIDMonitoringSystem.ConsoleApp.Screens.SafeEntryMgr
             Text = "[Check Out]",
             Hidden = true,
             Enabled = false,
-            BoundingBox = { Top = 11 }
+            BoundingBox = { Top = 6 }
         };
 
         private Label result = new Label("result")
         {
-            BoundingBox = { Top = 13 }
+            ClearOnExit = true,
+            BoundingBox = { Top = 8 }
         };
 
         [OnClick("check")]private void OnShowLocations(
@@ -99,13 +102,33 @@ namespace COVIDMonitoringSystem.ConsoleApp.Screens.SafeEntryMgr
             }
         }
 
-        [OnClick("confirm")] private void OnCheckOut()
+        [OnClick("confirm")] private void OnCheckOut(
+            [Parser("targetStore", "result")] BusinessLocation location)
         {
             var inputName = CovidManager.FindPerson(name.Text);
             var checkoutLocation = CovidManager.FindBusinessLocation(targetStore.Text);
             List<DateTime> latestCheckinDate = new List<DateTime>();
             List<DateTime> latestCheckoutDate = new List<DateTime>();
-
+            foreach (var i in inputName.SafeEntryList)
+            {
+                latestCheckinDate.Add(i.CheckIn);
+                latestCheckoutDate.Add(i.CheckOut);
+                if (i.Location == checkoutLocation && latestCheckinDate.Max() > latestCheckoutDate.Max())
+                {
+                    i.PerformCheckOut();
+                    checkoutLocation.VisitorsNow -= 1;
+                    result.Text = $"You have been checked out from {checkoutLocation}";
+                    ClearAllInputs();
+                    return;
+                }
+            }
+        }
+        public override void PreLoad()
+        {
+            targetStore.Hidden = true;
+            targetStore.Enabled = false;
+            confirm.Hidden = true;
+            confirm.Enabled = false;
         }
 
         public CheckOutScreen(ConsoleDisplayManager displayManager, COVIDMonitoringManager covidManager) : base(displayManager, covidManager)
@@ -115,38 +138,6 @@ namespace COVIDMonitoringSystem.ConsoleApp.Screens.SafeEntryMgr
             confirm.BoundingBox.SetRelativeBox(locations);
             result.BoundingBox.SetRelativeBox(locations);
         }
-        /*private void CheckOut()
-        {
-            var inputName = CovidManager.FindPerson(name.Text);
-            if (inputName != null)
-            {
-                foreach (var i in inputName.SafeEntryList)
-                {
-                    latestCheckinDate.Add(i.CheckIn);
-                    latestCheckoutDate.Add(i.CheckOut);
-                    if (latestCheckinDate.Max() > latestCheckoutDate.Max())
-                    {
-                        CHelper.WriteLine(i.ToString());
-                    }
-                }
-                var checkoutLocation = CHelper.GetInput("Enter store to check out from: ", CovidManager.FindBusinessLocation);
-                foreach (var i in inputName.SafeEntryList)
-                {
-                    if (i.Location == checkoutLocation && latestCheckinDate.Max() > latestCheckoutDate.Max())
-                    {
-                        i.PerformCheckOut();
-                        checkoutLocation.VisitorsNow -= 1;
-                        CHelper.WriteLine("You have been checked out from " + checkoutLocation);
-                        return;
-                    }
-                }
-
-                CHelper.WriteLine("You are not checked in to this store");
-            }
-            else
-            {
-                CHelper.WriteLine("Name not found.");
-            }
-        }*/
+        
     }
 }
