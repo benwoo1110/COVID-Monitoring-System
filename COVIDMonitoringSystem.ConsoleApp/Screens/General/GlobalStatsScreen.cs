@@ -20,16 +20,19 @@ namespace COVIDMonitoringSystem.ConsoleApp.Screens.General
             Text = "Globel Stats",
             BoundingBox = {Top = 0}
         };
+
         private Input country = new Input("country")
         {
             Prompt = "Enter a Country",
             BoundingBox = {Top = 4}
         };
+
         private Button searchCountry = new Button("searchCountry")
         {
             Text = "[Search Country]",
             BoundingBox = {Top = 6}
         };
+
         private Label result = new Label("result")
         {
             Text = "Search for a country and see what happens!",
@@ -40,7 +43,8 @@ namespace COVIDMonitoringSystem.ConsoleApp.Screens.General
         {
         }
 
-        [OnClick("searchCountry")] private void OnSearchCountry(
+        [OnClick("searchCountry")]
+        private void OnSearchCountry(
             [InputParam("country", "result")] string countryStuff)
         {
             var targetCountry = country.Text;

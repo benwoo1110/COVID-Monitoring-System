@@ -20,31 +20,37 @@ namespace COVIDMonitoringSystem.ConsoleApp.Screens.TravelEntryMgr
         {
             Text = "New Visitor"
         };
+
         private Label info = new Label("info")
         {
             Text = "Please Enter Details of the Visitor",
             BoundingBox = {Top = 4}
         };
+
         private Input name = new Input("name")
         {
             Prompt = "Name",
             BoundingBox = {Top = 6}
         };
+
         private Input passportNo = new Input("passportNo")
         {
             Prompt = "Passport Number",
             BoundingBox = {Top = 7}
         };
+
         private Input nationality = new Input("Nationality")
         {
             Prompt = "Nationality",
             BoundingBox = {Top = 8}
         };
+
         private Button create = new Button("create")
         {
             Text = "[Create]",
             BoundingBox = {Top = 10},
         };
+
         private Label result = new Label("result")
         {
             BoundingBox = {Top = 12},
@@ -55,7 +61,7 @@ namespace COVIDMonitoringSystem.ConsoleApp.Screens.TravelEntryMgr
         {
         }
 
-        [OnClick("create")] 
+        [OnClick("create")]
         private void OnCreate(
             [InputParam("name", "result")] string nameText,
             [InputParam("passportNo", "result")] string passportNoText,

@@ -18,21 +18,24 @@ namespace COVIDMonitoringSystem.ConsoleApp.Screens.TravelEntryMgr
         {
             Text = "Pay SHN Charges"
         };
+
         private Input name = new Input("name")
         {
             Prompt = "Name",
             BoundingBox = {Top = 4}
         };
+
         private Button viewPayment = new Button("viewPayment")
         {
             Text = "[View Payment]",
             BoundingBox = {Top = 6}
         };
+
         private Button paymentInfo = new Button("paymentInfo")
         {
             BoundingBox = {Top = 8}
         };
-        
+
         public PaySHNChargesScreen(ConsoleDisplayManager displayManager, COVIDMonitoringManager covidManager) : base(displayManager, covidManager)
         {
         }

@@ -17,16 +17,19 @@ namespace COVIDMonitoringSystem.ConsoleApp.Screens.General
             Text = "Details of a Person",
             BoundingBox = {Top = 0}
         };
+
         private Input name = new Input("name")
         {
             Prompt = "Person Name",
             BoundingBox = {Top = 4}
         };
+
         private Button view = new Button("view")
         {
             Text = "[View Details]",
             BoundingBox = {Top = 6}
         };
+
         private Label details = new Label("details")
         {
             BoundingBox = {Top = 8}
