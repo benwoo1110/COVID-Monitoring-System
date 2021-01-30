@@ -88,6 +88,11 @@ namespace COVIDMonitoringSystem.ConsoleApp.Display
             }
         }
 
+        public virtual void PrePassData(object data)
+        {
+            
+        }
+
         public virtual void PreLoad()
         {
             
