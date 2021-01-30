@@ -7,6 +7,7 @@
 using System;
 using System.Collections.Generic;
 using COVIDMonitoringSystem.ConsoleApp.Utilities;
+using COVIDMonitoringSystem.Core.Utilities;
 using JetBrains.Annotations;
 
 namespace COVIDMonitoringSystem.ConsoleApp.Display
@@ -44,7 +45,7 @@ namespace COVIDMonitoringSystem.ConsoleApp.Display
             });
         }
 
-        public void RegisterQuickInputResolver<T>(Func<string, T> converter, string errorMessage)
+        public void RegisterQuickObjectResolver<T>(Func<string, T> converter, string errorMessage) where T : class
         {
             RegisterInputResolver<T>((screen, value) =>
             {
@@ -63,6 +64,27 @@ namespace COVIDMonitoringSystem.ConsoleApp.Display
                 }
 
                 return result;
+            });
+        }
+
+        public void RegisterQuickEnumResolver<TE>(string enumName = null) where TE : struct
+        {
+            if (string.IsNullOrEmpty(enumName))
+            {
+                enumName = typeof(TE).Name;
+            }
+            
+            RegisterInputResolver<TE>((screen, value) =>
+            {
+                try
+                {
+                    return CoreHelper.ParseEnum<TE>(value);
+                }
+                catch (ArgumentException)
+                {
+                    throw new InputParseFailedException(
+                        $"No such {enumName}. Available values are: {string.Join(", ", Enum.GetNames(typeof(TE)))}.");
+                }
             });
         }
 

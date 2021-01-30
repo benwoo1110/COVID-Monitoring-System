@@ -34,6 +34,7 @@ namespace COVIDMonitoringSystem.ConsoleApp.Utilities
 
             Clear();
             Console.SetBufferSize(Console.WindowWidth, Console.WindowHeight);
+            ColourSelector.Element();
             
             return true;
         }
@@ -99,18 +100,6 @@ namespace COVIDMonitoringSystem.ConsoleApp.Utilities
             ColourSelector.Element();
         }
 
-        public static TE EnumParser<TE>(string value) where TE : struct
-        {
-            try
-            {
-                return CoreHelper.ParseEnum<TE>(value);
-            }
-            catch (ArgumentException)
-            {
-                throw new InputParseFailedException($"No such {typeof(TE).Name}. Available values are: {string.Join(", ", Enum.GetNames(typeof(TE)))}");
-            }
-        }
-
         public static string GetInput(string prompt)
         {
             return GetInput(prompt, Convert.ToString);
@@ -135,12 +124,7 @@ namespace COVIDMonitoringSystem.ConsoleApp.Utilities
                 }
             }
         }
-
-        public static void Pause(string message)
-        {
-            GetInput(message);
-        }
-
+        
         public static bool Confirm(string prompt)
         {
             return GetInput($"{prompt} [y/n]: ", input =>

@@ -30,27 +30,6 @@ namespace COVIDMonitoringSystem.ConsoleApp
             DisplayManager.RegisterScreen(new GenerateSHNReportScreen(DisplayManager, Manager));
         }
 
-        private void NewTravelRecord()
-        {
-            var targetPerson = CHelper.GetInput("Enter name: ", Manager.FindPerson);
-            if (targetPerson == null)
-            {
-                CHelper.WriteLine("No such person found!");
-                return;
-            }
-
-            var travelEntry = new TravelEntry(
-                targetPerson,
-                CHelper.GetInput("Last Country: "),
-                CHelper.GetInput("Entry Mode: ", CHelper.EnumParser<TravelEntryMode>),
-                CHelper.GetInput("Entry Date: ", Convert.ToDateTime)
-            );
-
-            //TODO: Add SHN Facility
-
-            targetPerson.AddTravelEntry(travelEntry);
-        }
-
         private void PaySHNCharges()
         {
             var targetPerson = CHelper.GetInput("Enter name: ", Manager.FindPerson);
