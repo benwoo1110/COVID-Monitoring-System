@@ -57,9 +57,9 @@ namespace COVIDMonitoringSystem.ConsoleApp.Screens.TravelEntryMgr
 
         [OnClick("create")] 
         private void OnCreate(
-            [Parser("name", "result")] string nameText,
-            [Parser("passportNo", "result")] string passportNoText,
-            [Parser("nationality", "result")] string nationalityText)
+            [InputParam("name", "result")] string nameText,
+            [InputParam("passportNo", "result")] string passportNoText,
+            [InputParam("nationality", "result")] string nationalityText)
         {
             CovidManager.AddPerson(new Visitor(nameText, passportNoText, nationalityText));
             result.Text = $"New visitor {nameText} has been added to the system.";

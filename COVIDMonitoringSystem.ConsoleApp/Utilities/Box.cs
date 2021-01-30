@@ -40,7 +40,7 @@ namespace COVIDMonitoringSystem.ConsoleApp.Utilities
             Dependents = new List<Element>();
         }
 
-        public void SetRelativeBox(Element element)
+        public void SetRelativeElement(Element element)
         {
             if (element.BoundingBox == this)
             {

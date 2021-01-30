@@ -37,7 +37,7 @@ namespace COVIDMonitoringSystem.ConsoleApp.Screens.General
         }
 
         [OnClick("view")]
-        private void OnViewDetails([Parser("name", "details")] Person targetPerson)
+        private void OnViewDetails([InputParam("name", "details")] Person targetPerson)
         {
             var personInfo = new DetailsBuilder();
             personInfo.AddInfo("Name", targetPerson.Name);

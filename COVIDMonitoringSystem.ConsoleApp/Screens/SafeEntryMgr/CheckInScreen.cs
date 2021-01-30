@@ -62,11 +62,11 @@ namespace COVIDMonitoringSystem.ConsoleApp.Screens.SafeEntryMgr
         public CheckInScreen(ConsoleDisplayManager displayManager, COVIDMonitoringManager covidManager) : base(
             displayManager, covidManager)
         {
-            name.BoundingBox.SetRelativeBox(locations);
-            targetStore.BoundingBox.SetRelativeBox(locations);
-            divider.BoundingBox.SetRelativeBox(locations);
-            confirm.BoundingBox.SetRelativeBox(locations);
-            result.BoundingBox.SetRelativeBox(locations);
+            name.BoundingBox.SetRelativeElement(locations);
+            targetStore.BoundingBox.SetRelativeElement(locations);
+            divider.BoundingBox.SetRelativeElement(locations);
+            confirm.BoundingBox.SetRelativeElement(locations);
+            result.BoundingBox.SetRelativeElement(locations);
         }
 
         public override void PreLoad()
@@ -88,8 +88,8 @@ namespace COVIDMonitoringSystem.ConsoleApp.Screens.SafeEntryMgr
         }
 
         [OnClick("confirm")] private void OnCheckIn(
-            [Parser("name", "result")] Resident person,
-            [Parser("targetStore", "result")] BusinessLocation location)
+            [InputParam("name", "result")] Resident person,
+            [InputParam("targetStore", "result")] BusinessLocation location)
         {
             var inputName = CovidManager.FindPerson(name.Text);
             var inputLocation = CovidManager.FindBusinessLocation(targetStore.Text);

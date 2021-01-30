@@ -17,12 +17,12 @@ namespace COVIDMonitoringSystem.ConsoleApp.Utilities
     public class ActionMethod
     {
         private MethodInfo Method { get; }
-        private List<KeyValuePair<ParameterInfo, Parser>> Parameters { get; }
+        private List<KeyValuePair<ParameterInfo, InputParam>> Parameters { get; }
 
         public ActionMethod(MethodInfo method)
         {
             Method = method;
-            Parameters = ReflectHelper.GetParametersAttributeMap<Parser>(method);
+            Parameters = ReflectHelper.GetParametersAttributeMap<InputParam>(method);
         }
 
         public void Run(AbstractScreen screen)

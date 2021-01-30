@@ -53,7 +53,7 @@ namespace COVIDMonitoringSystem.ConsoleApp.Screens.TravelEntryMgr
         public GenerateSHNReportScreen(ConsoleDisplayManager displayManager, COVIDMonitoringManager covidManager) :
             base(displayManager, covidManager)
         {
-            openFile.BoundingBox.SetRelativeBox(result);
+            openFile.BoundingBox.SetRelativeElement(result);
         }
 
         public override void PreLoad()
@@ -63,7 +63,7 @@ namespace COVIDMonitoringSystem.ConsoleApp.Screens.TravelEntryMgr
         }
 
         [OnClick("generate")]
-        private void OnGenerateReport([Parser("reportDate", "result")] DateTime targetDate)
+        private void OnGenerateReport([InputParam("reportDate", "result")] DateTime targetDate)
         {
             var reportResult = CovidManager.GenerateSHNStatusReportFile(targetDate);
             if (reportResult.IsSuccessful())

@@ -73,7 +73,7 @@ namespace COVIDMonitoringSystem.ConsoleApp.Screens.SafeEntryMgr
         };
 
         [OnClick("check")]private void OnShowLocations(
-            [Parser("name", "locations")] Resident person)
+            [InputParam("name", "locations")] Resident person)
         {
             var locationNames = "Available Business Locations:\n";
             var inputName = CovidManager.FindPerson(name.Text);
@@ -103,7 +103,7 @@ namespace COVIDMonitoringSystem.ConsoleApp.Screens.SafeEntryMgr
         }
 
         [OnClick("confirm")] private void OnCheckOut(
-            [Parser("targetStore", "result")] BusinessLocation location)
+            [InputParam("targetStore", "result")] BusinessLocation location)
         {
             var inputName = CovidManager.FindPerson(name.Text);
             var checkoutLocation = CovidManager.FindBusinessLocation(targetStore.Text);
@@ -133,10 +133,10 @@ namespace COVIDMonitoringSystem.ConsoleApp.Screens.SafeEntryMgr
 
         public CheckOutScreen(ConsoleDisplayManager displayManager, COVIDMonitoringManager covidManager) : base(displayManager, covidManager)
         {
-            targetStore.BoundingBox.SetRelativeBox(locations);
-            divider.BoundingBox.SetRelativeBox(locations);
-            confirm.BoundingBox.SetRelativeBox(locations);
-            result.BoundingBox.SetRelativeBox(locations);
+            targetStore.BoundingBox.SetRelativeElement(locations);
+            divider.BoundingBox.SetRelativeElement(locations);
+            confirm.BoundingBox.SetRelativeElement(locations);
+            result.BoundingBox.SetRelativeElement(locations);
         }
         
     }

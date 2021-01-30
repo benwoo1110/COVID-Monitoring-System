@@ -66,9 +66,9 @@ namespace COVIDMonitoringSystem.ConsoleApp.Screens.TravelEntryMgr
         
         public NewTravelRecordScreen(ConsoleDisplayManager displayManager, COVIDMonitoringManager covidManager) : base(displayManager, covidManager)
         {
-            shnFacility.BoundingBox.SetRelativeBox(shnMessage);
-            create.BoundingBox.SetRelativeBox(shnFacility);
-            result.BoundingBox.SetRelativeBox(create);
+            shnFacility.BoundingBox.SetRelativeElement(shnMessage);
+            create.BoundingBox.SetRelativeElement(shnFacility);
+            result.BoundingBox.SetRelativeElement(create);
         }
 
         public override void PreLoad()
@@ -78,7 +78,7 @@ namespace COVIDMonitoringSystem.ConsoleApp.Screens.TravelEntryMgr
         }
 
         [OnEnterInput("country")]
-        private void OnUpdateCountry([Parser("country")] SHNTier tier)
+        private void OnUpdateCountry([InputParam("country")] SHNTier tier)
         {
             if (tier == SHNTier.Dedicated)
             {
@@ -94,11 +94,11 @@ namespace COVIDMonitoringSystem.ConsoleApp.Screens.TravelEntryMgr
 
         [OnClick("create")]
         private void OnCreateRecord(
-            [Parser("name", "result")] Person person,
-            [Parser("country", "result")] string lastEmbarkCountry,
-            [Parser("entryMode", "result")] TravelEntryMode mode,
-            [Parser("entryDate", "result")] DateTime entryTime,
-            [Parser("shnFacility", "result")] SHNFacility facility)
+            [InputParam("name", "result")] Person person,
+            [InputParam("country", "result")] string lastEmbarkCountry,
+            [InputParam("entryMode", "result")] TravelEntryMode mode,
+            [InputParam("entryDate", "result")] DateTime entryTime,
+            [InputParam("shnFacility", "result")] SHNFacility facility)
         {
             var travelEntry = new TravelEntry(person, lastEmbarkCountry, mode, entryTime);
 

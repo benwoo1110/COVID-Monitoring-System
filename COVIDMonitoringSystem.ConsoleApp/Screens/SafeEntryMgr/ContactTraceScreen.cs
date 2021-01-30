@@ -19,12 +19,12 @@ namespace COVIDMonitoringSystem.ConsoleApp.Screens.SafeEntryMgr
 
         public ContactTraceScreen(ConsoleDisplayManager displayManager, COVIDMonitoringManager covidManager) : base(displayManager, covidManager)
         {
-            date1.BoundingBox.SetRelativeBox(locations);
-            date2.BoundingBox.SetRelativeBox(locations);
-            targetStore.BoundingBox.SetRelativeBox(locations);
-            generate.BoundingBox.SetRelativeBox(locations);
-            nameList.BoundingBox.SetRelativeBox(locations);
-            output.BoundingBox.SetRelativeBox(locations);
+            date1.BoundingBox.SetRelativeElement(locations);
+            date2.BoundingBox.SetRelativeElement(locations);
+            targetStore.BoundingBox.SetRelativeElement(locations);
+            generate.BoundingBox.SetRelativeElement(locations);
+            nameList.BoundingBox.SetRelativeElement(locations);
+            output.BoundingBox.SetRelativeElement(locations);
         }
 
         public override void PreLoad()
@@ -47,9 +47,9 @@ namespace COVIDMonitoringSystem.ConsoleApp.Screens.SafeEntryMgr
 
         [OnClick("generate")]
         private void onContactTracing(
-            [Parser("date1", "output")] DateTime startDate, 
-            [Parser("date2", "output")] DateTime endDate,
-            [Parser("targetStore", "output")] BusinessLocation location)
+            [InputParam("date1", "output")] DateTime startDate, 
+            [InputParam("date2", "output")] DateTime endDate,
+            [InputParam("targetStore", "output")] BusinessLocation location)
         {
             var targetDate1 = Convert.ToDateTime(date1.Text);
             var targetDate2 = Convert.ToDateTime(date2.Text);
