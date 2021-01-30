@@ -64,9 +64,7 @@ namespace COVIDMonitoringSystem.ConsoleApp.Screens.TravelEntryMgr
             CovidManager.AddPerson(new Visitor(nameText, passportNoText, nationalityText));
             result.Text = $"New visitor {nameText} has been added to the system.";
 
-            name.ClearText();
-            passportNo.ClearText();
-            nationality.ClearText();
+            ClearAllInputs();
         }
     }
 }
