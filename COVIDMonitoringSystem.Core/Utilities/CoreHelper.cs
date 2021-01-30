@@ -61,24 +61,29 @@ namespace COVIDMonitoringSystem.Core.Utilities
             return csvEntry;
         }
 
-        public static bool WriteCsv(
+        public static FileCreateResult WriteCsv(
             [NotNull] string filePath, 
             [NotNull] string[] headers, 
-            [NotNull] IEnumerable<Dictionary<string, string>> data) 
+            [NotNull] IEnumerable<Dictionary<string, string>> data)
         {
+            var result = new FileCreateResult();
             var contents = BuildCsvContents(headers, data);
+            
             try
             {
                 using var fs = File.Create(filePath);
                 var byteContents = new UTF8Encoding(true).GetBytes(contents);
                 fs.Write(byteContents, 0, contents.Length);
+                result.FilePath = fs.Name;
             }
             catch (IOException e)
             {
-                return false;
+                result.Errors = e;
+                result.Status = CreateStatus.Failed;
             }
 
-            return true;
+            result.Status = CreateStatus.Success;
+            return result;
         }
 
         [NotNull] private static string BuildCsvContents(

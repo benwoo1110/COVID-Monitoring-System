@@ -5,6 +5,7 @@
 //============================================================
 
 using System;
+using System.Diagnostics;
 using COVIDMonitoringSystem.ConsoleApp.Display;
 using COVIDMonitoringSystem.ConsoleApp.Display.Attributes;
 using COVIDMonitoringSystem.ConsoleApp.Display.Elements;
@@ -21,16 +22,19 @@ namespace COVIDMonitoringSystem.ConsoleApp.Screens.TravelEntryMgr
             Text = "Generate SHN Report CSV",
             BoundingBox = {Top = 0}
         };
+
         private Input reportDate = new Input("reportDate")
         {
             Prompt = "Report Date",
             BoundingBox = {Top = 4}
         };
+
         private Button generate = new Button("generate")
         {
             Text = "[Generate]",
             BoundingBox = {Top = 6}
         };
+
         private Label result = new Label("result")
         {
             BoundingBox = {Top = 8},
@@ -40,29 +44,58 @@ namespace COVIDMonitoringSystem.ConsoleApp.Screens.TravelEntryMgr
         private Button openFile = new Button("openFile")
         {
             Text = "[Open File]",
-            BoundingBox = {Top = 1},
-            Hidden = true
+            BoundingBox = {Top = 0}
         };
-        
-        public GenerateSHNReportScreen(ConsoleDisplayManager displayManager, COVIDMonitoringManager covidManager) : base(displayManager, covidManager)
+
+        private string cachedFilePath;
+
+        public GenerateSHNReportScreen(ConsoleDisplayManager displayManager, COVIDMonitoringManager covidManager) :
+            base(displayManager, covidManager)
         {
             openFile.BoundingBox.SetRelativeBox(result);
+        }
+
+        public override void PreLoad()
+        {
+            openFile.Hidden = true;
+            cachedFilePath = string.Empty;
         }
 
         [OnClick("generate")]
         private void OnGenerateReport([Parser("reportDate", "result")] DateTime targetDate)
         {
-            //TODO: More detailed return for a CSV file generation.
-            if (CovidManager.GenerateSHNStatusReportFile(targetDate))
+            var reportResult = CovidManager.GenerateSHNStatusReportFile(targetDate);
+            if (reportResult.IsSuccessful())
             {
-                result.Text = "File has been created.";
+                result.Text =
+                    $"SHN report on {targetDate} has been successfully generated. File has been saved to '{reportResult.FilePath}'.";
                 openFile.Hidden = false;
+                cachedFilePath = reportResult.FilePath;
                 ClearAllInputs();
                 return;
             }
 
-            result.Text = "There was an error generating the report.";
+            result.Text = $"There was an error generating the report. {reportResult.GetErrorMessage()}";
             openFile.Hidden = true;
+            cachedFilePath = string.Empty;
+        }
+
+        [OnClick("openFile")]
+        private void OnOpenReportFile()
+        {
+            if (string.IsNullOrEmpty(cachedFilePath))
+            {
+                return;
+            }
+
+            try
+            {
+                Process.Start(cachedFilePath);
+            }
+            catch (Exception e)
+            {
+                result.Text = cachedFilePath + "  " + e.Message;
+            }
         }
     }
 }

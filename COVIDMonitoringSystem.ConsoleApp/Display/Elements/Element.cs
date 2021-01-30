@@ -69,13 +69,16 @@ namespace COVIDMonitoringSystem.ConsoleApp.Display.Elements
 
         protected virtual void OnHiding(bool doHiding)
         {
-            if (doHiding)
+            if (!doHiding)
             {
-                CHelper.ClearLines(BoundingBox.GetTop(), BoundingBox.GetBottom());
-                if (BoundingBox.AutoHeight)
-                {
-                    BoundingBox.Height = 0;
-                }
+                QueueToRerender();
+                return;
+            }
+            
+            CHelper.ClearLines(BoundingBox.GetTop(), BoundingBox.GetBottom());
+            if (BoundingBox.AutoHeight)
+            {
+                BoundingBox.Height = 0;
             }
         }
 
