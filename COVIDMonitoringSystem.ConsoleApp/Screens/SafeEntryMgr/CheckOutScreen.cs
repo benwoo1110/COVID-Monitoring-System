@@ -112,18 +112,18 @@ namespace COVIDMonitoringSystem.ConsoleApp.Screens.SafeEntryMgr
             [InputParam("targetStore", "result")] BusinessLocation location)
         {
             var inputName = CovidManager.FindPerson(name.Text);
-            var checkoutLocation = CovidManager.FindBusinessLocation(targetStore.Text);
+            location = CovidManager.FindBusinessLocation(targetStore.Text);
             var latestCheckinDate = new List<DateTime>();
             var latestCheckoutDate = new List<DateTime>();
             foreach (var i in inputName.SafeEntryList)
             {
                 latestCheckinDate.Add(i.CheckIn);
                 latestCheckoutDate.Add(i.CheckOut);
-                if (i.Location == checkoutLocation && latestCheckinDate.Max() > latestCheckoutDate.Max())
+                if (i.Location == location && latestCheckinDate.Max() > latestCheckoutDate.Max())
                 {
                     i.PerformCheckOut();
-                    checkoutLocation.VisitorsNow -= 1;
-                    result.Text = $"You have been checked out from {checkoutLocation}";
+                    location.VisitorsNow -= 1;
+                    result.Text = $"You have been checked out from {location}";
                     ClearAllInputs();
                     return;
                 }

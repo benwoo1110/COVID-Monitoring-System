@@ -36,6 +36,7 @@ namespace COVIDMonitoringSystem.ConsoleApp.Screens.SafeEntryMgr
         private Label result = new Label
         {
             BoundingBox = {Top = 8},
+            ClearOnExit = true
         };
         private Input location = new Input
         {
@@ -47,27 +48,35 @@ namespace COVIDMonitoringSystem.ConsoleApp.Screens.SafeEntryMgr
         private Button getToken = new Button
         {
             Text = "[Get Token]",
-            BoundingBox = { Top = 11 }
+            BoundingBox = {Top = 11},
+            Hidden = true,
+            Enabled = false
         };
         private Label output = new Label
         {
-            BoundingBox = { Top = 13 }
+            BoundingBox = {Top = 13},
+            ClearOnExit = true
         };
 
         public TokenScreen(ConsoleDisplayManager displayManager, COVIDMonitoringManager covidManager) : base(displayManager, covidManager)
         {
         }
 
-        [OnClick("check")] private void OnCheck()
+        public override void OnClose()
         {
-            var targetResident = CovidManager.FindPersonOfType<Resident>(name.Text);
+            location.Hidden = true;
+            location.Enabled = false;
+            getToken.Hidden = true;
+            getToken.Enabled = false;
+        }
+
+        [OnClick("check")] private void OnCheck(
+            [InputParam("name", "result")] Resident targetResident)
+        {
+            targetResident = CovidManager.FindPersonOfType<Resident>(name.Text);
             if (targetResident != null)
             {
                 AssignToken(targetResident);
-            }
-            else
-            {
-                result.Text = "Resident not found";
             }
         }
 
@@ -86,10 +95,16 @@ namespace COVIDMonitoringSystem.ConsoleApp.Screens.SafeEntryMgr
             {
                 location.Hidden = false;
                 location.Enabled = true;
+                getToken.Hidden = false;
+                getToken.Enabled = true;
                 result.Text = "A new token will be issued to you.";
                 var generator = new Random();
                 var serialNum = generator.Next(10000, 100000);
                 var finalSerial = "T" + Convert.ToString(serialNum);
+                while (!AcceptableToken(finalSerial))
+                {
+                    finalSerial = "T" + Convert.ToString(serialNum);
+                }
                 var inputCollectDate = DateTime.Now;
                 var expiry = inputCollectDate.AddMonths(6);
                 var newT = new TraceTogetherToken(finalSerial, location.Text, expiry);
@@ -101,8 +116,14 @@ namespace COVIDMonitoringSystem.ConsoleApp.Screens.SafeEntryMgr
                 var generator = new Random();
                 var serialNum = generator.Next(10000, 100000);
                 var finalSerial = "T" + Convert.ToString(serialNum);
+                while (!AcceptableToken(finalSerial))
+                {
+                    finalSerial = "T" + Convert.ToString(serialNum);
+                }
                 location.Hidden = false;
                 location.Enabled = true;
+                getToken.Hidden = false;
+                getToken.Enabled = true;
                 person.Token.ReplaceToken(finalSerial, location.Text);
             }
             else
@@ -121,6 +142,23 @@ namespace COVIDMonitoringSystem.ConsoleApp.Screens.SafeEntryMgr
         {
             output.Text = $"A new token has been issued to you. Your token's serial number is {serialno}, " +
                 $"your collection location is {location} and your token expires on {expiry}.";
+            ClearAllInputs();
+        }
+
+        private bool AcceptableToken(string serialno)
+        {
+            foreach (Resident r in CovidManager.PersonList)
+            {
+                if (r.Token.SerialNo == serialno)
+                {
+                    return false;
+                }
+                else
+                {
+                    return true;
+                }
+            }
+            return false;
         }
     }
 }

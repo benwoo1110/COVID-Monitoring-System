@@ -63,9 +63,19 @@ namespace COVIDMonitoringSystem.ConsoleApp.Screens.SafeEntryMgr
             [InputParam("capacity")] int capacityNumber)
         {
             var oldCapacity = targetBusiness.MaximumCapacity;
-            targetBusiness.MaximumCapacity = capacityNumber;
-            result.Text = $"Maximum capacity for {targetBusiness} has been changed from {oldCapacity} to {targetBusiness.MaximumCapacity}";
-            ClearAllInputs();
+            if (targetBusiness.VisitorsNow == 0)
+            {
+                targetBusiness.MaximumCapacity = capacityNumber;
+                result.Text = $"Maximum capacity for {targetBusiness} has been changed from {oldCapacity} to {targetBusiness.MaximumCapacity}";
+                ClearAllInputs();
+                return;
+            }
+            else
+            {
+                result.Text = $"Maximum capacity for {targetBusiness} cannot be changed because there are people in the store, please" +
+                    $" try again later.";
+                ClearAllInputs();
+            }
         }
     }
 }
