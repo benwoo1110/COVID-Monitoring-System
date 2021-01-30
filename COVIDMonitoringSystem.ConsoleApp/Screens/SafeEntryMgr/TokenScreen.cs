@@ -66,10 +66,13 @@ namespace COVIDMonitoringSystem.ConsoleApp.Screens.SafeEntryMgr
             }
         }
 
-        [OnClick("getToken")] private void OnToken(string finalSerial, string location, DateTime expiry)
+        [OnClick("getToken")] private void OnToken()
         {
-            output.Text = $"A new token has been issued to you. Your serial number is {finalSerial}, " +
-                        $"your collection location is at {location} and the expiry date of your token is {expiry}.";
+            var targetResident = CovidManager.FindPersonOfType<Resident>(name.Text);
+            var finalSerial = targetResident.Token.SerialNo;
+            var collectionLocation = location.Text;
+            var expiry = targetResident.Token.ExpiryDate;
+            DisplayToken(finalSerial, collectionLocation, expiry);
         }
         
         private void AssignToken(Resident person)
@@ -86,7 +89,6 @@ namespace COVIDMonitoringSystem.ConsoleApp.Screens.SafeEntryMgr
                 var expiry = inputCollectDate.AddMonths(6);
                 var newT = new TraceTogetherToken(finalSerial, location.Text, expiry);
                 person.Token = newT;
-                OnToken(finalSerial, location.Text, expiry);
             }
             else if (person.Token.IsEligibleForReplacement())
             {
@@ -97,7 +99,6 @@ namespace COVIDMonitoringSystem.ConsoleApp.Screens.SafeEntryMgr
                 location.Hidden = false;
                 location.Enabled = true;
                 person.Token.ReplaceToken(finalSerial, location.Text);
-                OnToken(finalSerial, location.Text, person.Token.ExpiryDate);
             }
             else
             {
@@ -109,6 +110,12 @@ namespace COVIDMonitoringSystem.ConsoleApp.Screens.SafeEntryMgr
             {
                 result.Text = "Resident does not exist, or person is not a resident.";
             }  
+        }
+
+        private void DisplayToken(string serialno, string location, DateTime expiry)
+        {
+            output.Text = $"A new token has been issued to you. Your token's serial number is {serialno}, " +
+                $"your collection location is {location} and your token expires on {expiry}.";
         }
 
         public TokenScreen(ConsoleDisplayManager displayManager, COVIDMonitoringManager covidManager) : base(displayManager, covidManager)
