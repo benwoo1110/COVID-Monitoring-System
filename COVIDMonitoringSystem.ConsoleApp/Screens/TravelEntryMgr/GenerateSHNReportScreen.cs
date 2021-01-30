@@ -13,7 +13,12 @@ namespace COVIDMonitoringSystem.ConsoleApp.Screens.TravelEntryMgr
     public class GenerateSHNReportScreen : CovidScreen
     {
         public override string Name => "shnReport";
-        
+
+        private Header header = new Header("header")
+        {
+            Text = "Generate SHN Report CSV",
+            BoundingBox = {Top = 0}
+        };
         private Input reportDate = new Input("reportDate")
         {
             Prompt = "Report Date",

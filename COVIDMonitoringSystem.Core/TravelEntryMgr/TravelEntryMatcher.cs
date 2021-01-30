@@ -5,7 +5,6 @@
 //============================================================
 
 using System;
-using COVIDMonitoringSystem.Core.Utilities;
 
 namespace COVIDMonitoringSystem.Core.TravelEntryMgr
 {
@@ -28,7 +27,6 @@ namespace COVIDMonitoringSystem.Core.TravelEntryMgr
         public int GenerateIdentifier()
         {
             var code = HashCode.Combine(PersonType, Tier);
-            Logging.Debug(code.ToString());
             return code;
         }
     }

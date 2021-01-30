@@ -6,7 +6,6 @@
 
 using System;
 using COVIDMonitoringSystem.Core.PersonMgr;
-using COVIDMonitoringSystem.Core.Utilities;
 using JetBrains.Annotations;
 
 namespace COVIDMonitoringSystem.Core.TravelEntryMgr
@@ -103,8 +102,7 @@ namespace COVIDMonitoringSystem.Core.TravelEntryMgr
         {
             if (!Conditions.RequireDedicatedFacility)
             {
-                Logging.Error($"No dedicated SHN facility needed for type: {Tier}");
-                return false;
+                throw new InvalidOperationException($"No dedicated SHN facility needed for tier: {Tier}");
             }
             
             ShnFacility = facility;

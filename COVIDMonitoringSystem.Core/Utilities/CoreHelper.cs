@@ -75,8 +75,6 @@ namespace COVIDMonitoringSystem.Core.Utilities
             }
             catch (IOException e)
             {
-                Logging.Error(e.Message);
-                Logging.Debug(e.StackTrace);
                 return false;
             }
 

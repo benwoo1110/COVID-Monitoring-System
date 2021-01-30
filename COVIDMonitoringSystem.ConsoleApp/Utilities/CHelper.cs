@@ -6,7 +6,6 @@
 
 using System;
 using System.Collections.Generic;
-using COVIDMonitoringSystem.Core.Utilities;
 
 namespace COVIDMonitoringSystem.ConsoleApp.Utilities
 {

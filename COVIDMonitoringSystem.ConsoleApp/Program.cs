@@ -4,7 +4,7 @@
 // Module Group   : T06
 //============================================================
 
-using COVIDMonitoringSystem.Core.Utilities;
+using System;
 
 namespace COVIDMonitoringSystem.ConsoleApp
 {
@@ -12,7 +12,6 @@ namespace COVIDMonitoringSystem.ConsoleApp
     {
         static void Main(string[] args)
         {
-            Logging.SetLogLevel(LogLevel.None);
             new ConsoleRunner().Run();
         }
     }
