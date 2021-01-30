@@ -95,7 +95,7 @@ namespace COVIDMonitoringSystem.ConsoleApp.Display
 
             Active = true;
             Render();
-            SetSelection(0);
+            SelectDefault();
         }
 
         public virtual void OnView()
@@ -141,9 +141,36 @@ namespace COVIDMonitoringSystem.ConsoleApp.Display
             SetCursor();
         }
 
-        public void SetSelection(int to)
+        public void SelectDefault()
         {
-            if (CachedSelectableElement.Count == 0)
+            ClearSelection();
+            ShiftSelectionBy(0);
+        }
+
+        public void SelectNext()
+        {
+            ShiftSelectionBy(1);
+        }
+
+        public void SelectPrevious()
+        {
+            ShiftSelectionBy(-1);
+        }
+
+        private void ShiftSelectionBy(int by)
+        {
+            var selectableElements = GetAllSelectableElements();
+            if (selectableElements.Count == 0)
+            {
+                return;
+            }
+
+            var selectedIndex = (SelectedElement == null) 
+                ? 0 
+                : selectableElements.IndexOf(SelectedElement);
+
+            var newSelectedElement = selectableElements[CoreHelper.Mod(selectedIndex + by, selectableElements.Count)];
+            if (newSelectedElement == null)
             {
                 return;
             }
@@ -152,22 +179,14 @@ namespace COVIDMonitoringSystem.ConsoleApp.Display
             {
                 SelectedElement.Selected = false;
             }
-
-            SelectedIndex = CoreHelper.Mod(to, CachedSelectableElement.Count);
-            var targetElement = CachedSelectableElement[SelectedIndex];
-
-            if (targetElement.Hidden || !targetElement.Enabled)
-            {
-                return;
-            }
-
-            SelectedElement = targetElement;
-            SelectedElement.Selected = true;
+            
+            newSelectedElement.Selected = true;
+            SelectedElement = newSelectedElement;
         }
 
-        public void ChangeSelection(int by)
+        public bool HasSelection()
         {
-            SetSelection(SelectedIndex + by);
+            return SelectedElement != null;
         }
 
         public void ClearSelection()
@@ -179,12 +198,6 @@ namespace COVIDMonitoringSystem.ConsoleApp.Display
 
             SelectedElement.Selected = false;
             SelectedElement = null;
-            SelectedIndex = -1;
-        }
-
-        public bool HasSelection()
-        {
-            return SelectedIndex >= 0 && SelectedElement != null;
         }
 
         public void SetCursor()
@@ -200,6 +213,11 @@ namespace COVIDMonitoringSystem.ConsoleApp.Display
             FindAllElementOfType<Input>()
                 .FindAll(input => input.ClearOnExit)
                 .ForEach(input => input.ClearText());
+        }
+
+        public List<SelectableElement> GetAllSelectableElements()
+        {
+            return CachedSelectableElement.FindAll(element => element.IsSelectable());
         }
         
         public Element FindElement(string name)

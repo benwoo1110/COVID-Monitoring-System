@@ -51,12 +51,12 @@ namespace COVIDMonitoringSystem.ConsoleApp.Display
 
         private void NextSelection(ConsoleKeyInfo key)
         {
-            CurrentAbstractScreen.ChangeSelection(1);
+            CurrentAbstractScreen.SelectNext();
         }
 
         private void PreviousSelection(ConsoleKeyInfo key)
         {
-            CurrentAbstractScreen.ChangeSelection(-1);
+            CurrentAbstractScreen.SelectPrevious();
         }
 
         private void DoSelection(ConsoleKeyInfo key)
@@ -66,9 +66,9 @@ namespace COVIDMonitoringSystem.ConsoleApp.Display
                 buttonElement.Run();
                 return;
             }
-            if (CurrentAbstractScreen.SelectedElement is Input inputElement)
+            if (CurrentAbstractScreen.SelectedElement is Input)
             {
-                CurrentAbstractScreen.ChangeSelection(1);
+                CurrentAbstractScreen.SelectNext();
             }
         }
 

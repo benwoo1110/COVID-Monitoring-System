@@ -41,6 +41,11 @@ namespace COVIDMonitoringSystem.ConsoleApp.Display.Elements
         {
         }
 
+        public bool IsSelectable()
+        {
+            return Enabled && !Hidden;
+        }
+
         protected override void SelectColour()
         {
             if (!Enabled)
