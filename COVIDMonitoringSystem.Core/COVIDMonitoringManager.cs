@@ -112,7 +112,7 @@ namespace COVIDMonitoringSystem.Core
             );
         }
 
-        public bool GenerateSHNStatusReportFile(DateTime dateTime)
+        public FileCreateResult GenerateSHNStatusReportFile(DateTime dateTime)
         {
             var csvData = new List<Dictionary<string, string>>();
 
@@ -149,7 +149,7 @@ namespace COVIDMonitoringSystem.Core
                 $"ContactTracingReport.csv",
                 new[] { "Name", "Check In Date and Time", "Check Out Date and Time" },
                 csvData
-            );
+            ).IsSuccessful();
         }
 
         private Dictionary<string, string> GenerateSingleTravelEntryReport(TravelEntry entry)

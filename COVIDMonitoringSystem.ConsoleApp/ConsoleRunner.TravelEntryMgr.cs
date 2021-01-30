@@ -66,13 +66,5 @@ namespace COVIDMonitoringSystem.ConsoleApp
             payment.DoPayment();
             CHelper.WriteLine($"Payment for {payment.NumberOfUnpaidEntries()} travel entries has be successfully made!");
         }
-
-        private void GenerateSHNReport()
-        {
-            var targetDate = CHelper.GetInput("Enter Date to Report: ", Convert.ToDateTime);
-            CHelper.WriteLine(Manager.GenerateSHNStatusReportFile(targetDate)
-                ? "Successfully generated report file."
-                : "There was an error generating report file.");
-        }
     }
 }
