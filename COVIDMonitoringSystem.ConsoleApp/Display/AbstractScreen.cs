@@ -88,6 +88,11 @@ namespace COVIDMonitoringSystem.ConsoleApp.Display
             }
         }
 
+        public virtual void PrePassData(object data)
+        {
+            
+        }
+
         public virtual void PreLoad()
         {
             
@@ -134,7 +139,7 @@ namespace COVIDMonitoringSystem.ConsoleApp.Display
             {
                 element.Render();
             }
-            ColourSelector.Element();
+            ColourSelector.Default();
             SetCursor();
         }
 
@@ -144,7 +149,7 @@ namespace COVIDMonitoringSystem.ConsoleApp.Display
             UpdateQueue.Clear();
             
             queueSnapshot.ForEach(element => element.Render());
-            ColourSelector.Element();
+            ColourSelector.Default();
             SetCursor();
         }
 

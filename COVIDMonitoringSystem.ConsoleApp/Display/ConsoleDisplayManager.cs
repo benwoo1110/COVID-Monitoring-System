@@ -153,7 +153,7 @@ namespace COVIDMonitoringSystem.ConsoleApp.Display
             keyAction?.Invoke(keyInfo);
         }
 
-        public void PushScreen(string screenName)
+        public void PushScreen(string screenName, object data = null)
         {
             if (ScreenStack.Count > 0)
             {
@@ -166,6 +166,7 @@ namespace COVIDMonitoringSystem.ConsoleApp.Display
             var targetScreen = ScreenMap[screenName];
             ScreenStack.Push(targetScreen);
             CurrentAbstractScreen = targetScreen;
+            CurrentAbstractScreen.PrePassData(data);
         }
 
         public void PopScreen(bool doQuit = false)

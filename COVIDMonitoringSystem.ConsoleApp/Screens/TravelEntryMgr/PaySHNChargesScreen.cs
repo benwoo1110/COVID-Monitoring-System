@@ -1,118 +1,116 @@
-﻿//============================================================
-// Student Number : S10203296, S10205301
-// Student Name   : Benedict Woo, Melvin Kee
-// Module Group   : T06
-//============================================================
-
-using System.Collections.Generic;
+﻿using System;
 using COVIDMonitoringSystem.ConsoleApp.Display;
 using COVIDMonitoringSystem.ConsoleApp.Display.Attributes;
 using COVIDMonitoringSystem.ConsoleApp.Display.Elements;
-using COVIDMonitoringSystem.ConsoleApp.Utilities;
 using COVIDMonitoringSystem.Core;
-using COVIDMonitoringSystem.Core.PersonMgr;
+using COVIDMonitoringSystem.Core.TravelEntryMgr;
 
 namespace COVIDMonitoringSystem.ConsoleApp.Screens.TravelEntryMgr
 {
     public class PaySHNChargesScreen : CovidScreen
     {
         public override string Name => "paySHNCharges";
-
+        
         private Header header = new Header
         {
-            Text = "Pay SHN Charges"
+            Text = "View/Pay SHN Charges"
         };
-
-        private Input name = new Input
+        
+        private Label paymentInfo = new Label
         {
-            Prompt = "Name",
             BoundingBox = {Top = 4}
         };
-
-        private Button viewPayment = new Button
+        
+        private Input paymentMode = new Input
         {
-            Text = "[View Payment]",
-            BoundingBox = {Top = 6}
+            Prompt = "Payment Mode",
+            BoundingBox = {Top = 0}
+        };
+        
+        private Input payAmount = new Input
+        {
+            Prompt = "Amount ($)",
+            BoundingBox = {Top = 1}
         };
 
-        private Button paymentInfo = new Button
+        private Button pay = new Button
         {
-            BoundingBox = {Top = 8},
-            ClearOnExit = true
+            Text = "[Pay]",
+            BoundingBox = {Top = 3}
+        };
+        
+        private Label result = new Label
+        {
+            BoundingBox = {Top = 5}
+        };
+        
+        private Button back = new Button
+        {
+            Text = "[Back]",
+            BoundingBox = {Top = 0}
         };
 
-        private Button payNow = new Button
-        {
-            BoundingBox = {Top = 10},
-            ClearOnExit = true
-        };
+        private SHNPayment Payment { get; set; }
+        private string PaymentDetails { get; set; }
 
         public PaySHNChargesScreen(ConsoleDisplayManager displayManager, COVIDMonitoringManager covidManager) : base(displayManager, covidManager)
         {
+            paymentMode.BoundingBox.SetRelativeElement(paymentInfo);
+            payAmount.BoundingBox.SetRelativeElement(paymentInfo);
+            pay.BoundingBox.SetRelativeElement(paymentInfo);
+            result.BoundingBox.SetRelativeElement(paymentInfo);
+            back.BoundingBox.SetRelativeElement(result);
         }
 
-        [OnClick("viewPayment")]
-        private void OnPaymentView([InputParam("name", "paymentInfo")] Person targetPerson)
+        public override void PrePassData(object data)
         {
-            var payment = targetPerson.GenerateSHNPaymentDetails();
-            if (!payment.HasUnpaidEntries())
+            try
             {
-                paymentInfo.Text = $"{targetPerson.Name} does not make any unpaid travel entries.";
+                var dataArray = (object[]) data;
+                Payment = (SHNPayment) dataArray[0];
+                PaymentDetails = (string) dataArray[1];
+            }
+            catch (Exception)
+            {
+                Payment = null;
+                PaymentDetails = null;
+            }
+        }
+
+        public override void PreLoad()
+        {
+            paymentInfo.Text = PaymentDetails;
+            back.Hidden = true;
+
+            paymentMode.Enabled = true;
+            payAmount.Enabled = true;
+            pay.Enabled = true;
+        }
+
+        [OnClick("pay")]
+        private void OnDoPayment(
+            [InputParam("paymentMode", "result")] string mode,
+            [InputParam("payAmount", "result")] double amount)
+        {
+            var change = Payment.DoPayment(amount);
+            if (change < 0)
+            {
+                result.Text = "Insufficient amount. Payment is not done.";
                 return;
             }
 
-            var paymentList = new List<string>();
-            foreach (var entry in payment.Entries)
-            {
-                paymentList.Add($"{entry.LastCountryOfEmbarkation,-20} | ${entry.CalculateCharges():0.00}");
-            }
+            result.Text = $"Payment completed. You receive back change of ${change:0.00}.";
+            back.Hidden = false;
             
-            var detailsBuilder = new DetailsBuilder();
-            detailsBuilder.AddLine($"{targetPerson.Name} has {payment.NumberOfUnpaidEntries()} unpaid travel entries.")
-                .Separator()
-                .AddOrderedList("Payment List", paymentList)
-                .Separator()
-                .AddLine($"Subtotal: ${payment.SubTotalPrice:0.00}")
-                .AddLine($"Total: ${payment.TotalPrice:0.00} (include 7% GST)");
-
-            paymentInfo.Text = detailsBuilder.Build();
+            paymentMode.Enabled = false;
+            payAmount.Enabled = false;
+            pay.Enabled = false;
         }
 
-        /*private void PaySHNCharges()
+        [OnClick("back")]
+        private void OnBack()
         {
-            var targetPerson = CHelper.GetInput("Enter name: ", Manager.FindPerson);
-            if (targetPerson == null)
-            {
-                CHelper.WriteLine("No such person found!");
-                return;
-            }
-
-            var payment = targetPerson.GenerateSHNPaymentDetails();
-            if (!payment.HasUnpaidEntries())
-            {
-                CHelper.WriteLine($"{targetPerson.Name} does not make any unpaid travel entries.");
-                return;
-            }
-
-            CHelper.WriteLine($"{targetPerson.Name} has {payment.NumberOfUnpaidEntries()} unpaid travel entries.");
-            var index = 1;
-            foreach (var entry in payment.Entries)
-            {
-                CHelper.WriteLine($"{index} - {entry.LastCountryOfEmbarkation,-20} | ${entry.CalculateCharges():0.00}");
-                index++;
-            }
-
-            CHelper.WriteLine($"Subtotal: ${payment.SubTotalPrice:0.00}");
-            CHelper.WriteLine($"Total: ${payment.TotalPrice:0.00} (include 7% GST)");
-
-            if (!CHelper.Confirm("Do you want to pay the travel entries now?"))
-            {
-                CHelper.WriteLine("No payment made, you can come again on a later date to do so.");
-                return;
-            }
-
-            payment.DoPayment();
-            CHelper.WriteLine($"Payment for {payment.NumberOfUnpaidEntries()} travel entries has be successfully made!");
-        }*/
+            DisplayManager.PopScreen();
+        }
     }
 }

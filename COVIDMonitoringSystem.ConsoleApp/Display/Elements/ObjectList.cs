@@ -74,7 +74,7 @@ namespace COVIDMonitoringSystem.ConsoleApp.Display.Elements
             ColourSelector.Selected();
             CHelper.WriteEmpty();
             CHelper.WriteLine(headerBuilder.ToString());
-            ColourSelector.Element();
+            ColourSelector.Default();
             CHelper.WriteEmpty();
 
             foreach (var propertyValues in valuesArray)

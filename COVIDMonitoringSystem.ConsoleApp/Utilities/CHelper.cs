@@ -33,7 +33,7 @@ namespace COVIDMonitoringSystem.ConsoleApp.Utilities
 
             Clear();
             Console.SetBufferSize(Console.WindowWidth, Console.WindowHeight);
-            ColourSelector.Element();
+            ColourSelector.Default();
             
             return true;
         }
@@ -96,7 +96,7 @@ namespace COVIDMonitoringSystem.ConsoleApp.Utilities
         {
             Console.Clear();
             Console.SetCursorPosition(0, 0);
-            ColourSelector.Element();
+            ColourSelector.Default();
         }
 
         public static string GetInput(string prompt)

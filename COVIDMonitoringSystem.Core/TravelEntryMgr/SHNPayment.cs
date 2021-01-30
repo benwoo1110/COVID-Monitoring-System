@@ -41,13 +41,21 @@ namespace COVIDMonitoringSystem.Core.TravelEntryMgr
             return Entries.Count > 0;
         }
 
-        public void DoPayment()
+        public double DoPayment(double amount)
         {
             ValidateIntegrity();
+
+            if (amount < TotalPrice)
+            {
+                return -1;
+            }
+            
             foreach (var travelEntry in Entries)
             {
                 travelEntry.IsPaid = true;
             }
+
+            return amount - TotalPrice;
         }
 
         public void ValidateIntegrity()

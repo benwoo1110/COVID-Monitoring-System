@@ -26,7 +26,7 @@ namespace COVIDMonitoringSystem.ConsoleApp.Screens
         
         public override void OnView()
         {
-            ColourSelector.Element();
+            ColourSelector.Default();
             Console.SetCursorPosition(0, 4);
             Runner?.Invoke();
             CHelper.WriteEmpty();

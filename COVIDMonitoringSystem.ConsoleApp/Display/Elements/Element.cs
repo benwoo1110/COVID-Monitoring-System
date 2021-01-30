@@ -56,7 +56,7 @@ namespace COVIDMonitoringSystem.ConsoleApp.Display.Elements
 
         protected virtual void SelectColour()
         {
-            ColourSelector.Element();
+            ColourSelector.Default();
         }
 
         protected abstract int WriteToScreen();

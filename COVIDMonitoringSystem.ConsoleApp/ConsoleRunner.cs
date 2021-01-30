@@ -91,7 +91,7 @@ namespace COVIDMonitoringSystem.ConsoleApp
                 .AddOption("View All SHN Facilities", "viewFacilities")
                 .AddOption("New Visitor", "newVisitor")
                 .AddOption("New Travel Record", "newTravelRecord")
-                .AddOption("Pay SHN Charges", "paySHNCharges")
+                .AddOption("Pay SHN Charges", "viewSHNCharges")
                 .AddOption("Generate SHN Status Report", "shnReport")
                 .Build()
             );
@@ -138,6 +138,7 @@ namespace COVIDMonitoringSystem.ConsoleApp
             );
             DisplayManager.RegisterScreen(new NewVisitorScreen(DisplayManager, Manager));
             DisplayManager.RegisterScreen(new NewTravelRecordScreen(DisplayManager, Manager));
+            DisplayManager.RegisterScreen(new ViewSHNChargesScreen(DisplayManager, Manager));
             DisplayManager.RegisterScreen(new PaySHNChargesScreen(DisplayManager, Manager));
             DisplayManager.RegisterScreen(new GenerateSHNReportScreen(DisplayManager, Manager));
         }
