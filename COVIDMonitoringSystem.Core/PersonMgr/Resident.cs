@@ -5,6 +5,7 @@
 //============================================================
 
 using System;
+using COVIDMonitoringSystem.Core.SafeEntryMgr;
 
 namespace COVIDMonitoringSystem.Core.PersonMgr
 {

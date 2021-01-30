@@ -23,7 +23,7 @@ namespace COVIDMonitoringSystem.Core.SafeEntryMgr
 
         public bool IsFull()
         {
-            int capacityCheck = MaximumCapacity - VisitorsNow;
+            var capacityCheck = MaximumCapacity - VisitorsNow;
             return capacityCheck < 1;
         }
 

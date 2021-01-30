@@ -51,7 +51,7 @@ namespace COVIDMonitoringSystem.Core.Utilities
             var csvEntries = new Dictionary<string, string>[fileData.Length - 1];
             for (var index = 1; index < fileData.Length; index++)
             {
-                string[] lineData = fileData[index].Split(',');
+                var lineData = fileData[index].Split(',');
                 csvEntries[index-1] = ParseSingleCsvLine(headers, lineData);
             }
 

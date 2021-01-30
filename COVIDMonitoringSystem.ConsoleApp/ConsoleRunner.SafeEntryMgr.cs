@@ -137,8 +137,8 @@ namespace COVIDMonitoringSystem.ConsoleApp
         private void CheckOut()
         {
             var inputName = CHelper.GetInput("Enter your name: ", Manager.FindPerson);
-            List<DateTime> latestCheckinDate = new List<DateTime>();
-            List<DateTime> latestCheckoutDate = new List<DateTime>();
+            var latestCheckinDate = new List<DateTime>();
+            var latestCheckoutDate = new List<DateTime>();
             if (inputName != null)
             {
                 foreach(var i in inputName.SafeEntryList)

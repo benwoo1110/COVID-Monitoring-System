@@ -6,7 +6,7 @@
 
 using System;
 
-namespace COVIDMonitoringSystem.Core.PersonMgr
+namespace COVIDMonitoringSystem.Core.SafeEntryMgr
 {
     public class TraceTogetherToken
     {
@@ -25,7 +25,7 @@ namespace COVIDMonitoringSystem.Core.PersonMgr
 
         public bool IsEligibleForReplacement()
         {
-            int expiryCheck = ((ExpiryDate.Year - DateTime.Now.Year) * 12) + ExpiryDate.Month - DateTime.Now.Month;
+            var expiryCheck = ((ExpiryDate.Year - DateTime.Now.Year) * 12) + ExpiryDate.Month - DateTime.Now.Month;
             return expiryCheck <= 1;
         }
 
