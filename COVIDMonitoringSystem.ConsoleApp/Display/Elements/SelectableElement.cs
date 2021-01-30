@@ -50,7 +50,7 @@ namespace COVIDMonitoringSystem.ConsoleApp.Display.Elements
         {
             if (!Enabled)
             {
-                //TODO: Disabled color
+                ColourSelector.Disabled();
             }
             else if (Selected)
             {
@@ -58,7 +58,7 @@ namespace COVIDMonitoringSystem.ConsoleApp.Display.Elements
             }
             else
             {
-                ColourSelector.Element();
+                ColourSelector.Default();
             }
         }
 

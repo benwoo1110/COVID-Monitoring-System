@@ -16,9 +16,9 @@ namespace COVIDMonitoringSystem.ConsoleApp.Utilities
             Console.ForegroundColor = ConsoleColor.Black;
         }
         
-        public static void Element()
+        public static void Default()
         {
-            Console.BackgroundColor = ConsoleColor.Gray;
+            Console.BackgroundColor = ConsoleColor.White;
             Console.ForegroundColor = ConsoleColor.Black;
         }
         
@@ -27,10 +27,11 @@ namespace COVIDMonitoringSystem.ConsoleApp.Utilities
             Console.BackgroundColor = ConsoleColor.DarkGray;
             Console.ForegroundColor = ConsoleColor.White;
         }
-
-        public static void Default()
+        
+        public static void Disabled()
         {
-            Console.ResetColor();
+            Console.BackgroundColor = ConsoleColor.White;
+            Console.ForegroundColor = ConsoleColor.Gray;
         }
     }
 }
