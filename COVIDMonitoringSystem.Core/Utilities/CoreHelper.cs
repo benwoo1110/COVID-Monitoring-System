@@ -153,6 +153,11 @@ namespace COVIDMonitoringSystem.Core.Utilities
             return JsonConvert.SerializeObject(o, Formatting.Indented, Config);
         }
 
+        public static int GetStringLength([CanBeNull] string text)
+        {
+            return text?.Length ?? 0;
+        }
+
         public static int Mod(int value, int modulus)
         {
             return value == 0

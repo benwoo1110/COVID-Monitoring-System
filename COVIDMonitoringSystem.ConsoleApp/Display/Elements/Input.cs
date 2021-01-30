@@ -6,6 +6,7 @@
 
 using System;
 using COVIDMonitoringSystem.ConsoleApp.Utilities;
+using COVIDMonitoringSystem.Core.Utilities;
 
 namespace COVIDMonitoringSystem.ConsoleApp.Display.Elements
 {
@@ -57,8 +58,8 @@ namespace COVIDMonitoringSystem.ConsoleApp.Display.Elements
 
         public void UpdateCursor()
         {
-            //TODO: Improve this
-            BoundingBox.CursorLeft = Prompt.Length + Text.Length + 6;
+            
+            BoundingBox.CursorLeft = CoreHelper.GetStringLength(Prompt) + CoreHelper.GetStringLength(Text) + 6;
         }
 
         public void Run()
