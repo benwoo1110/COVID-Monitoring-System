@@ -8,6 +8,7 @@ using COVIDMonitoringSystem.ConsoleApp.Builders;
 using COVIDMonitoringSystem.ConsoleApp.Display;
 using COVIDMonitoringSystem.ConsoleApp.Display.Elements;
 using COVIDMonitoringSystem.ConsoleApp.Screens;
+using COVIDMonitoringSystem.ConsoleApp.Screens.General;
 using COVIDMonitoringSystem.ConsoleApp.Utilities;
 using COVIDMonitoringSystem.Core.PersonMgr;
 

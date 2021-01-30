@@ -184,6 +184,13 @@ namespace COVIDMonitoringSystem.ConsoleApp.Display
         {
             return SelectedIndex >= 0 && SelectedElement != null;
         }
+
+        public void ClearAllInputs()
+        {
+            FindAllElementOfType<Input>()
+                .FindAll(input => input.ClearOnExit)
+                .ForEach(input => input.ClearText());
+        }
         
         public Element FindElement(string name)
         {

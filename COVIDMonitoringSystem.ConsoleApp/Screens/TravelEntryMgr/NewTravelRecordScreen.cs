@@ -95,12 +95,25 @@ namespace COVIDMonitoringSystem.ConsoleApp.Screens.TravelEntryMgr
         [OnClick("create")]
         private void OnCreateRecord(
             [Parser("name", "result")] Person person,
-            [Parser("country", "result")] string countryName,
+            [Parser("country", "result")] string lastEmbarkCountry,
             [Parser("entryMode", "result")] TravelEntryMode mode,
             [Parser("entryDate", "result")] DateTime entryTime,
             [Parser("shnFacility", "result")] SHNFacility facility)
         {
-            
+            var travelEntry = new TravelEntry(person, lastEmbarkCountry, mode, entryTime);
+
+            if (travelEntry.Conditions.RequireDedicatedFacility)
+            {
+                if (facility == null)
+                {
+                    result.Text = "You are required to specify a dedicated SHN facility to stay in.";
+                    return;
+                }
+
+                travelEntry.AssignSHNFacility(facility);
+            }
+
+            result.Text = $"A new travel entry record has been successfully added for {person.Name}.";
         }
     }
 }
