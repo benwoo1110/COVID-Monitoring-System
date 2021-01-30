@@ -48,7 +48,8 @@ namespace COVIDMonitoringSystem.ConsoleApp.Screens.SafeEntryMgr
 
         private Label result = new Label("result")
         {
-            BoundingBox = { Top = 9 }
+            BoundingBox = { Top = 9 },
+            ClearOnExit = true
         };
 
         public EditCapacityScreen(ConsoleDisplayManager displayManager, COVIDMonitoringManager covidManager) : base(displayManager, covidManager)
@@ -75,6 +76,7 @@ namespace COVIDMonitoringSystem.ConsoleApp.Screens.SafeEntryMgr
             else
             {
                 result.Text = $"{businessName.Text} not found. Maximum capacity has not been edited.";
+               
             }
         }
     }
