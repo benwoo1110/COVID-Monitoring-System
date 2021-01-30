@@ -128,6 +128,7 @@ namespace COVIDMonitoringSystem.ConsoleApp.Display
                 element.Render();
             }
             ColourSelector.Element();
+            SetCursor();
         }
 
         public void Update()
@@ -137,6 +138,7 @@ namespace COVIDMonitoringSystem.ConsoleApp.Display
             
             queueSnapshot.ForEach(element => element.Render());
             ColourSelector.Element();
+            SetCursor();
         }
 
         public void SetSelection(int to)
@@ -183,6 +185,14 @@ namespace COVIDMonitoringSystem.ConsoleApp.Display
         public bool HasSelection()
         {
             return SelectedIndex >= 0 && SelectedElement != null;
+        }
+
+        public void SetCursor()
+        {
+            if (HasSelection())
+            {
+                SelectedElement.BoundingBox.SetCursorPosition();
+            }
         }
 
         public void ClearAllInputs()
