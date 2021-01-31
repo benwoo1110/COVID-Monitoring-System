@@ -6,6 +6,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using COVIDMonitoringSystem.ConsoleApp.Builders;
 using COVIDMonitoringSystem.ConsoleApp.Display;
 using COVIDMonitoringSystem.ConsoleApp.Screens.General;
@@ -16,6 +17,7 @@ using COVIDMonitoringSystem.Core;
 using COVIDMonitoringSystem.Core.PersonMgr;
 using COVIDMonitoringSystem.Core.SafeEntryMgr;
 using COVIDMonitoringSystem.Core.TravelEntryMgr;
+using COVIDMonitoringSystem.Core.Utilities;
 
 namespace COVIDMonitoringSystem.ConsoleApp
 {
@@ -97,6 +99,10 @@ namespace COVIDMonitoringSystem.ConsoleApp
             DisplayManager.ValuesManager.RegisterInputValueType(
                 "shnFacility",
                 screen => Manager.SHNFacilitiesList.ConvertAll(facility => facility.FacilityName)
+            );
+            DisplayManager.ValuesManager.RegisterInputValueType(
+                "entryMode",
+                screen => Enum.GetNames(typeof(TravelEntryMode)).ToList()
             );
         }
 

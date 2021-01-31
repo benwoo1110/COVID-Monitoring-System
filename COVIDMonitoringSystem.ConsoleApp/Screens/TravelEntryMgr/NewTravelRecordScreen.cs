@@ -41,7 +41,8 @@ namespace COVIDMonitoringSystem.ConsoleApp.Screens.TravelEntryMgr
         private Input entryMode = new Input
         {
             Prompt = "Entry Mode",
-            BoundingBox = {Top = 6}
+            BoundingBox = {Top = 6},
+            SuggestionType = "entryMode"
         };
 
         private Input entryDate = new Input
