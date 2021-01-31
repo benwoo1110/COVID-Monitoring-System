@@ -29,6 +29,11 @@ namespace COVIDMonitoringSystem.Core.Utilities
             return Enum.Parse<TE>(value, true);
         }
 
+        /// <summary>
+        /// Open a file with the default system application for it.
+        /// </summary>
+        /// <param name="path">Target file location.</param>
+        /// <returns>true if open successfully, false otherwise.</returns>
         public static bool OpenFile(string path)
         {
             try
