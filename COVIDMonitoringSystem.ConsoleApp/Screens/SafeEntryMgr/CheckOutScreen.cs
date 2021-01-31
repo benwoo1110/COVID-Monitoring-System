@@ -86,6 +86,7 @@ namespace COVIDMonitoringSystem.ConsoleApp.Screens.SafeEntryMgr
         private void OnShowLocations(
             [InputParam("name", "locations")] Person targetPerson)
         {
+            result.ClearText();
             var locationNames = "Available Business Locations:\n";
             var latestCheckinDate = new List<DateTime>();
             var latestCheckoutDate = new List<DateTime>();
@@ -111,6 +112,11 @@ namespace COVIDMonitoringSystem.ConsoleApp.Screens.SafeEntryMgr
         private void OnCheckOut(
             [InputParam("targetStore", "result")] BusinessLocation location)
         {
+            targetStore.Hidden = true;
+            targetStore.Enabled = false;
+            confirm.Hidden = true;
+            confirm.Enabled = false;
+            locations.ClearText();
             var inputName = CovidManager.FindPerson(name.Text);
             location = CovidManager.FindBusinessLocation(targetStore.Text);
             var latestCheckinDate = new List<DateTime>();

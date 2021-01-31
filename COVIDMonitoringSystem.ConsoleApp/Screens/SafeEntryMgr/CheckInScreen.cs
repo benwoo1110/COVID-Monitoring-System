@@ -92,6 +92,7 @@ namespace COVIDMonitoringSystem.ConsoleApp.Screens.SafeEntryMgr
             [InputParam("name", "result")] Person person,
             [InputParam("targetStore", "result")] BusinessLocation location)
         {
+            ClearAllInputs();
             if (location.IsFull())
             {
                 result.Text = $"{location} is at full capacity, please try again later.";
@@ -102,7 +103,6 @@ namespace COVIDMonitoringSystem.ConsoleApp.Screens.SafeEntryMgr
             person.AddSafeEntry(checkIn);
             location.VisitorsNow += 1;
             result.Text = $"You have been checked in to {location}";
-            ClearAllInputs();
         }
     }
 }
