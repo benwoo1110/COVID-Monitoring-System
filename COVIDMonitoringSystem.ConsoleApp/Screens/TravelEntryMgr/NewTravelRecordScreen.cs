@@ -104,7 +104,7 @@ namespace COVIDMonitoringSystem.ConsoleApp.Screens.TravelEntryMgr
         [OnClick("create")]
         private void OnCreateRecord(
             [InputParam("name", "result")] Person person,
-            [InputParam("country", "result")] string lastEmbarkCountry,
+            [InputParam("country", "result")] [Values("countries")] string lastEmbarkCountry,
             [InputParam("entryMode", "result")] TravelEntryMode mode,
             [InputParam("entryDate", "result")] DateTime entryTime,
             [InputParam("shnFacility", "result")] SHNFacility facility)

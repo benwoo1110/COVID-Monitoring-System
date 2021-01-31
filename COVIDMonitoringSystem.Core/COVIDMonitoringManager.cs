@@ -19,16 +19,22 @@ namespace COVIDMonitoringSystem.Core
         public List<BusinessLocation> BusinessLocationList { get; private set; }
         public List<SHNFacility> SHNFacilitiesList { get; private set; }
         public List<Person> PersonList { get; private set; }
+        public HashSet<string> ValidCountries { get; private set; }
+        public HashSet<string> ValidCollectionLocation { get; private set; }
 
         public COVIDMonitoringManager()
         {
+            LoadValidInputSetData();
             LoadBusinessLocationData();
             LoadSHNFacilityData();
             LoadPersonData();
         }
-        
-        //TODO: Additional feature idea...
-        //https://corona.lmao.ninja/v2/countries/singapore
+
+        private void LoadValidInputSetData()
+        {
+            ValidCollectionLocation = CoreHelper.ReadSingleColumnCsv("resources/CollectionLocation.csv");
+            ValidCountries = CoreHelper.ReadSingleColumnCsv("resources/Countries.csv");
+        }
 
         private void LoadBusinessLocationData()
         {
