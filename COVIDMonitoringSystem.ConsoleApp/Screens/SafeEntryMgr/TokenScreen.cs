@@ -73,6 +73,7 @@ namespace COVIDMonitoringSystem.ConsoleApp.Screens.SafeEntryMgr
         [OnClick("check")] private void OnCheck(
             [InputParam("name", "result")] Resident targetResident)
         {
+            output.ClearText();
             targetResident = CovidManager.FindPersonOfType<Resident>(name.Text);
             if (targetResident != null)
             {
@@ -138,11 +139,16 @@ namespace COVIDMonitoringSystem.ConsoleApp.Screens.SafeEntryMgr
             }  
         }
 
-        private void DisplayToken(string serialno, string location, DateTime expiry)
+        private void DisplayToken(string serialno, string collection, DateTime expiry)
         {
             output.Text = $"A new token has been issued to you. Your token's serial number is {serialno}, " +
-                $"your collection location is {location} and your token expires on {expiry}.";
+                $"your collection location is {collection} and your token expires on {expiry}.";
             ClearAllInputs();
+            result.ClearText();
+            location.Hidden = true;
+            location.Enabled = false;
+            getToken.Hidden = true;
+            getToken.Enabled = false;
         }
 
         private bool AcceptableToken(string serialno)
