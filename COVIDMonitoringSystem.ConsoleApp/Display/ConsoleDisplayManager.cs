@@ -31,12 +31,14 @@ namespace COVIDMonitoringSystem.ConsoleApp.Display
         private bool Running { get; set; }
         public bool ScreenUpdated { get; set; }
         public InputResolverManager ResolveManager { get; }
+        public InputValuesManager ValuesManager { get; }
 
         public ConsoleDisplayManager()
         {
             ScreenMap = new Dictionary<string, AbstractScreen>();
             KeyActionMap = new Dictionary<ConsoleKey, Action<ConsoleKeyInfo>>();
             ResolveManager = new InputResolverManager();
+            ValuesManager = new InputValuesManager();
             SetDefaultKeyMap();
         }
 

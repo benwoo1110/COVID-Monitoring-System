@@ -42,6 +42,18 @@ namespace COVIDMonitoringSystem.Core.Utilities
 
             return true;
         }
+
+        /// <summary>
+        /// Read a csv file that only has one column.
+        /// </summary>
+        /// <param name="filePath">Location of csv file.</param>
+        /// <returns>Each line of file stored in set.</returns>
+        [NotNull]
+        public static HashSet<string> ReadSingleColumnCsv([NotNull] string filePath)
+        {
+            var fileData = File.ReadAllLines(filePath);
+            return new HashSet<string>(fileData);
+        }
         
         [NotNull] public static Dictionary<string, string>[] ReadCsv([NotNull] string filePath)
         {

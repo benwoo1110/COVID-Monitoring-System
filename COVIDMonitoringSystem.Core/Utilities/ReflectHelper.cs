@@ -66,6 +66,27 @@ namespace COVIDMonitoringSystem.Core.Utilities
 
             return parameterAttributeMap;
         }
+
+        public static Dictionary<ParameterInfo, TA> GetParametersAttributeDict<TA>(MethodInfo methodInfo)
+            where TA : Attribute
+        {
+            var parameterAttributeMap = new Dictionary<ParameterInfo, TA>();
+            var parameterInfos = methodInfo.GetParameters();
+
+            foreach (var parameter in parameterInfos)
+            {
+                var attribute = parameter.GetCustomAttribute(typeof(TA), true);
+                if (attribute is TA targetAttribute)
+                {
+                    parameterAttributeMap.Add(parameter, targetAttribute);
+                    continue;
+                }
+
+                parameterAttributeMap.Add(parameter, null);
+            }
+
+            return parameterAttributeMap;
+        }
         
         public static Dictionary<string, string> GetAllPropertyValues<T>(T obj) where T : class
         {

@@ -4,11 +4,14 @@
 // Module Group   : T06
 //============================================================
 
+using System;
+using System.Collections.Generic;
 using COVIDMonitoringSystem.ConsoleApp.Builders;
 using COVIDMonitoringSystem.ConsoleApp.Display;
 using COVIDMonitoringSystem.ConsoleApp.Screens.General;
 using COVIDMonitoringSystem.ConsoleApp.Screens.SafeEntryMgr;
 using COVIDMonitoringSystem.ConsoleApp.Screens.TravelEntryMgr;
+using COVIDMonitoringSystem.ConsoleApp.Utilities;
 using COVIDMonitoringSystem.Core;
 using COVIDMonitoringSystem.Core.PersonMgr;
 using COVIDMonitoringSystem.Core.SafeEntryMgr;
@@ -27,6 +30,7 @@ namespace COVIDMonitoringSystem.ConsoleApp
             DisplayManager = new ConsoleDisplayManager();
             Manager = new COVIDMonitoringManager();
             RegisterInputResolvers();
+            RegisterInputValueTypes();
             SetUpMenus();
             SetUpGeneralScreens();
             SetUpSafeEntryScreens();
@@ -60,6 +64,20 @@ namespace COVIDMonitoringSystem.ConsoleApp
                 "This shouldn't happen. Input was: {0}"
             );
             DisplayManager.ResolveManager.RegisterQuickEnumResolver<TravelEntryMode>("entry mode");
+        }
+
+        private void RegisterInputValueTypes()
+        {
+            DisplayManager.ValuesManager.RegisterInputValueType<string>(
+                "countries", (
+                screen) => Manager.ValidCountries, 
+                "{0} is not a valid country."
+            );
+            DisplayManager.ValuesManager.RegisterInputValueType<string>(
+                "collectLocation", 
+                screen => Manager.ValidCollectionLocation,
+                "{0} is not a valid collection location."
+            );
         }
 
         private void SetUpMenus()
