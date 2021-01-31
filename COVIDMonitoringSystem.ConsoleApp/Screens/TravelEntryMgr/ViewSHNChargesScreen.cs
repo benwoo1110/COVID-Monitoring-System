@@ -27,7 +27,8 @@ namespace COVIDMonitoringSystem.ConsoleApp.Screens.TravelEntryMgr
         private Input name = new Input
         {
             Prompt = "Name",
-            BoundingBox = {Top = 4}
+            BoundingBox = {Top = 4},
+            SuggestionType = "person"
         };
 
         private Button viewPayment = new Button

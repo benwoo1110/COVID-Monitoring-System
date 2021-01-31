@@ -10,7 +10,7 @@ namespace COVIDMonitoringSystem.ConsoleApp.Display.Elements
 {
     public abstract class SelectableElement : TextElement
     {
-        private bool selected;
+        protected bool selected;
         private bool enabled = true;
 
         public bool Enabled
@@ -23,7 +23,7 @@ namespace COVIDMonitoringSystem.ConsoleApp.Display.Elements
             }
         }
 
-        public bool Selected
+        public virtual bool Selected
         {
             get => selected;
             set

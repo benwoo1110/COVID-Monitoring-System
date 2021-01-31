@@ -25,7 +25,8 @@ namespace COVIDMonitoringSystem.ConsoleApp.Screens.General
         private Input country = new Input
         {
             Prompt = "Enter a Country",
-            BoundingBox = {Top = 4}
+            BoundingBox = {Top = 4},
+            SuggestionType = "countries"
         };
 
         private Button searchCountry = new Button

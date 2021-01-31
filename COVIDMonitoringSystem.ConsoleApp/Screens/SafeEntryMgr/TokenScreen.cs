@@ -26,7 +26,8 @@ namespace COVIDMonitoringSystem.ConsoleApp.Screens.SafeEntryMgr
         private Input name = new Input
         {
             Prompt = "Enter resident name",
-            BoundingBox = { Top = 4 }
+            BoundingBox = { Top = 4 },
+            SuggestionType = "resident"
         };
         private Button check = new Button
         {
@@ -43,7 +44,8 @@ namespace COVIDMonitoringSystem.ConsoleApp.Screens.SafeEntryMgr
             Prompt = "Enter your collection location",
             BoundingBox = {Top = 10},
             Hidden = true,
-            Enabled = false
+            Enabled = false,
+            SuggestionType = "collectLocation"
         };
         private Button getToken = new Button
         {

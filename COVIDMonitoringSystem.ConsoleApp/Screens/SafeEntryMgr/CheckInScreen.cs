@@ -33,13 +33,15 @@ namespace COVIDMonitoringSystem.ConsoleApp.Screens.SafeEntryMgr
         private Input name = new Input
         {
             Prompt = "Enter your name",
-            BoundingBox = {Top = 0}
+            BoundingBox = {Top = 0},
+            SuggestionType = "person"
         };
 
         private Input targetStore = new Input
         {
             Prompt = "Enter business location to check in to",
-            BoundingBox = {Top = 1}
+            BoundingBox = {Top = 1},
+            SuggestionType = "businessLocation"
         };
 
         private Label divider = new Label

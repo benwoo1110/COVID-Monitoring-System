@@ -28,7 +28,8 @@ namespace COVIDMonitoringSystem.ConsoleApp.Screens.SafeEntryMgr
         private Input name = new Input
         {
             Prompt = "Enter your name",
-            BoundingBox = { Top = 4 }
+            BoundingBox = { Top = 4 },
+            SuggestionType = "person"
         };
         private Button check = new Button
         {
@@ -50,7 +51,8 @@ namespace COVIDMonitoringSystem.ConsoleApp.Screens.SafeEntryMgr
             Prompt = "Enter business location to check out from",
             Hidden = true,
             Enabled = false,
-            BoundingBox = { Top = 2 }
+            BoundingBox = { Top = 2 },
+            SuggestionType = "businessLocation"
         };
         private Button confirm = new Button
         {

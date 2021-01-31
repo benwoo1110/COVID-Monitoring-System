@@ -78,6 +78,26 @@ namespace COVIDMonitoringSystem.ConsoleApp
                 screen => Manager.ValidCollectionLocation,
                 "{0} is not a valid collection location."
             );
+            DisplayManager.ValuesManager.RegisterInputValueType(
+                "person",
+                screen => Manager.PersonList.ConvertAll(person => person.Name)
+            );
+            DisplayManager.ValuesManager.RegisterInputValueType(
+                "resident",
+                screen => Manager.GetAllPersonOfType<Resident>().ConvertAll(resident => resident.Name)
+            );
+            DisplayManager.ValuesManager.RegisterInputValueType(
+                "visitor",
+                screen => Manager.GetAllPersonOfType<Visitor>().ConvertAll(visitor => visitor.Name)
+            );
+            DisplayManager.ValuesManager.RegisterInputValueType(
+                "businessLocation",
+                screen => Manager.BusinessLocationList.ConvertAll(business => business.BusinessName)
+            );
+            DisplayManager.ValuesManager.RegisterInputValueType(
+                "shnFacility",
+                screen => Manager.SHNFacilitiesList.ConvertAll(facility => facility.FacilityName)
+            );
         }
 
         private void SetUpMenus()

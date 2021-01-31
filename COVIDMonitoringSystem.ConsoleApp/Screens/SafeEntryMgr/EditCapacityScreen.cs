@@ -26,7 +26,8 @@ namespace COVIDMonitoringSystem.ConsoleApp.Screens.SafeEntryMgr
         private Input businessName = new Input
         {
             Prompt = "Enter business name to search for",
-            BoundingBox = {Top = 4}
+            BoundingBox = {Top = 4},
+            SuggestionType = "businessLocation"
         };
 
         private Input capacity = new Input

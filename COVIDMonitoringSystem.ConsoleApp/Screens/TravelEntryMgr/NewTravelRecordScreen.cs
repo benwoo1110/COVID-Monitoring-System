@@ -27,7 +27,8 @@ namespace COVIDMonitoringSystem.ConsoleApp.Screens.TravelEntryMgr
         private Input name = new Input
         {
             Prompt = "Name",
-            BoundingBox = {Top = 4}
+            BoundingBox = {Top = 4},
+            SuggestionType = "person"
         };
 
         private Input country = new Input
@@ -59,6 +60,7 @@ namespace COVIDMonitoringSystem.ConsoleApp.Screens.TravelEntryMgr
         {
             Prompt = "SHN Facility Name",
             BoundingBox = {Top = 0},
+            SuggestionType = "shnFacility"
         };
 
         private Button create = new Button

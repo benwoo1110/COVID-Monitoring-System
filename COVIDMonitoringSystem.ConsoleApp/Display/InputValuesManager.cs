@@ -73,7 +73,7 @@ namespace COVIDMonitoringSystem.ConsoleApp.Display
             }
 
             result.AddRange(valueChecker.ListGetter(screen)
-                .Where(s => s.ToLower().StartsWith(obj.ToString()?.ToLower() ?? "`")));
+                .Where(s => s.ToLower().StartsWith(obj.ToString()?.ToLower() ?? "")));
 
             return result;
         }

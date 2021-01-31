@@ -43,7 +43,8 @@ namespace COVIDMonitoringSystem.ConsoleApp.Screens.SafeEntryMgr
         private Input targetStore = new Input
         {
             Prompt = "Enter the name of the store you want to check",
-            BoundingBox = {Top = 2}
+            BoundingBox = {Top = 2},
+            SuggestionType = "businessLocation"
         };
 
         private Button generate = new Button

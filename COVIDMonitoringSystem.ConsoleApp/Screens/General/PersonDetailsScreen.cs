@@ -21,7 +21,8 @@ namespace COVIDMonitoringSystem.ConsoleApp.Screens.General
         private Input name = new Input
         {
             Prompt = "Person Name",
-            BoundingBox = {Top = 4}
+            BoundingBox = {Top = 4},
+            SuggestionType = "person"
         };
 
         private Button view = new Button

@@ -38,6 +38,25 @@ namespace COVIDMonitoringSystem.ConsoleApp.Display.Elements
             }
         }
 
+        public override bool Selected
+        {
+            get => selected;
+            set
+            {
+                selected = value;
+                if (value == false)
+                {
+                    OnDeselect();
+                }
+                else
+                {
+                    UpdateSuggestion();
+                }
+                
+                QueueToRerender();
+            }
+        }
+
         public override bool ClearOnExit { get; set; } = true;
         public ActionMethod MethodRunner { get; set; }
         public Action OnEnterRunner { get; set; }
