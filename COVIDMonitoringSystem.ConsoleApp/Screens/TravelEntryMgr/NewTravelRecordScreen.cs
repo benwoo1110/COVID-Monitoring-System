@@ -33,7 +33,8 @@ namespace COVIDMonitoringSystem.ConsoleApp.Screens.TravelEntryMgr
         private Input country = new Input
         {
             Prompt = "Last Country of Embark",
-            BoundingBox = {Top = 5}
+            BoundingBox = {Top = 5},
+            SuggestionType = "countries"
         };
 
         private Input entryMode = new Input

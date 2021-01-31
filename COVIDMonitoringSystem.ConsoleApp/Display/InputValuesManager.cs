@@ -10,17 +10,15 @@ namespace COVIDMonitoringSystem.ConsoleApp.Display
         private class ValueTypeMatcher
         {
             public string Name { get; }
-            public Type TargetType { get; }
 
-            public ValueTypeMatcher(string name, Type targetType)
+            public ValueTypeMatcher(string name)
             {
                 Name = name;
-                TargetType = targetType;
             }
 
             public override int GetHashCode()
             {
-                return HashCode.Combine(Name, TargetType);
+                return HashCode.Combine(Name);
             }
         }
 
@@ -43,14 +41,14 @@ namespace COVIDMonitoringSystem.ConsoleApp.Display
             valuesMap = new Dictionary<int, ValueChecker>();
         }
 
-        public void RegisterInputValueType<T>(string name, Func<AbstractScreen, ICollection<string>> supplier, string errorMessage)
+        public void RegisterInputValueType(string name, Func<AbstractScreen, ICollection<string>> supplier, string errorMessage = null)
         {
-            valuesMap.Add(new ValueTypeMatcher(name, typeof(T)).GetHashCode(), new ValueChecker(supplier, errorMessage));
+            valuesMap.Add(new ValueTypeMatcher(name).GetHashCode(), new ValueChecker(supplier, errorMessage));
         }
         
-        public void DoCheck(string name, Type type, AbstractScreen screen, object obj)
+        public void DoCheck(string name, AbstractScreen screen, object obj)
         {
-            var matcher = new ValueTypeMatcher(name, type);
+            var matcher = new ValueTypeMatcher(name);
             var valueChecker = valuesMap.GetValueOrDefault(matcher.GetHashCode());
             if (valueChecker == null)
             {
@@ -62,6 +60,22 @@ namespace COVIDMonitoringSystem.ConsoleApp.Display
             {
                 throw new InputParseFailedException(string.Format(valueChecker.ErrorMessage, obj));
             }
+        }
+
+        public List<string> GetSuggestion(string name, AbstractScreen screen, object obj)
+        {
+            var result = new List<string>();
+            var matcher = new ValueTypeMatcher(name);
+            var valueChecker = valuesMap.GetValueOrDefault(matcher.GetHashCode());
+            if (valueChecker == null)
+            {
+                return result;
+            }
+
+            result.AddRange(valueChecker.ListGetter(screen)
+                .Where(s => s.ToLower().StartsWith(obj.ToString()?.ToLower() ?? "`")));
+
+            return result;
         }
     }
 }

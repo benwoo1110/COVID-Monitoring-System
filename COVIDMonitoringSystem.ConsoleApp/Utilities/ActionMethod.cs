@@ -72,14 +72,7 @@ namespace COVIDMonitoringSystem.ConsoleApp.Utilities
         {
             try
             {
-                var result = screen.DisplayManager.ResolveManager.Parse(screen, input.Text, type);
-                var value = ParamValuesChecker.GetValueOrDefault(parameterInfo);
-
-                if (value != null)
-                {
-                    screen.DisplayManager.ValuesManager.DoCheck(value.ValueName, type, screen, result);
-                }
-                return result;
+                return ParseResult(screen, input, type, parameterInfo);
             }
             catch
             {
@@ -93,15 +86,7 @@ namespace COVIDMonitoringSystem.ConsoleApp.Utilities
         {
             try
             {
-                var result = screen.DisplayManager.ResolveManager.Parse(screen, input.Text, type);
-                var value = ParamValuesChecker.GetValueOrDefault(parameterInfo);
-
-                if (value != null)
-                {
-                    screen.DisplayManager.ValuesManager.DoCheck(value.ValueName, type, screen, result);
-                }
-
-                return result;
+                return ParseResult(screen, input, type, parameterInfo);
             }
             catch (ArgumentNullException)
             {
@@ -117,6 +102,19 @@ namespace COVIDMonitoringSystem.ConsoleApp.Utilities
             }
 
             return null;
+        }
+
+        private object ParseResult(AbstractScreen screen, Input input, Type type, ParameterInfo parameterInfo)
+        {
+            var result = screen.DisplayManager.ResolveManager.Parse(screen, input.Text, type);
+            var value = ParamValuesChecker.GetValueOrDefault(parameterInfo);
+
+            if (value != null)
+            {
+                screen.DisplayManager.ValuesManager.DoCheck(value.ValueName, screen, result);
+            }
+
+            return result;
         }
     }
 }

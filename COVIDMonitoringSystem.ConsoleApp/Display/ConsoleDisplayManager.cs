@@ -44,11 +44,22 @@ namespace COVIDMonitoringSystem.ConsoleApp.Display
 
         private void SetDefaultKeyMap()
         {
-            KeyActionMap.Add(ConsoleKey.Tab, NextSelection);
+            KeyActionMap.Add(ConsoleKey.Tab, OnTab);
             KeyActionMap.Add(ConsoleKey.DownArrow, NextSelection);
             KeyActionMap.Add(ConsoleKey.UpArrow, PreviousSelection);
             KeyActionMap.Add(ConsoleKey.Enter, DoSelection);
             KeyActionMap.Add(ConsoleKey.Escape, EscapeBack);
+        }
+
+        private void OnTab(ConsoleKeyInfo key)
+        {
+            if (CurrentAbstractScreen.SelectedElement is Input inputElement)
+            {
+                inputElement.NextSuggestion();
+                return;
+            }
+            
+            CurrentAbstractScreen.SelectNext();
         }
 
         private void NextSelection(ConsoleKeyInfo key)
@@ -68,8 +79,9 @@ namespace COVIDMonitoringSystem.ConsoleApp.Display
                 buttonElement.Run();
                 return;
             }
-            if (CurrentAbstractScreen.SelectedElement is Input)
+            if (CurrentAbstractScreen.SelectedElement is Input inputElement)
             {
+                inputElement.ApplySuggestion();
                 CurrentAbstractScreen.SelectNext();
             }
         }

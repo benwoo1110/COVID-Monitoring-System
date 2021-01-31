@@ -68,12 +68,12 @@ namespace COVIDMonitoringSystem.ConsoleApp
 
         private void RegisterInputValueTypes()
         {
-            DisplayManager.ValuesManager.RegisterInputValueType<string>(
+            DisplayManager.ValuesManager.RegisterInputValueType(
                 "countries", (
                 screen) => Manager.ValidCountries, 
                 "{0} is not a valid country."
             );
-            DisplayManager.ValuesManager.RegisterInputValueType<string>(
+            DisplayManager.ValuesManager.RegisterInputValueType(
                 "collectLocation", 
                 screen => Manager.ValidCollectionLocation,
                 "{0} is not a valid collection location."

@@ -28,6 +28,12 @@ namespace COVIDMonitoringSystem.ConsoleApp.Utilities
             Console.ForegroundColor = ConsoleColor.White;
         }
         
+        public static void Suggestion()
+        {
+            Console.BackgroundColor = ConsoleColor.White;
+            Console.ForegroundColor = ConsoleColor.DarkGray;
+        }
+
         public static void Disabled()
         {
             Console.BackgroundColor = ConsoleColor.White;
