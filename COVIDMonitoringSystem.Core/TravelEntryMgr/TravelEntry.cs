@@ -17,7 +17,7 @@ namespace COVIDMonitoringSystem.Core.TravelEntryMgr
         public TravelEntryMode EntryModeType { get; }
         public DateTime EntryDate { get; }
         public DateTime ShnEndDate { get; private set; }
-        public SHNFacility ShnFacility { get; private set; }
+        public SHNFacility ShnStay { get; private set; }
         public SHNTier Tier { get; private set; }
         public SHNConditions Conditions { get; private set; }
         public TravelEntryStatus Status { get; private set; } = TravelEntryStatus.Incomplete;
@@ -49,7 +49,7 @@ namespace COVIDMonitoringSystem.Core.TravelEntryMgr
             TravelEntryMode entryModeType, 
             DateTime entryDate, 
             DateTime shnEndDate,
-            [CanBeNull] SHNFacility shnFacility, 
+            [CanBeNull] SHNFacility shnStay, 
             bool isPaid)
         {
             TravelPerson = travelPerson;
@@ -57,10 +57,11 @@ namespace COVIDMonitoringSystem.Core.TravelEntryMgr
             EntryModeType = entryModeType;
             EntryDate = entryDate;
             ShnEndDate = shnEndDate;
-            ShnFacility = shnFacility;
+            ShnStay = shnStay;
             IsPaid = isPaid;
             GetRequirementAndCalculator();
             ValidateCompletedEntry();
+            UpdateFacilityVacancy();
         }
 
         private void CompleteEntryDetails(bool forced = false)
@@ -98,14 +99,30 @@ namespace COVIDMonitoringSystem.Core.TravelEntryMgr
             Status = TravelEntryStatus.Completed;
         }
 
+        private void UpdateFacilityVacancy()
+        {
+            if (!Conditions.RequireDedicatedFacility)
+            {
+                return;
+            }
+
+            ShnStay.FacilityVacancy--;
+        }
+        
         public bool AssignSHNFacility(SHNFacility facility)
         {
             if (!Conditions.RequireDedicatedFacility)
             {
                 throw new InvalidOperationException($"No dedicated SHN facility needed for tier: {Tier}");
             }
+
+            if (ShnStay != null)
+            {
+                return false;
+            }
             
-            ShnFacility = facility;
+            ShnStay = facility;
+            UpdateFacilityVacancy();
             return true;
         }
 
@@ -133,7 +150,7 @@ namespace COVIDMonitoringSystem.Core.TravelEntryMgr
             {
                 return "Own Accommodation";
             }
-            return ShnFacility.FacilityName;
+            return ShnStay.FacilityName;
         }
 
         public override string ToString()

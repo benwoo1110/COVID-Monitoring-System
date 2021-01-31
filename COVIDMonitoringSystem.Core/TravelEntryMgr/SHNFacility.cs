@@ -11,9 +11,23 @@ namespace COVIDMonitoringSystem.Core.TravelEntryMgr
 {
     public class SHNFacility
     {
+        private int facilityVacancy;
         public string FacilityName { get; }
         public int FacilityCapacity { get; }
-        public int FacilityVacancy { get; }
+
+        public int FacilityVacancy
+        {
+            get => facilityVacancy;
+            internal set
+            {
+                facilityVacancy = value;
+                if (facilityVacancy < 0)
+                {
+                    throw new InvalidOperationException("Facility is full!");
+                }
+            }
+        }
+
         public CheckPointDistance Distance { get; }
 
         [Obsolete("Required by assignment")]
