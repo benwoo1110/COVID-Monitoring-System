@@ -90,6 +90,11 @@ namespace COVIDMonitoringSystem.ConsoleApp.Utilities
                 return;
             }
 
+            if (Height > to)
+            {
+                CHelper.ClearLines(GetTop() + to, GetTop() + Height);
+            }
+
             Height = to;
         }
 
