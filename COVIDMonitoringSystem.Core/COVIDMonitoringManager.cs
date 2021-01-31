@@ -192,7 +192,7 @@ namespace COVIDMonitoringSystem.Core
         /// <param name="start">Input the start of the time range to perform contact tracing</param>
         /// <param name="end">Input the end of the time range to perform contact tracing</param>
         /// <returns>New CSV file with contact tracing information</returns>
-        public bool GenerateContactTracingReportFile(BusinessLocation location, DateTime start, DateTime end)
+        public FileCreateResult GenerateContactTracingReportFile(BusinessLocation location, DateTime start, DateTime end)
         {
             var csvData = new List<Dictionary<string, string>>();
 
@@ -210,7 +210,7 @@ namespace COVIDMonitoringSystem.Core
                 $"ContactTracingReport.csv",
                 new[] { "Name", "Check In Date and Time", "Check Out Date and Time" },
                 csvData
-            ).IsSuccessful();
+            );
         }
 
         /// <summary>

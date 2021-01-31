@@ -10,6 +10,7 @@ using COVIDMonitoringSystem.Core;
 using COVIDMonitoringSystem.ConsoleApp.Display.Attributes;
 using COVIDMonitoringSystem.ConsoleApp.Display.Elements;
 using COVIDMonitoringSystem.Core.SafeEntryMgr;
+using COVIDMonitoringSystem.Core.Utilities;
 
 namespace COVIDMonitoringSystem.ConsoleApp.Screens.SafeEntryMgr
 {
@@ -64,6 +65,14 @@ namespace COVIDMonitoringSystem.ConsoleApp.Screens.SafeEntryMgr
             ClearOnExit = true
         };
 
+        private Button openFile = new Button
+        {
+            Text = "[View File]",
+            BoundingBox = {Top = 0}
+        };
+
+        private string cachedFilePath;
+
         public ContactTraceScreen(ConsoleDisplayManager displayManager, COVIDMonitoringManager covidManager) : base(
             displayManager, covidManager)
         {
@@ -73,10 +82,12 @@ namespace COVIDMonitoringSystem.ConsoleApp.Screens.SafeEntryMgr
             generate.BoundingBox.SetRelativeElement(locations);
             nameList.BoundingBox.SetRelativeElement(locations);
             output.BoundingBox.SetRelativeElement(locations);
+            openFile.BoundingBox.SetRelativeElement(output);
         }
 
         public override void PreLoad()
         {
+            openFile.Hidden = true;
             ShowLocations();
         }
 
@@ -114,9 +125,29 @@ namespace COVIDMonitoringSystem.ConsoleApp.Screens.SafeEntryMgr
 
             nameList.Text = contactNames;
 
-            output.Text = CovidManager.GenerateContactTracingReportFile(targetLocation, targetDate1, targetDate2)
-                ? "Successfully generated report file."
-                : "There was an error generating report file.";
+            var result = CovidManager.GenerateContactTracingReportFile(targetLocation, targetDate1, targetDate2);
+
+            if (result.IsSuccessful())
+            {
+                output.Text = "Successfully generated report file.";
+                openFile.Hidden = false;
+                cachedFilePath = result.FilePath;
+            }
+            else
+            {
+                output.Text = "There was an error generating report file.";
+            }
+        }
+
+        [OnClick("openFile")]
+        private void OnOpenReportFile()
+        {
+            if (string.IsNullOrEmpty(cachedFilePath))
+            {
+                return;
+            }
+
+            CoreHelper.OpenFile(cachedFilePath);
         }
     }
 }
