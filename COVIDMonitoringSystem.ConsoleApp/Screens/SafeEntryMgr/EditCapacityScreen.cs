@@ -60,8 +60,8 @@ namespace COVIDMonitoringSystem.ConsoleApp.Screens.SafeEntryMgr
 
         [OnClick("confirm")]
         private void OnChangeCapacity(
-            [InputParam("businessName")] BusinessLocation targetBusiness,
-            [InputParam("capacity")] int capacityNumber)
+            [InputParam("businessName", "result")] BusinessLocation targetBusiness,
+            [InputParam("capacity", "result")] int capacityNumber)
         {
             var oldCapacity = targetBusiness.MaximumCapacity;
             if (targetBusiness.VisitorsNow == 0)
