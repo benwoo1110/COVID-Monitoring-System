@@ -60,8 +60,14 @@ namespace COVIDMonitoringSystem.ConsoleApp.Display.Elements
             {
                 return CHelper.WriteLine($"{Prompt}: {Text}", Align);
             }
-            
-            return CHelper.WriteLine($"{Prompt}: {Text} , {CachedSuggestions[SuggestionIndex]}", Align);
+
+            var remainingSuggestionLetters = CachedSuggestions[SuggestionIndex].Substring(Text.Length);
+            var length = CHelper.WriteLine($"{Prompt}: {Text}", Align);
+            ColourSelector.Suggestion();
+            BoundingBox.SetCursorPosition();
+            CHelper.WriteLine($"{remainingSuggestionLetters}", TextAlign.None);
+            ColourSelector.Selected();
+            return length;
         }
 
         public void UpdateCursor()
