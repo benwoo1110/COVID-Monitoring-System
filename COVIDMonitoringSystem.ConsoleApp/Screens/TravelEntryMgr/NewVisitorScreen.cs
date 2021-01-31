@@ -31,7 +31,6 @@ namespace COVIDMonitoringSystem.ConsoleApp.Screens.TravelEntryMgr
         {
             Prompt = "Name",
             BoundingBox = {Top = 6},
-            SuggestionType = "person"
         };
 
         private Input passportNo = new Input
