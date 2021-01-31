@@ -72,22 +72,20 @@ namespace COVIDMonitoringSystem.ConsoleApp.Screens.SafeEntryMgr
             getToken.Enabled = false;
         }
 
-        [OnClick("check")] private void OnCheck(
+        [OnClick("check")] 
+        private void OnCheck(
             [InputParam("name", "result")] Resident targetResident)
         {
             output.ClearText();
-            targetResident = CovidManager.FindPersonOfType<Resident>(name.Text);
-            if (targetResident != null)
-            {
-                AssignToken(targetResident);
-            }
+            AssignToken(targetResident);
         }
 
-        [OnClick("getToken")] private void OnToken()
+        [OnClick("getToken")] 
+        private void OnToken(
+            [InputParam("name", "result")] Resident targetResident,
+            [InputParam("location", "result")] [Values("collectLocation")] string collectionLocation)
         {
-            var targetResident = CovidManager.FindPersonOfType<Resident>(name.Text);
             var finalSerial = targetResident.Token.SerialNo;
-            var collectionLocation = location.Text;
             var expiry = targetResident.Token.ExpiryDate;
             DisplayToken(finalSerial, collectionLocation, expiry);
         }
