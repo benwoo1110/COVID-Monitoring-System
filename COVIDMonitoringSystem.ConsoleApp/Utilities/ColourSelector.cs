@@ -30,8 +30,8 @@ namespace COVIDMonitoringSystem.ConsoleApp.Utilities
         
         public static void Suggestion()
         {
-            Console.BackgroundColor = ConsoleColor.White;
-            Console.ForegroundColor = ConsoleColor.DarkGray;
+            Console.BackgroundColor = ConsoleColor.DarkGray;
+            Console.ForegroundColor = ConsoleColor.Gray;
         }
 
         public static void Disabled()
