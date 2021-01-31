@@ -52,7 +52,7 @@ namespace COVIDMonitoringSystem.ConsoleApp.Screens.SafeEntryMgr
             Hidden = true,
             Enabled = false,
             BoundingBox = { Top = 2 },
-            SuggestionType = "businessLocation"
+            SuggestionType = "checkOutLocation"
         };
         private Button confirm = new Button
         {
@@ -66,6 +66,8 @@ namespace COVIDMonitoringSystem.ConsoleApp.Screens.SafeEntryMgr
             ClearOnExit = true,
             BoundingBox = { Top = 4 }
         };
+
+        public Person CachePerson { get; private set; }
 
         public CheckOutScreen(ConsoleDisplayManager displayManager, COVIDMonitoringManager covidManager) : base(
             displayManager, covidManager)
@@ -103,6 +105,7 @@ namespace COVIDMonitoringSystem.ConsoleApp.Screens.SafeEntryMgr
                 }
             }
 
+            CachePerson = targetPerson;
             locations.Text = locationNames;
             targetStore.Hidden = false;
             targetStore.Enabled = true;
@@ -119,11 +122,9 @@ namespace COVIDMonitoringSystem.ConsoleApp.Screens.SafeEntryMgr
             confirm.Hidden = true;
             confirm.Enabled = false;
             locations.ClearText();
-            var inputName = CovidManager.FindPerson(name.Text);
-            location = CovidManager.FindBusinessLocation(targetStore.Text);
             var latestCheckinDate = new List<DateTime>();
             var latestCheckoutDate = new List<DateTime>();
-            foreach (var i in inputName.SafeEntryList)
+            foreach (var i in CachePerson.SafeEntryList)
             {
                 latestCheckinDate.Add(i.CheckIn);
                 latestCheckoutDate.Add(i.CheckOut);

@@ -104,6 +104,32 @@ namespace COVIDMonitoringSystem.ConsoleApp
                 "entryMode",
                 screen => Enum.GetNames(typeof(TravelEntryMode)).ToList()
             );
+            DisplayManager.ValuesManager.RegisterInputValueType(
+                "checkOutLocation",
+                screen =>
+                {
+                    if (!(screen is CheckOutScreen checkOutScreen) || checkOutScreen.CachePerson == null)
+                    {
+                        return new List<string>();
+                    }
+                    
+                    var latestCheckinDate = new List<DateTime>();
+                    var latestCheckoutDate = new List<DateTime>();
+                    var result = new List<string>();
+                    foreach (var i in checkOutScreen.CachePerson.SafeEntryList)
+                    {
+                        latestCheckinDate.Add(i.CheckIn);
+                        latestCheckoutDate.Add(i.CheckOut);
+                        if (latestCheckinDate.Max() > latestCheckoutDate.Max())
+                        {
+                            result.Add(i.Location.BusinessName);
+                        }
+                    }
+
+                    return result;
+
+                }
+            );
         }
 
         private void SetUpMenus()
