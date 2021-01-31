@@ -20,28 +20,22 @@ namespace COVIDMonitoringSystem.ConsoleApp.Screens.TravelEntryMgr
         {
             BoundingBox = {Top = 4}
         };
-        
-        private Input paymentMode = new Input
-        {
-            Prompt = "Payment Mode",
-            BoundingBox = {Top = 0}
-        };
-        
+
         private Input payAmount = new Input
         {
             Prompt = "Amount ($)",
-            BoundingBox = {Top = 1}
+            BoundingBox = {Top = 0}
         };
 
         private Button pay = new Button
         {
             Text = "[Pay]",
-            BoundingBox = {Top = 3}
+            BoundingBox = {Top = 2}
         };
         
         private Label result = new Label
         {
-            BoundingBox = {Top = 5}
+            BoundingBox = {Top = 4}
         };
         
         private Button back = new Button
@@ -55,7 +49,6 @@ namespace COVIDMonitoringSystem.ConsoleApp.Screens.TravelEntryMgr
 
         public PaySHNChargesScreen(ConsoleDisplayManager displayManager, COVIDMonitoringManager covidManager) : base(displayManager, covidManager)
         {
-            paymentMode.BoundingBox.SetRelativeElement(paymentInfo);
             payAmount.BoundingBox.SetRelativeElement(paymentInfo);
             pay.BoundingBox.SetRelativeElement(paymentInfo);
             result.BoundingBox.SetRelativeElement(paymentInfo);
@@ -82,14 +75,12 @@ namespace COVIDMonitoringSystem.ConsoleApp.Screens.TravelEntryMgr
             paymentInfo.Text = PaymentDetails;
             back.Hidden = true;
 
-            paymentMode.Enabled = true;
             payAmount.Enabled = true;
             pay.Enabled = true;
         }
 
         [OnClick("pay")]
         private void OnDoPayment(
-            [InputParam("paymentMode", "result")] string mode,
             [InputParam("payAmount", "result")] double amount)
         {
             var change = Payment.DoPayment(amount);
@@ -102,7 +93,6 @@ namespace COVIDMonitoringSystem.ConsoleApp.Screens.TravelEntryMgr
             result.Text = $"Payment completed. You receive back change of ${change:0.00}.";
             back.Hidden = false;
             
-            paymentMode.Enabled = false;
             payAmount.Enabled = false;
             pay.Enabled = false;
         }
