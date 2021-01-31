@@ -95,6 +95,7 @@ namespace COVIDMonitoringSystem.ConsoleApp.Screens.SafeEntryMgr
             var latestCheckinDate = new List<DateTime>();
             var latestCheckoutDate = new List<DateTime>();
 
+            var hasLocationToCheckOut = false;
             foreach (var i in targetPerson.SafeEntryList)
             {
                 latestCheckinDate.Add(i.CheckIn);
@@ -102,7 +103,14 @@ namespace COVIDMonitoringSystem.ConsoleApp.Screens.SafeEntryMgr
                 if (latestCheckinDate.Max() > latestCheckoutDate.Max())
                 {
                     locationNames += $"{i.Location}\n";
+                    hasLocationToCheckOut = true;
                 }
+            }
+
+            if (!hasLocationToCheckOut)
+            {
+                locations.Text = "You do not have any safe entry location to check out.";
+                return;
             }
 
             CachePerson = targetPerson;
