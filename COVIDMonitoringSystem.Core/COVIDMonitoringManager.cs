@@ -30,6 +30,9 @@ namespace COVIDMonitoringSystem.Core
         //TODO: Additional feature idea...
         //https://corona.lmao.ninja/v2/countries/singapore
 
+        /// <summary>
+        /// Reads CSV file "BusinessLocation.csv" and adds the data into a list BusinessLocationList
+        /// </summary>
         private void LoadBusinessLocationData()
         {
             var locationCsvData = CoreHelper.ReadCsv("resources/BusinessLocation.csv");
@@ -41,6 +44,9 @@ namespace COVIDMonitoringSystem.Core
             }
         }
 
+        /// <summary>
+        /// Calls a web API and reads the JSON file and adds the data into a list SHNFacilitiesList
+        /// </summary>
         private void LoadSHNFacilityData()
         {
             SHNFacilitiesList = (List<SHNFacility>) CoreHelper.FetchFromWeb<List<SHNFacility>>(
@@ -49,6 +55,9 @@ namespace COVIDMonitoringSystem.Core
             ) ?? new List<SHNFacility>();
         }
 
+        /// <summary>
+        /// Reads CSV file "Person.csv" and adds the data into a list PersonList, calls function ParseResidentEntry or ParseVisitorEntry depending on type of person in data
+        /// </summary>
         private void LoadPersonData()
         {
             var personCsvData = CoreHelper.ReadCsv("resources/Person.csv");
@@ -69,6 +78,11 @@ namespace COVIDMonitoringSystem.Core
             }
         }
 
+        /// <summary>
+        /// Creates new Resident if person in CSV file is a resident with its appropriate attributes, calls ParseTraceTogetherToken if resident has a TraceTogether token
+        /// </summary>
+        /// <param name="entry">Each entry of person details in CSV file</param>
+        /// <returns>New Resident object</returns>
         private Person ParseResidentEntry(IReadOnlyDictionary<string, string> entry)
         {
             var newResident = new Resident(
@@ -85,6 +99,11 @@ namespace COVIDMonitoringSystem.Core
             return newResident;
         }
 
+        /// <summary>
+        /// Creates new TraceTogetherToken object if the Resident in the CSV file has a token
+        /// </summary>
+        /// <param name="entry">Each entry of person details in CSV file</param>
+        /// <returns>New TraceTogetherToken object</returns>
         private TraceTogetherToken ParseTraceTogetherToken(IReadOnlyDictionary<string, string> entry)
         {
             return new TraceTogetherToken(
@@ -94,11 +113,22 @@ namespace COVIDMonitoringSystem.Core
             );
         }
 
+        /// <summary>
+        /// Creates new Visitor if person in CSV file is a visitor with its appropriate attributes
+        /// </summary>
+        /// <param name="entry">Each entry of person details in CSV file</param>
+        /// <returns>New Visitor object</returns>
         private Person ParseVisitorEntry(IReadOnlyDictionary<string, string> entry)
         {
             return new Visitor(entry["name"], entry["passportNo"], entry["nationality"]);
         }
 
+        /// <summary>
+        /// Creates a new TravelEntry for each person in CSV file
+        /// </summary>
+        /// <param name="entry">Each entry of person details in CSV file</param>
+        /// <param name="newPerson">The new Person object created in function LoadPersonData()</param>
+        /// <returns></returns>
         private TravelEntry ParseTravelEntry(IReadOnlyDictionary<string, string> entry, Person newPerson)
         {
             return new TravelEntry(
@@ -112,6 +142,11 @@ namespace COVIDMonitoringSystem.Core
             );
         }
 
+        /// <summary>
+        /// Calls a web API and reads the JSON file and adds the data into a dictionary
+        /// </summary>
+        /// <param name="country">Input name of country that user wants to check for COVID data</param>
+        /// <returns>Dictionary object consisting of country name and country COVID data</returns>
         public Dictionary<string, object> LoadCountryCovidData(string country)
         {
             return CoreHelper.FetchFromWeb<Dictionary<string, object>>(
@@ -120,6 +155,11 @@ namespace COVIDMonitoringSystem.Core
             );
         }
 
+        /// <summary>
+        /// Generates SHN Status Report into a new CSV for each person who is serving SHN
+        /// </summary>
+        /// <param name="dateTime">Input DateTime of the date to generate SHN status report for</param>
+        /// <returns>New CSV file with SHN status report information</returns>
         public FileCreateResult GenerateSHNStatusReportFile(DateTime dateTime)
         {
             var csvData = new List<Dictionary<string, string>>();
@@ -139,6 +179,13 @@ namespace COVIDMonitoringSystem.Core
             );
         }
 
+        /// <summary>
+        /// Generates Contact Tracing Report into a new CSV file
+        /// </summary>
+        /// <param name="location">Input store name to generate contact tracing details for</param>
+        /// <param name="start">Input the start of the time range to perform contact tracing</param>
+        /// <param name="end">Input the end of the time range to perform contact tracing</param>
+        /// <returns>New CSV file with contact tracing information</returns>
         public bool GenerateContactTracingReportFile(BusinessLocation location, DateTime start, DateTime end)
         {
             var csvData = new List<Dictionary<string, string>>();
@@ -160,6 +207,11 @@ namespace COVIDMonitoringSystem.Core
             ).IsSuccessful();
         }
 
+        /// <summary>
+        /// Generates a single TravelEntry record as a dictionary
+        /// </summary>
+        /// <param name="entry">The TravelEntry object to generate record for</param>
+        /// <returns>Dictionary containing TravelEntry record information</returns>
         private Dictionary<string, string> GenerateSingleTravelEntryReport(TravelEntry entry)
         {
             return new Dictionary<string, string>
@@ -171,6 +223,12 @@ namespace COVIDMonitoringSystem.Core
             };
         }
 
+        /// <summary>
+        /// Generate SafeEntry details of a single person
+        /// </summary>
+        /// <param name="details">SafeEntry object to pass in</param>
+        /// <param name="info">Target to generate SafeEntry details for</param>
+        /// <returns></returns>
         private Dictionary<string, string> GenerateSingleSafeEntryDetails(SafeEntry details, Person info)
         {
             return new Dictionary<string, string>
@@ -183,41 +241,79 @@ namespace COVIDMonitoringSystem.Core
             };
         }
 
+        /// <summary>
+        /// Adds a new business location to BusinessLocationList
+        /// </summary>
+        /// <param name="business">Input business location</param>
         public void AddBusinessLocation(BusinessLocation business)
         {
             BusinessLocationList.Add(business);
         }
 
+        /// <summary>
+        /// Adds a new SHN facility to SHNFacilitiesList
+        /// </summary>
+        /// <param name="facility">Input SHN facility</param>
         public void AddSHNFacility(SHNFacility facility)
         {
             SHNFacilitiesList.Add(facility);
         }
 
+        /// <summary>
+        /// Adds a new Person to PersonList
+        /// </summary>
+        /// <param name="person">Input Person</param>
         public void AddPerson(Person person)
         {
             PersonList.Add(person);
         }
 
+        /// <summary>
+        /// Searches for input in BusinessLocationList
+        /// </summary>
+        /// <param name="name">Name of business location to search for</param>
+        /// <returns>Name of business location if it is found</returns>
         public BusinessLocation FindBusinessLocation(string name)
         {
             return BusinessLocationList.Find(businessLocation => businessLocation.BusinessName.ToLower().Equals(name.ToLower()));
         }
-        
+
+        /// <summary>
+        /// Searches for input in SHNFacilitiesList
+        /// </summary>
+        /// <param name="name">Name of SHN facility to search for</param>
+        /// <returns>Name of SHN facility if it is found</returns>
         public SHNFacility FindSHNFacility(string name)
         {
             return SHNFacilitiesList.Find(shnFacility => shnFacility.FacilityName.Equals(name));
         }
 
+        /// <summary>
+        /// Searches for input in PersonList
+        /// </summary>
+        /// <param name="name">Name of Person to search for</param>
+        /// <returns>Name of Person if it is found</returns>
         public Person FindPerson(string name)
         {
             return PersonList.Find(person => person.Name.Equals(name));
         }
 
+        /// <summary>
+        /// Searches if a certain person type has the input name
+        /// </summary>
+        /// <typeparam name="T">Type of Person to search for</typeparam>
+        /// <param name="name">Name of Person to search for</param>
+        /// <returns>Name of Resident/Visitor if it is found</returns>
         public T FindPersonOfType<T>(string name) where T : Person
         {
             return GetAllPersonOfType<T>().Find(person => person.Name.ToLower().Equals(name.ToLower()));
         }
 
+        /// <summary>
+        /// Gets all Persons of a certain type in a list
+        /// </summary>
+        /// <typeparam name="T">Type of Person to search for</typeparam>
+        /// <returns>A list with all the persons of the selected type</returns>
         public List<T> GetAllPersonOfType<T>() where T : Person
         {
             return PersonList.FindAll(p => p is T).ConvertAll(p => (T) p);
