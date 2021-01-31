@@ -129,6 +129,8 @@ namespace COVIDMonitoringSystem.ConsoleApp.Screens.TravelEntryMgr
             person.AddTravelEntry(travelEntry);
             
             result.Text = $"A new travel entry record has been successfully added for {person.Name}.";
+            shnMessage.Hidden = true;
+            shnFacility.Hidden = true;
             ClearAllInputs();
         }
     }
