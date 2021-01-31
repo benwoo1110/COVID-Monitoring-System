@@ -55,10 +55,13 @@ namespace COVIDMonitoringSystem.ConsoleApp.Display
         {
             if (CurrentAbstractScreen.SelectedElement is Input inputElement)
             {
-                inputElement.NextSuggestion();
-                return;
+                var result = inputElement.NextSuggestion();
+                if (!result)
+                {
+                    return;
+                }
             }
-            
+
             CurrentAbstractScreen.SelectNext();
         }
 

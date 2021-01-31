@@ -105,15 +105,22 @@ namespace COVIDMonitoringSystem.ConsoleApp.Display.Elements
             Text = CachedSuggestions[SuggestionIndex];
         }
         
-        public void NextSuggestion()
+        public bool NextSuggestion()
         {
             if (!HasSuggestions())
             {
-                return;
+                return true;
+            }
+
+            if (SuggestionIsConcrete())
+            {
+                ApplySuggestion();
+                return true;
             }
             
             SuggestionIndex = CoreHelper.Mod(++SuggestionIndex, CachedSuggestions.Count);
             Render();
+            return false;
         }
         
         protected void UpdateSuggestion()
@@ -130,6 +137,11 @@ namespace COVIDMonitoringSystem.ConsoleApp.Display.Elements
         private bool HasSuggestions()
         {
             return CachedSuggestions != null && CachedSuggestions.Count > 0;
+        }
+
+        private bool SuggestionIsConcrete()
+        {
+            return CachedSuggestions != null && CachedSuggestions.Count == 1;
         }
     }
 }
