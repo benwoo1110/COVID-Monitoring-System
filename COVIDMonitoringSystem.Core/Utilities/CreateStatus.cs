@@ -6,6 +6,9 @@
 
 namespace COVIDMonitoringSystem.Core.Utilities
 {
+    /// <summary>
+    /// Different states when attempting to create a file.
+    /// </summary>
     public enum CreateStatus
     {
         Success,

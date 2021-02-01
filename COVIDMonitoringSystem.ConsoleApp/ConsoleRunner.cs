@@ -212,8 +212,7 @@ namespace COVIDMonitoringSystem.ConsoleApp
             DisplayManager.RegisterScreen(new ListScreenBuilder<SHNFacility>(DisplayManager)
                 .OfName("viewFacilities")
                 .WithHeader("View All SHN Facilities")
-                .WithProperties(new[]
-                    {"FacilityName", "FacilityCapacity", "FacilityVacancy", "FromLand", "FromSea", "FromAir"})
+                .WithProperties(new[] {"FacilityName", "FacilityCapacity", "FacilityVacancy", "FromLand", "FromSea", "FromAir"})
                 .WithGetter(() => Manager.SHNFacilitiesList)
                 .Build()
             );

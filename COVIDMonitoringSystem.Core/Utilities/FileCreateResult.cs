@@ -8,6 +8,9 @@ using System;
 
 namespace COVIDMonitoringSystem.Core.Utilities
 {
+    /// <summary>
+    /// Store details of a created file by the program.
+    /// </summary>
     public class FileCreateResult
     {
         public CreateStatus Status { get; internal set; } = CreateStatus.Unknown;

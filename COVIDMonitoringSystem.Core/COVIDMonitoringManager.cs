@@ -14,6 +14,9 @@ using COVIDMonitoringSystem.Core.Utilities;
 
 namespace COVIDMonitoringSystem.Core
 {
+    /// <summary>
+    /// Heart of the Covid Monitoring system's API
+    /// </summary>
     public class COVIDMonitoringManager
     {
         public List<BusinessLocation> BusinessLocationList { get; private set; }
@@ -30,6 +33,9 @@ namespace COVIDMonitoringSystem.Core
             LoadPersonData();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         private void LoadValidInputSetData()
         {
             ValidCollectionLocation = CoreHelper.ReadSingleColumnCsv("resources/CollectionLocation.csv");
@@ -55,14 +61,15 @@ namespace COVIDMonitoringSystem.Core
         /// </summary>
         private void LoadSHNFacilityData()
         {
-            SHNFacilitiesList = (List<SHNFacility>) CoreHelper.FetchFromWeb<List<SHNFacility>>(
+            SHNFacilitiesList = CoreHelper.FetchFromWeb<List<SHNFacility>>(
                 "https://covidmonitoringapiprg2.azurewebsites.net",
                 "/facility"
             ) ?? new List<SHNFacility>();
         }
 
         /// <summary>
-        /// Reads CSV file "Person.csv" and adds the data into a list PersonList, calls function ParseResidentEntry or ParseVisitorEntry depending on type of person in data
+        /// Reads CSV file "Person.csv" and adds the data into a list PersonList, calls function
+        /// ParseResidentEntry or ParseVisitorEntry depending on type of person in data.
         /// </summary>
         private void LoadPersonData()
         {
@@ -325,6 +332,10 @@ namespace COVIDMonitoringSystem.Core
             return PersonList.FindAll(p => p is T).ConvertAll(p => (T) p);
         }
 
+        /// <summary>
+        /// Gets all SHN Facilities that still have vacancies.
+        /// </summary>
+        /// <returns>A list of SHNFacility</returns>
         public List<SHNFacility> GetAvailableSHNFacility()
         {
             return SHNFacilitiesList.FindAll(facility => facility.IsAvailable());

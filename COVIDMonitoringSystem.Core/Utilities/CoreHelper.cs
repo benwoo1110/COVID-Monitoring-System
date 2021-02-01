@@ -165,11 +165,6 @@ namespace COVIDMonitoringSystem.Core.Utilities
             return JsonConvert.DeserializeObject<T>(rawData);
         }
 
-        [NotNull] public static string GetObjectData([CanBeNull] object o)
-        {
-            return JsonConvert.SerializeObject(o, Formatting.Indented, Config);
-        }
-
         public static int GetStringLength([CanBeNull] string text)
         {
             return text?.Length ?? 0;
