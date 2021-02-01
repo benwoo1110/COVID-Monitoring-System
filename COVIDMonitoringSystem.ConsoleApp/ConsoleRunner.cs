@@ -57,9 +57,21 @@ namespace COVIDMonitoringSystem.ConsoleApp
                 Manager.FindBusinessLocation,
                 "No business with name {0} found."
             );
-            DisplayManager.ResolveManager.RegisterQuickObjectResolver(
-                Manager.FindSHNFacility,
-                "No SHN facility with name {0} found."
+            DisplayManager.ResolveManager.RegisterInputResolver<SHNFacility>(
+                (screen, value) =>
+                {
+                    var facility = Manager.FindSHNFacility(value);
+                    if (facility == null)
+                    {
+                        throw new InputParseFailedException($"No SHN facility with name '{value}' found.");
+                    }
+                    if (!facility.IsAvailable())
+                    {
+                        throw new InputParseFailedException($"{value} is full. Please choose another SHN facility.");
+                    }
+
+                    return facility;
+                }
             );
             DisplayManager.ResolveManager.RegisterQuickObjectResolver(
                 SHNTier.FindAppropriateTier,
@@ -98,7 +110,7 @@ namespace COVIDMonitoringSystem.ConsoleApp
             );
             DisplayManager.ValuesManager.RegisterInputValueType(
                 "shnFacility",
-                screen => Manager.SHNFacilitiesList.ConvertAll(facility => facility.FacilityName)
+                screen => Manager.GetAvailableSHNFacility().ConvertAll(facility => facility.FacilityName)
             );
             DisplayManager.ValuesManager.RegisterInputValueType(
                 "entryMode",
@@ -127,7 +139,6 @@ namespace COVIDMonitoringSystem.ConsoleApp
                     }
 
                     return result;
-
                 }
             );
         }

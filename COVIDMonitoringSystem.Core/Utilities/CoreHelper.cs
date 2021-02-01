@@ -159,7 +159,6 @@ namespace COVIDMonitoringSystem.Core.Utilities
             var response = responseTask.Result;
             if (!response.IsSuccessStatusCode)
             {
-                Console.WriteLine($"Response from server was not successful. Response dump as follows:\n{GetObjectData(response)}");
                 return null;
             }
             var rawData = response.Content.ReadAsStringAsync().Result;

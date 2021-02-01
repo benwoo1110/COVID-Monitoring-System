@@ -324,5 +324,10 @@ namespace COVIDMonitoringSystem.Core
         {
             return PersonList.FindAll(p => p is T).ConvertAll(p => (T) p);
         }
+
+        public List<SHNFacility> GetAvailableSHNFacility()
+        {
+            return SHNFacilitiesList.FindAll(facility => facility.IsAvailable());
+        }
     }
 }
