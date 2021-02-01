@@ -17,20 +17,19 @@ using COVIDMonitoringSystem.Core;
 using COVIDMonitoringSystem.Core.PersonMgr;
 using COVIDMonitoringSystem.Core.SafeEntryMgr;
 using COVIDMonitoringSystem.Core.TravelEntryMgr;
-using COVIDMonitoringSystem.Core.Utilities;
 
 namespace COVIDMonitoringSystem.ConsoleApp
 {
     public class ConsoleRunner
     {
-        private COVIDMonitoringManager Manager { get; }
+        private COVIDMonitoringManager CovidManager { get; }
 
         private ConsoleDisplayManager DisplayManager { get; }
 
         public ConsoleRunner()
         {
             DisplayManager = new ConsoleDisplayManager();
-            Manager = new COVIDMonitoringManager();
+            CovidManager = new COVIDMonitoringManager();
             RegisterInputResolvers();
             RegisterInputValueTypes();
             SetUpMenus();
@@ -42,25 +41,25 @@ namespace COVIDMonitoringSystem.ConsoleApp
         private void RegisterInputResolvers()
         {
             DisplayManager.ResolveManager.RegisterQuickObjectResolver(
-                Manager.FindPerson,
+                CovidManager.FindPerson,
                 "No person with name {0} found."
             );
             DisplayManager.ResolveManager.RegisterQuickObjectResolver(
-                Manager.FindPersonOfType<Resident>,
+                CovidManager.FindPersonOfType<Resident>,
                 "No resident with name {0} found."
             );
             DisplayManager.ResolveManager.RegisterQuickObjectResolver(
-                Manager.FindPersonOfType<Visitor>,
+                CovidManager.FindPersonOfType<Visitor>,
                 "No visitor with name {0} found."
             );
             DisplayManager.ResolveManager.RegisterQuickObjectResolver(
-                Manager.FindBusinessLocation,
+                CovidManager.FindBusinessLocation,
                 "No business with name {0} found."
             );
             DisplayManager.ResolveManager.RegisterInputResolver<SHNFacility>(
                 (screen, value) =>
                 {
-                    var facility = Manager.FindSHNFacility(value);
+                    var facility = CovidManager.FindSHNFacility(value);
                     if (facility == null)
                     {
                         throw new InputParseFailedException($"No SHN facility with name '{value}' found.");
@@ -84,38 +83,38 @@ namespace COVIDMonitoringSystem.ConsoleApp
         {
             DisplayManager.ValuesManager.RegisterInputValueType(
                 "countries", (
-                screen) => Manager.ValidCountries, 
+                screen) => CovidManager.ValidCountries, 
                 "{0} is not a valid country."
             );
             DisplayManager.ValuesManager.RegisterInputValueType(
                 "collectLocation", 
-                screen => Manager.ValidCollectionLocation,
+                screen => CovidManager.ValidCollectionLocation,
                 "{0} is not a valid collection location."
             );
             DisplayManager.ValuesManager.RegisterInputValueType(
                 "nationality",
-                screen => Manager.ValidNationalities,
+                screen => CovidManager.ValidNationalities,
                 "{0} is not a valid nationality."
             );
             DisplayManager.ValuesManager.RegisterInputValueType(
                 "person",
-                screen => Manager.PersonList.ConvertAll(person => person.Name)
+                screen => CovidManager.PersonList.ConvertAll(person => person.Name)
             );
             DisplayManager.ValuesManager.RegisterInputValueType(
                 "resident",
-                screen => Manager.GetAllPersonOfType<Resident>().ConvertAll(resident => resident.Name)
+                screen => CovidManager.GetAllPersonOfType<Resident>().ConvertAll(resident => resident.Name)
             );
             DisplayManager.ValuesManager.RegisterInputValueType(
                 "visitor",
-                screen => Manager.GetAllPersonOfType<Visitor>().ConvertAll(visitor => visitor.Name)
+                screen => CovidManager.GetAllPersonOfType<Visitor>().ConvertAll(visitor => visitor.Name)
             );
             DisplayManager.ValuesManager.RegisterInputValueType(
                 "businessLocation",
-                screen => Manager.BusinessLocationList.ConvertAll(business => business.BusinessName)
+                screen => CovidManager.BusinessLocationList.ConvertAll(business => business.BusinessName)
             );
             DisplayManager.ValuesManager.RegisterInputValueType(
                 "shnFacility",
-                screen => Manager.GetAvailableSHNFacility().ConvertAll(facility => facility.FacilityName)
+                screen => CovidManager.GetAvailableSHNFacility().ConvertAll(facility => facility.FacilityName)
             );
             DisplayManager.ValuesManager.RegisterInputValueType(
                 "entryMode",
@@ -185,31 +184,31 @@ namespace COVIDMonitoringSystem.ConsoleApp
 
         private void SetUpGeneralScreens()
         {
-            DisplayManager.RegisterScreen(new PersonDetailsScreen(DisplayManager, Manager));
+            DisplayManager.RegisterScreen(new PersonDetailsScreen(DisplayManager, CovidManager));
             DisplayManager.RegisterScreen(new ListScreenBuilder<Visitor>(DisplayManager)
                 .OfName("viewAllVisitors")
                 .WithHeader("View All Visitors")
                 .WithProperties(new[] {"Name", "PassportNo", "Nationality", "SafeEntryList", "TravelEntryList"})
-                .WithGetter(() => Manager.GetAllPersonOfType<Visitor>())
+                .WithGetter(() => CovidManager.GetAllPersonOfType<Visitor>())
                 .Build()
             );
-            DisplayManager.RegisterScreen(new GlobalStatsScreen(DisplayManager, Manager));
+            DisplayManager.RegisterScreen(new GlobalStatsScreen(DisplayManager, CovidManager));
         }
 
         private void SetUpSafeEntryScreens()
         {
-            DisplayManager.RegisterScreen(new TokenScreen(DisplayManager, Manager));
+            DisplayManager.RegisterScreen(new TokenScreen(DisplayManager, CovidManager));
             DisplayManager.RegisterScreen(new ListScreenBuilder<BusinessLocation>(DisplayManager)
                 .OfName("viewLocations")
                 .WithHeader("View All Business Location")
                 .WithProperties(new[] {"BusinessName", "BranchCode", "MaximumCapacity", "VisitorsNow"})
-                .WithGetter(() => Manager.BusinessLocationList)
+                .WithGetter(() => CovidManager.BusinessLocationList)
                 .Build()
             );
-            DisplayManager.RegisterScreen(new EditCapacityScreen(DisplayManager, Manager));
-            DisplayManager.RegisterScreen(new CheckInScreen(DisplayManager, Manager));
-            DisplayManager.RegisterScreen(new CheckOutScreen(DisplayManager, Manager));
-            DisplayManager.RegisterScreen(new ContactTraceScreen(DisplayManager, Manager));
+            DisplayManager.RegisterScreen(new EditCapacityScreen(DisplayManager, CovidManager));
+            DisplayManager.RegisterScreen(new CheckInScreen(DisplayManager, CovidManager));
+            DisplayManager.RegisterScreen(new CheckOutScreen(DisplayManager, CovidManager));
+            DisplayManager.RegisterScreen(new ContactTraceScreen(DisplayManager, CovidManager));
         }
 
         private void SetUpTravelEntryScreens()
@@ -218,14 +217,14 @@ namespace COVIDMonitoringSystem.ConsoleApp
                 .OfName("viewFacilities")
                 .WithHeader("View All SHN Facilities")
                 .WithProperties(new[] {"FacilityName", "FacilityCapacity", "FacilityVacancy", "FromLand", "FromSea", "FromAir"})
-                .WithGetter(() => Manager.SHNFacilitiesList)
+                .WithGetter(() => CovidManager.SHNFacilitiesList)
                 .Build()
             );
-            DisplayManager.RegisterScreen(new NewVisitorScreen(DisplayManager, Manager));
-            DisplayManager.RegisterScreen(new NewTravelRecordScreen(DisplayManager, Manager));
-            DisplayManager.RegisterScreen(new ViewSHNChargesScreen(DisplayManager, Manager));
-            DisplayManager.RegisterScreen(new PaySHNChargesScreen(DisplayManager, Manager));
-            DisplayManager.RegisterScreen(new GenerateSHNReportScreen(DisplayManager, Manager));
+            DisplayManager.RegisterScreen(new NewVisitorScreen(DisplayManager, CovidManager));
+            DisplayManager.RegisterScreen(new NewTravelRecordScreen(DisplayManager, CovidManager));
+            DisplayManager.RegisterScreen(new ViewSHNChargesScreen(DisplayManager, CovidManager));
+            DisplayManager.RegisterScreen(new PaySHNChargesScreen(DisplayManager, CovidManager));
+            DisplayManager.RegisterScreen(new GenerateSHNReportScreen(DisplayManager, CovidManager));
         }
 
         public void Run()

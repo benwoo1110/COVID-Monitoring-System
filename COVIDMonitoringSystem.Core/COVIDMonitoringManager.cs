@@ -35,7 +35,7 @@ namespace COVIDMonitoringSystem.Core
         }
 
         /// <summary>
-        /// Lo
+        /// Init preset valid values for various fields.
         /// </summary>
         private void LoadValidInputSetData()
         {

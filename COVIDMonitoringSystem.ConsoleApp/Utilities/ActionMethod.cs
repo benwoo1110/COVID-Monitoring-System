@@ -23,7 +23,7 @@ namespace COVIDMonitoringSystem.ConsoleApp.Utilities
         public ActionMethod(MethodInfo method)
         {
             Method = method;
-            Parameters = ReflectHelper.GetParametersAttributeMap<InputParam>(method);
+            Parameters = ReflectHelper.GetParametersAttributeList<InputParam>(method);
             
             //TODO: Not efficient but ok for now
             ParamValuesChecker = ReflectHelper.GetParametersAttributeDict<Values>(method);

@@ -47,7 +47,7 @@ namespace COVIDMonitoringSystem.Core.Utilities
             return methodAttributeMap;
         }
 
-        public static List<KeyValuePair<ParameterInfo, TA>> GetParametersAttributeMap<TA>(MethodInfo methodInfo) where TA : Attribute
+        public static List<KeyValuePair<ParameterInfo, TA>> GetParametersAttributeList<TA>(MethodInfo methodInfo) where TA : Attribute
         {
             var parameterAttributeMap = new List<KeyValuePair<ParameterInfo, TA>>();
             var parameterInfos = methodInfo.GetParameters();

@@ -5,7 +5,6 @@
 //============================================================
 
 using System;
-using System.IO;
 using COVIDMonitoringSystem.ConsoleApp.Display;
 using COVIDMonitoringSystem.ConsoleApp.Display.Attributes;
 using COVIDMonitoringSystem.ConsoleApp.Display.Elements;

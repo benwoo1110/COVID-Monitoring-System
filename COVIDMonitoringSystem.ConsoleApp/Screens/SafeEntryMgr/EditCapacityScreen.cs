@@ -4,7 +4,6 @@
 // Module Group   : T06
 //============================================================
 
-using System;
 using COVIDMonitoringSystem.ConsoleApp.Display;
 using COVIDMonitoringSystem.ConsoleApp.Display.Attributes;
 using COVIDMonitoringSystem.ConsoleApp.Display.Elements;

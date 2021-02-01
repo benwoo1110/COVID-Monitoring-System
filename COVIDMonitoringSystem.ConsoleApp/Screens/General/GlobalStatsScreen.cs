@@ -20,7 +20,7 @@ namespace COVIDMonitoringSystem.ConsoleApp.Screens.General
 
         private Header header = new Header
         {
-            Text = "Globel Stats",
+            Text = "Global Stats",
             BoundingBox = {Top = 0}
         };
 
