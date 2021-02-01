@@ -4,6 +4,8 @@
 // Module Group   : T06
 //============================================================
 
+using System;
+using System.Collections.Generic;
 using COVIDMonitoringSystem.ConsoleApp.Display;
 using COVIDMonitoringSystem.ConsoleApp.Display.Attributes;
 using COVIDMonitoringSystem.ConsoleApp.Display.Elements;
@@ -38,7 +40,8 @@ namespace COVIDMonitoringSystem.ConsoleApp.Screens.General
         private Label result = new Label
         {
             Text = "Search for a country and see what happens!",
-            BoundingBox = {Top = 8}
+            BoundingBox = {Top = 8},
+            ClearOnExit = true
         };
 
         public GlobalStatsScreen(ConsoleDisplayManager displayManager, COVIDMonitoringManager covidManager) : base(displayManager, covidManager)
@@ -51,8 +54,22 @@ namespace COVIDMonitoringSystem.ConsoleApp.Screens.General
         {
             var targetCountry = country.Text;
             result.Text = $"Loading information on {countryName}...";
+            result.Render();
 
-            var countryCovidData = CovidManager.LoadCountryCovidData(countryName);
+            Dictionary<string, object> countryCovidData;
+            try
+            {
+                countryCovidData = CovidManager.LoadCountryCovidData(countryName);
+                if (countryCovidData == null)
+                {
+                    throw new Exception();
+                }
+            }
+            catch
+            {
+                result.Text = "An errored occured while loading information from web.";
+                return;
+            }
 
             var detailsBuilder = new DetailsBuilder();
             foreach (var (key, value) in countryCovidData)
