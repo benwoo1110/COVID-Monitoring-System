@@ -42,7 +42,8 @@ namespace COVIDMonitoringSystem.ConsoleApp.Screens.TravelEntryMgr
         private Input nationality = new Input
         {
             Prompt = "Nationality",
-            BoundingBox = {Top = 8}
+            BoundingBox = {Top = 8},
+            SuggestionType = "nationality"
         };
 
         private Button create = new Button

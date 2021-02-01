@@ -24,6 +24,7 @@ namespace COVIDMonitoringSystem.Core
         public List<Person> PersonList { get; private set; }
         public HashSet<string> ValidCountries { get; private set; }
         public HashSet<string> ValidCollectionLocation { get; private set; }
+        public HashSet<string> ValidNationalities { get; private set; }
 
         public COVIDMonitoringManager()
         {
@@ -34,12 +35,13 @@ namespace COVIDMonitoringSystem.Core
         }
 
         /// <summary>
-        /// 
+        /// Lo
         /// </summary>
         private void LoadValidInputSetData()
         {
             ValidCollectionLocation = CoreHelper.ReadSingleColumnCsv("resources/CollectionLocation.csv");
             ValidCountries = CoreHelper.ReadSingleColumnCsv("resources/Countries.csv");
+            ValidNationalities = CoreHelper.ReadSingleColumnCsv("resources/Nationality.csv");
         }
 
         /// <summary>

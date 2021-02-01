@@ -93,6 +93,11 @@ namespace COVIDMonitoringSystem.ConsoleApp
                 "{0} is not a valid collection location."
             );
             DisplayManager.ValuesManager.RegisterInputValueType(
+                "nationality",
+                screen => Manager.ValidNationalities,
+                "{0} is not a valid nationality."
+            );
+            DisplayManager.ValuesManager.RegisterInputValueType(
                 "person",
                 screen => Manager.PersonList.ConvertAll(person => person.Name)
             );
