@@ -226,6 +226,7 @@ namespace COVIDMonitoringSystem.ConsoleApp
 
         public void Run()
         {
+            Console.SetWindowSize(128, 40);
             DisplayManager.Run("mainMenu");
         }
     }
