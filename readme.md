@@ -1,13 +1,13 @@
 # Covid Monitoring System
 
 Since first identified in late 2019, COVID-19 has ravaged countries around world, halting economies, grinding international travel, and has affected all walks of lives. Similarly, Singapore as an international hub for multiple sectors such as healthcare, education, and trade, is not spared by the pandemic.
-<br><br>
+
 As part of our Programming II module, we were tasked to create an effective monitoring system with an Object-Oriented Programming (OOP) approach. 
 
 ### Features
 
 #### Unique keyboard interaction
-With a purpose-built [ConsoleDisplayManger](COVIDMonitoringSystem.ConsoleApp/Display/ConsoleDisplayManager.cs), [Screen](COVIDMonitoringSystem.ConsoleApp/Display/AbstractScreen.cs) and a suite of custom ["UI elements"](COVIDMonitoringSystem.ConsoleApp/Display/Elements) classes, you can use arrow keys to navigate and enter to do selections.
+With a purpose-built [ConsoleDisplayManger](COVIDMonitoringSystem.ConsoleApp/Display/ConsoleDisplayManager.cs), [Screen](COVIDMonitoringSystem.ConsoleApp/Display/AbstractScreen.cs) and [a suite of custom "UI elements"](COVIDMonitoringSystem.ConsoleApp/Display/Elements) classes, you can use arrow keys to navigate and enter to do selections.
 
 ![Main Menu](screenshots/main-menu.png)
 
