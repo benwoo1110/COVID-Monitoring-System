@@ -277,10 +277,23 @@ namespace COVIDMonitoringSystem.Core
         /// <summary>
         /// Adds a new Person to PersonList
         /// </summary>
-        /// <param name="person">Input Person</param>
-        public void AddPerson(Person person)
+        /// <param name="newPerson">Input Person</param>
+        /// <returns>if person was added successfully.</returns>
+        public bool AddPerson(Person newPerson)
         {
-            PersonList.Add(person);
+            if (newPerson is Visitor visitor)
+            {
+                foreach (var vPerson in GetAllPersonOfType<Visitor>())
+                {
+                    if (vPerson.PassportNo == visitor.PassportNo)
+                    {
+                        return false;
+                    }
+                }
+            }
+
+            PersonList.Add(newPerson);
+            return true;
         }
 
         /// <summary>

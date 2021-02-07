@@ -68,10 +68,13 @@ namespace COVIDMonitoringSystem.ConsoleApp.Screens.TravelEntryMgr
             [InputParam("passportNo", "result")] string passportNoText,
             [InputParam("nationality", "result")] string nationalityText)
         {
-            CovidManager.AddPerson(new Visitor(nameText, passportNoText, nationalityText));
-            result.Text = $"New visitor {nameText} has been added to the system.";
-
-            ClearAllInputs();
+            if (CovidManager.AddPerson(new Visitor(nameText, passportNoText, nationalityText)))
+            {
+                result.Text = $"New visitor {nameText} has been added to the system.";
+                ClearAllInputs();
+                return;
+            }
+            result.Text = $"Visitor {nameText} was not added to the system. Is the passport number unique?";
         }
     }
 }
