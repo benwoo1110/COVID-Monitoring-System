@@ -39,7 +39,6 @@ namespace COVIDMonitoringSystem.ConsoleApp.Screens.General
 
         private Label result = new Label
         {
-            Text = "Search for a country and see what happens!",
             BoundingBox = {Top = 8},
             ClearOnExit = true
         };
