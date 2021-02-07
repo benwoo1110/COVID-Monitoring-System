@@ -13,21 +13,6 @@ namespace COVIDMonitoringSystem.ConsoleApp.Display
 {
     public class InputValuesManager
     {
-        private class ValueTypeMatcher
-        {
-            public string Name { get; }
-
-            public ValueTypeMatcher(string name)
-            {
-                Name = name;
-            }
-
-            public override int GetHashCode()
-            {
-                return HashCode.Combine(Name);
-            }
-        }
-
         private class ValueChecker
         {
             public Func<AbstractScreen, ICollection<string>> ListGetter { get; }
@@ -40,22 +25,21 @@ namespace COVIDMonitoringSystem.ConsoleApp.Display
             }
         }
         
-        private Dictionary<int, ValueChecker> valuesMap;
+        private Dictionary<string, ValueChecker> valuesMap;
 
         public InputValuesManager()
         {
-            valuesMap = new Dictionary<int, ValueChecker>();
+            valuesMap = new Dictionary<string, ValueChecker>();
         }
 
         public void RegisterInputValueType(string name, Func<AbstractScreen, ICollection<string>> supplier, string errorMessage = null)
         {
-            valuesMap.Add(new ValueTypeMatcher(name).GetHashCode(), new ValueChecker(supplier, errorMessage));
+            valuesMap.Add(name, new ValueChecker(supplier, errorMessage));
         }
         
         public void DoCheck(string name, AbstractScreen screen, object obj)
         {
-            var matcher = new ValueTypeMatcher(name);
-            var valueChecker = valuesMap.GetValueOrDefault(matcher.GetHashCode());
+            var valueChecker = valuesMap.GetValueOrDefault(name);
             if (valueChecker == null)
             {
                 return;
@@ -71,8 +55,7 @@ namespace COVIDMonitoringSystem.ConsoleApp.Display
         public List<string> GetSuggestion(string name, AbstractScreen screen, object obj)
         {
             var result = new List<string>();
-            var matcher = new ValueTypeMatcher(name);
-            var valueChecker = valuesMap.GetValueOrDefault(matcher.GetHashCode());
+            var valueChecker = valuesMap.GetValueOrDefault(name);
             if (valueChecker == null)
             {
                 return result;
