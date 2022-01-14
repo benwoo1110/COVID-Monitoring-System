@@ -106,7 +106,10 @@ namespace COVIDMonitoringSystem.Core.TravelEntryMgr
                 return;
             }
 
-            ShnStay.FacilityVacancy--;
+            if (ShnStay != null)
+            {
+                ShnStay.FacilityVacancy--;
+            }
         }
         
         public bool AssignSHNFacility(SHNFacility facility)
